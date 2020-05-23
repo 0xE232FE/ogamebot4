@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="425.0" spacing="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.controller.FirstStartController">
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+   <children>
+      <Label text="Podaj ścieżkę instalacji" />
+      <TextField fx:id="editTextMainPath" promptText="C:\ogamebot4" />
+      <Label text="Podaj ścieżkę sterownika przeglądarki" />
+      <TextField fx:id="editTextDriverPath" promptText="C:\...\chromedriver.exe" />
+      <HBox prefWidth="200.0" spacing="5.0">
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+         <children>
+            <Button mnemonicParsing="false" onAction="#save" text="SAVE" />
+            <Button fx:id="buttonRun" disable="true" mnemonicParsing="false" onAction="#run" text="RUN" />
+         </children>
+      </HBox>
+      <Label fx:id="labelError" />
+   </children>
+</VBox>
