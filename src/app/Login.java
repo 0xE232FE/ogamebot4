@@ -79,7 +79,7 @@ class Login
             }
             if(counter > 10)
             {
-                Log.printLog(Login.class.getName(),"Nie znaleziono reklamy.");
+//                Log.printLog(Login.class.getName(),"Nie znaleziono reklamy.");
                 return;
             }
         }

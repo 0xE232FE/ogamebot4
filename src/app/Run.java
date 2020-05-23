@@ -149,7 +149,7 @@ public class Run extends Task
         }
         catch (NoSuchElementException e)
         {
-            System.out.println(DifferentMethods.fullDateFormat() + "Nie widoczny button GRAJ.");
+//            System.out.println(DifferentMethods.fullDateFormat() + "Nie widoczny button GRAJ.");
             return false;
         }
 
