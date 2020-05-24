@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox alignment="CENTER" prefHeight="650.0" prefWidth="1200.0" spacing="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.controller.MainController">
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+   <children>
+      <VBox prefWidth="178.0" spacing="2.0">
+         <HBox.margin>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </HBox.margin>
+         <children>
+            <Label text="AKTYWNE WĄTKI" />
+            <VBox fx:id="vBoxActiveTask" spacing="2.0">
+               <VBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </VBox.margin>
+            </VBox>
+            <Separator prefWidth="200.0" />
+         </children>
+      </VBox>
+      <Separator orientation="VERTICAL" />
+      <TabPane prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+      </TabPane>
+      <Separator orientation="VERTICAL" />
+      <VBox prefWidth="178.0">
+         <children>
+            <VBox prefWidth="158.0" spacing="2.0">
+               <VBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </VBox.margin>
+               <children>
+                  <Label text="CZAS GRY" />
+                  <Label fx:id="labelGameTime" />
+                  <Separator prefWidth="200.0" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</HBox>
