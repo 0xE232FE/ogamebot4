@@ -3,6 +3,7 @@ package app;
 import app.data.accounts.Accounts;
 import com.DifferentMethods;
 import com.Log;
+import ogame.GameTime;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -115,6 +116,7 @@ class Login
             if(a)
             {
                 WebElement playButton = webDriver.findElement(By.id("joinGame"));
+                GameClient.scrollToElement(webDriver,playButton);
                 if(playButton.isDisplayed())
                     playButton.findElement(By.tagName("a")).click();
 

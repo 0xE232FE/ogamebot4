@@ -1,6 +1,7 @@
 package app;
 
 import app.gui.controller.MainController;
+import app.tasks.BotLogic;
 import app.tasks.CzasGry;
 import org.openqa.selenium.*;
 
@@ -13,9 +14,13 @@ public class GameClient extends Task
     private CzasGry czasGry;
 
     private GUIUpdater guiUpdater;
+    private TaskManager taskManager;
+    private BotLogic botLogic;
+
     GameClient(WebDriver webDriver, MainController mainController)
     {
         guiUpdater = new GUIUpdater(webDriver,mainController);
+        taskManager = new TaskManager(webDriver,mainController);
         setRun(false);
         this.webDriver = webDriver;
         this.mainController = mainController;
@@ -24,6 +29,9 @@ public class GameClient extends Task
 
         czasGry = new CzasGry(webDriver);
         czasGry.setRun(true);
+
+        botLogic = new BotLogic(webDriver);
+        botLogic.setRun(true);
     }
 
     @Override

@@ -2,6 +2,7 @@ package app;
 
 
 import app.czas.CzasGry;
+import app.gui.active_task.ActiveTask;
 import app.gui.controller.MainController;
 import com.Waiter;
 import javafx.application.Platform;
@@ -25,6 +26,7 @@ public class GUIUpdater extends Task
             {
                 Runnable updater = () -> {
                     updateCzasGry();
+                    updateAktywneWatki();
                 };
                 Platform.runLater(updater);
             }
@@ -35,13 +37,22 @@ public class GUIUpdater extends Task
 
     private void updateCzasGry()
     {
-       getController().setTime(CzasGry.getData().toString() + CzasGry.getCzas().toString());
+       getController().setTime(CzasGry.getData().toString() + " " + CzasGry.getCzas().toString());
     }
 
     private boolean initAktywneWatki = true;
     private void updateAktywneWatki()
     {
 
+        if(initAktywneWatki && getController() != null && TaskManager.getTasks() != null)
+        {
+            for(LeafTask leafTask : TaskManager.getTasks())
+            {
+                ActiveTask activeTask = new ActiveTask(leafTask);
+                getController().getvBoxActiveTask().getChildren().add(activeTask.gethBox());
+                initAktywneWatki = false;
+            }
+        }
     }
 
 

@@ -82,6 +82,10 @@ public class Task implements Runnable {
         this.controller = controller;
     }
 
+    public Task(WebDriver w) {
+        this.w = w;
+    }
+
 //    /**
 //     * Zwraca wartość, czy Task jest uruchomiony.
 //     */
@@ -89,7 +93,7 @@ public class Task implements Runnable {
 //        return index == -1 ? run : (run && controller.getTaskOnOff()[index]);
 //    }
 
-        /**
+    /**
      * Zwraca wartość, czy Task jest uruchomiony.
      */
     public boolean isRun() {
