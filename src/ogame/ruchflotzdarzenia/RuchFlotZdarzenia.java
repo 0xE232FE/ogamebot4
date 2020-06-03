@@ -4,6 +4,7 @@ import app.GameClient;
 import com.DifferentMethods;
 import com.Log;
 import com.Waiter;
+import ogame.attack.Attack;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,14 +23,28 @@ public class RuchFlotZdarzenia
     private static final String MISJE_TBODY = "//*[@id=\"eventContent\"]/tbody";
 
 
+    public static boolean eventBoxNiewidoczny(WebDriver w)
+    {
+        WebElement e = w.findElement(By.xpath("//*[@id=\"eventboxContent\"]"));
+
+//        Log.printLog1(e.getAttribute("style"), RuchFlotZdarzenia.class,29);
+        return e.getAttribute("style").contains("none");
+    }
 
     public static void rozwin(WebDriver w)
     {
             WebElement e = w.findElement(By.xpath("//*[@id=\"js_eventDetailsClosed\"]"));
             GameClient.scrollToElement(w,e);
-            e.click();
-            Waiter.sleep(100,100);
-            Log.printLog(RuchFlotZdarzenia.class.getName(),"Klikam w button: Rozwiń box Zdarzenia.");
+
+            if(eventBoxNiewidoczny(w))
+            {
+                e.click();
+                Waiter.sleep(100,100);
+                Log.printLog(RuchFlotZdarzenia.class.getName(),"Klikam w button: Rozwiń box Zdarzenia.");
+            }
+            else
+                Log.printLog(RuchFlotZdarzenia.class.getName(),"Event box zdarzenia jest wyświetlony.");
+
     }
 
     public static void zwin(WebDriver w)
@@ -41,7 +56,7 @@ public class RuchFlotZdarzenia
         Log.printLog(RuchFlotZdarzenia.class.getName(),"Klikam w button: Zwiń box Zdarzenia.");
     }
 
-    private static List<Misja>  misje(WebDriver w)
+    public static List<Misja>  misje(WebDriver w)
     {
         if(!brakRuchuFlot(w))
         {
@@ -51,13 +66,31 @@ public class RuchFlotZdarzenia
 
             for(WebElement tmp : e2)
             {
-                if(tmp.getAttribute("class").equals("undermark"))
+                String attr = tmp.getAttribute("class");
+
+                if(attr.equals("undermark") || attr.equals("middlemark") ||attr.equals("overmark") )
                 {
                     String s = tmp.getText();
                     String [] strings = s.split(" ");
 
-                    if(strings.length > 1 && (strings[2].equals("własna") || strings[2].equals("przyjazna") ||strings[2].equals("wroga")))
-                        m.add(new Misja(strings[2],Integer.valueOf(strings[0])));
+                    int a = strings.length;
+
+                    switch (a)
+                    {
+                        case 2:
+                        {
+                            if(strings[1].equals("przyjazny") || strings[1].equals("wrogi"))
+                                m.add(new Misja(strings[1],Integer.valueOf(strings[0])));
+                            break;
+                        }
+                        case 3:
+                        {
+                            if(strings[2].equals("własna"))
+                                m.add(new Misja(strings[2],Integer.valueOf(strings[0])));
+                            break;
+                        }
+
+                    }
                 }
             }
             return m;
@@ -75,6 +108,27 @@ public class RuchFlotZdarzenia
             else {
                 for (Misja m : misje) {
                     if (m.getNazwa().equals("własna"))
+                        return m.getIlosc();
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Log.printErrorLog(RuchFlotZdarzenia.class.getName(),"-> iloscMisjiWlasnych()");
+        }
+        return -1;
+    }
+
+    public static int iloscMisjiWrogich(WebDriver w)
+    {
+        try {
+            List<Misja> misje = misje(w);
+
+            if (misje == null)
+                return -1;
+            else {
+                for (Misja m : misje) {
+                    if (m.getNazwa().equals("wrogi"))
                         return m.getIlosc();
                 }
             }

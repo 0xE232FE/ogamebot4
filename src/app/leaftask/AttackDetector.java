@@ -6,9 +6,12 @@ import ogame.attack.Attack;
 import ogame.ruchflotzdarzenia.RuchFlotZdarzenia;
 import org.openqa.selenium.WebDriver;
 
+import java.util.List;
+
 public class AttackDetector extends LeafTask
 {
 
+    private int iloscMisjiWrogich = -1;
     public AttackDetector(WebDriver w, int index, long sleep) {
         super(w, index, sleep, "Attack Detector");
     }
@@ -21,13 +24,26 @@ public class AttackDetector extends LeafTask
 
                 boolean attack = Attack.detected(getW());
 
-//                planety.setAtackDetected(attack);
+//                List<RuchFlotZdarzenia.Misja> misje = RuchFlotZdarzenia.misje(getW());
+//                for(RuchFlotZdarzenia.Misja m : misje)
+//                    Log.printLog1(m.toString(),Attack.class, 29);
 
-                if (attack)
+
+                if(attack)
                 {
                     RuchFlotZdarzenia.rozwin(getW());
                     Log.printLog(Attack.class.getName(), "Wykryto atak.");
-                    //todo - co zrobić gdy wykryje atak
+
+                    int tmp = RuchFlotZdarzenia.iloscMisjiWrogich(getW());
+                    Log.printLog1(String.valueOf(tmp), AttackDetector.class,33);
+
+                    if(tmp != iloscMisjiWrogich)
+                    {
+                        iloscMisjiWrogich = tmp;
+                        Log.printLog(Attack.class.getName(), "Pobieram dane o wrogich misjach.");
+                        //todo - co zrobić gdy wykryje atak
+                    }
+
                 }
                 else
                     Log.printLog(Attack.class.getName(), "Brak ataku.");

@@ -32,6 +32,8 @@ public class GameClient extends Task
 
         botLogic = new BotLogic(webDriver);
         botLogic.setRun(true);
+
+        mainController.setBotLogic(botLogic);
     }
 
     @Override
