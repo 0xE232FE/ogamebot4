@@ -21,6 +21,7 @@ public class BotLogic extends Task {
             if(isRun())
             {
                 TaskManager.getTasks()[0].execute();
+                TaskManager.getTasks()[1].execute();
             }
             Waiter.sleep(10,40);
         }

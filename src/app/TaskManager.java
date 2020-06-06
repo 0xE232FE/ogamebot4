@@ -3,6 +3,7 @@ package app;
 
 import app.gui.controller.MainController;
 import app.leaftask.AttackDetector;
+import app.leaftask.Planety;
 import com.Log;
 import org.openqa.selenium.WebDriver;
 
@@ -25,7 +26,8 @@ public class TaskManager
     private void initTasks()
     {
         tasks = new LeafTask[]{
-                new AttackDetector(webDriver,0,5)
+                new AttackDetector(webDriver,0,5),
+                new Planety(webDriver,1,60*1000)
         };
         Log.printLog(TaskManager.class.getName(), "Utworzono " +tasks.length + " Tasków.");
     }

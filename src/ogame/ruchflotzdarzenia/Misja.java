@@ -5,7 +5,6 @@ import app.czas.Data;
 
 public class Misja
 {
-
     private final Czas czasWykonania;
     private final Data dataWykonania;
     private final int typMisji;

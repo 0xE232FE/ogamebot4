@@ -12,6 +12,11 @@ public class Czas implements Serializable
 
         }
 
+        public Czas(String czas)
+        {
+            setTimeVariable(czas);
+        }
+
         /**
          *
          * @param czas  w sekundach

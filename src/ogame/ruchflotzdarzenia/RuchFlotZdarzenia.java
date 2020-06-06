@@ -1,10 +1,11 @@
 package ogame.ruchflotzdarzenia;
 
 import app.GameClient;
+import app.czas.Czas;
 import com.DifferentMethods;
 import com.Log;
 import com.Waiter;
-import ogame.attack.Attack;
+import ogame.SciezkaWebElementu;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,6 +22,7 @@ public class RuchFlotZdarzenia
 
     private static final String ILOSC_MISJI_P = "/html/body/div[5]/div[1]/div[4]/div/div[1]/div[1]/p";
     private static final String MISJE_TBODY = "//*[@id=\"eventContent\"]/tbody";
+    private SciezkaWebElementu zdarzenie = new SciezkaWebElementu("//*[@id=\"eventContent\"]/tbody/tr[","]");
 
 
     public static boolean eventBoxNiewidoczny(WebDriver w)
@@ -29,6 +31,25 @@ public class RuchFlotZdarzenia
 
 //        Log.printLog1(e.getAttribute("style"), RuchFlotZdarzenia.class,29);
         return e.getAttribute("style").contains("none");
+    }
+
+    public static List<WrogaMisja> getWrogieMisje(WebDriver w)
+    {
+        List<WrogaMisja> tmp = new ArrayList<>();
+        int a = iloscZdarzen(w);
+        for(int i = 1; i <= a; i++)
+        {
+            if(Zdarzenie.eventType(w,i) == 1)
+            {
+                Log.printLog(RuchFlotZdarzenia.class.getName(),"Rozpoczynam pobieranie misji wrogiej z pozycji " + i + ".");
+                WrogaMisja wrogaMisja = new WrogaMisja(new Czas(Zdarzenie.time(w,i)),Zdarzenie.naPlanete(w,i),
+                        Zdarzenie.wspolrzedneCelu(w,i),Zdarzenie.id(w,i));
+                tmp.add(wrogaMisja);
+                Log.printLog(RuchFlotZdarzenia.class.getName(),"Zakończono pobieranie misji wrogiej.");
+            }
+        }
+
+        return tmp;
     }
 
     public static void rozwin(WebDriver w)
@@ -45,6 +66,14 @@ public class RuchFlotZdarzenia
             else
                 Log.printLog(RuchFlotZdarzenia.class.getName(),"Event box zdarzenia jest wyświetlony.");
 
+    }
+
+    public static int iloscZdarzen(WebDriver w)
+    {
+        WebElement e = w.findElement(By.xpath(MISJE_TBODY));
+        List<WebElement> tmp = e.findElements(By.tagName("tr"));
+
+        return tmp.size();
     }
 
     public static void zwin(WebDriver w)
@@ -186,5 +215,4 @@ public class RuchFlotZdarzenia
             return sb;
         }
     }
-
 }

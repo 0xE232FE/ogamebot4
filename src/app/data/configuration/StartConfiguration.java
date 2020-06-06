@@ -70,7 +70,7 @@ public class StartConfiguration implements Serializable
 
                 o.close();
                 f.close();
-                Log.printLog1(s,StartConfiguration.class,72);
+//                Log.printLog1(s,StartConfiguration.class,72);
                 return s;
 
             } catch (IOException | ClassNotFoundException e) {

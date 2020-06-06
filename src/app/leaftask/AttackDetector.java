@@ -1,12 +1,11 @@
 package app.leaftask;
 
 import app.LeafTask;
+import app.atak.WrogieMisje;
 import com.Log;
 import ogame.attack.Attack;
 import ogame.ruchflotzdarzenia.RuchFlotZdarzenia;
 import org.openqa.selenium.WebDriver;
-
-import java.util.List;
 
 public class AttackDetector extends LeafTask
 {
@@ -24,24 +23,23 @@ public class AttackDetector extends LeafTask
 
                 boolean attack = Attack.detected(getW());
 
-//                List<RuchFlotZdarzenia.Misja> misje = RuchFlotZdarzenia.misje(getW());
-//                for(RuchFlotZdarzenia.Misja m : misje)
-//                    Log.printLog1(m.toString(),Attack.class, 29);
-
-
                 if(attack)
                 {
-                    RuchFlotZdarzenia.rozwin(getW());
                     Log.printLog(Attack.class.getName(), "Wykryto atak.");
 
                     int tmp = RuchFlotZdarzenia.iloscMisjiWrogich(getW());
-                    Log.printLog1(String.valueOf(tmp), AttackDetector.class,33);
 
                     if(tmp != iloscMisjiWrogich)
                     {
+                        RuchFlotZdarzenia.rozwin(getW());
                         iloscMisjiWrogich = tmp;
                         Log.printLog(Attack.class.getName(), "Pobieram dane o wrogich misjach.");
-                        //todo - co zrobić gdy wykryje atak
+                        WrogieMisje.setMisje(RuchFlotZdarzenia.getWrogieMisje(getW()));
+                        Log.printLog(Attack.class.getName(), "Zakończono pobieranie danych o wrogich misjach.");
+                    }
+                    else
+                    {
+                        WrogieMisje.printLeftTime();
                     }
 
                 }
@@ -52,6 +50,6 @@ public class AttackDetector extends LeafTask
             }
         }
         else
-            Log.printLog(Attack.class.getName(), "OFF");
+            Log.printLog(AttackDetector.class.getName(), "OFF");
     }
 }

@@ -8,11 +8,11 @@ public class Data implements Serializable {
 
     /**
      * Rozbija datę na rok, miesiacm dzien
-     * @param czas Data w formacie dd.mm.rrrr
+     * @param data Data w formacie dd.mm.rrrr
      */
-    public void setDataVariable(String czas)
+    public void setDataVariable(String data)
     {
-        StringBuilder sb = new StringBuilder(czas);
+        StringBuilder sb = new StringBuilder(data);
 
         if(sb.length() == 10)
         {
@@ -27,7 +27,7 @@ public class Data implements Serializable {
             year = Integer.valueOf(sb.substring(6,8));
         }
 
-        data = toString();
+        this.data = toString();
     }
 
     /**
@@ -223,6 +223,123 @@ public class Data implements Serializable {
         else
             setDataVariable(((data.getDay()+1) > 10 ? (data.getDay()+1) : "0"+(data.getDay()+1)) + "." +
                     (data.getMonth() > 10 ? data.getMonth():"0"+data.getMonth()) + "." + data.getYear());
+    }
+
+    /**
+     * Metoda zmieniająca datę o jeden dzień do przodu.
+     */
+    public Data getTommorowDate()
+    {
+        Data tmp = new Data();
+        int[] maxDay = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        boolean leapYear = getYear() % 4 == 0;
+
+        if(getDay() >= 28)
+        {
+            if(getMonth() == 12 && getDay() == 31)
+            {
+                tmp.setDataVariable("01.01."+(getYear()+1));
+            }
+            else
+            {
+                boolean changed = false;
+                switch (getMonth())
+                {
+                    case 1:
+                        if(getDay() == 31)
+                        {
+                            tmp.setDataVariable("01.02."+(getYear()));
+                            changed = true;
+                        }
+                        break;
+                    case 2:
+                        if(leapYear)
+                            if(getDay() == 29)
+                            {
+                                tmp.setDataVariable("01.03."+(getYear()));
+                                changed = true;
+                            }
+                            else if(getDay() == 28)
+                            {
+                                tmp.setDataVariable("01.03."+(getYear()));
+                                changed = true;
+                            }
+                        break;
+                    case 3:
+                        if(getDay() == 31)
+                        {
+                            tmp.setDataVariable("01.04."+(getYear()));
+                            changed = true;
+                        }
+                        break;
+                    case 4:
+                        if(getDay() == 30)
+                        {
+                            tmp.setDataVariable("01.05."+(getYear()));
+                            changed = true;
+                        }
+                        break;
+                    case 5:
+                        if(getDay() == 31)
+                        {
+                            tmp.setDataVariable("01.06."+(getYear()));
+                            changed = true;
+                        }
+                        break;
+                    case 6:
+                        if(getDay() == 31)
+                        {
+                            tmp.setDataVariable("01.07."+(getYear()));
+                            changed = true;
+                        }
+                        break;
+                    case 7:
+                        if(getDay() == 31)
+                        {
+                            tmp.setDataVariable("01.08."+(getYear()));
+                            changed = true;
+                        }
+                        break;
+                    case 8:
+                        if(getDay() == 31)
+                        {
+                            tmp.setDataVariable("01.09."+(getYear()));
+                            changed = true;
+                        }
+                        break;
+                    case 9:
+                        if(getDay() == 31)
+                        {
+                            tmp.setDataVariable("01.10."+(getYear()));
+                            changed = true;
+                        }
+                        break;
+                    case 10:
+                        if(getDay() == 31)
+                        {
+                            tmp.setDataVariable("01.11."+(getYear()));
+                            changed = true;
+                        }
+                        break;
+                    case 11:
+                        if(getDay() == 31)
+                        {
+                            tmp.setDataVariable("01.12."+(getYear()));
+                            changed = true;
+                        }
+                        break;
+                }
+
+                if(!changed)
+                    tmp.setDataVariable(((getDay()+1) > 10 ? (getDay()+1) : "0"+(getDay()+1)) + "." +
+                            (getMonth() > 10 ? getMonth():"0"+getMonth()) + "." + getYear());
+            }
+        }
+        else
+            tmp.setDataVariable(((getDay()+1) > 10 ? (getDay()+1) : "0"+(getDay()+1)) + "." +
+                    (getMonth() > 10 ? getMonth():"0"+getMonth()) + "." + getYear());
+
+        return tmp;
     }
 
     @Override
