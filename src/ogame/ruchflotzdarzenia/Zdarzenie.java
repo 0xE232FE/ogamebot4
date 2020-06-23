@@ -13,13 +13,25 @@ public class Zdarzenie
     private static final String MISJE_TBODY = "//*[@id=\"eventContent\"]/tbody";
     private static SciezkaWebElementu zdarzenie = new SciezkaWebElementu("//*[@id=\"eventContent\"]/tbody/tr[","]");
 
-    public  static int eventType(WebDriver w, int nr)
+    /**
+     * Pobiera typ misji jako int. Każda misja ma przypisany dla siebie odpowiednik w postaci liczby typu <b>int</b>.
+     * @param w WebDriver
+     * @param nr Numer misji na liście.
+     * @return Rodzaj misji.
+     */
+    static int eventType(WebDriver w, int nr)
     {
         zdarzenie.setVar(nr);
         WebElement e = w.findElement(By.xpath(zdarzenie.toString()));
         return Integer.valueOf(e.getAttribute("data-mission-type"));
     }
 
+    /**
+     * Pobiera id misji. Jest to niepowtarzalny identyfikator dla każdej misji w Boxie Zdarzeń.
+     * @param w WebDriver
+     * @param nr Numer misji na liście.
+     * @return Id.
+     */
     public  static int id(WebDriver w, int nr)
     {
         zdarzenie.setVar(nr);
@@ -27,21 +39,46 @@ public class Zdarzenie
         return Integer.valueOf(e.getAttribute("id").split("-")[1]);
     }
 
-
-    public static String time(WebDriver w, int nr)
+    /**
+     * Pobiera czas misji. Jest to czas np. wejścia ataku lub dostaczenia surowców w misji Transportuj.
+     * @param w WebDriver
+     * @param nr Numer misji na liście.
+     * @return Czas.
+     */
+    static String time(WebDriver w, int nr)
     {
         SciezkaWebElementu tmp = zdarzenie;
         tmp.setVar(nr);
 
         WebElement e = w.findElement(By.xpath(tmp.append("/td[2]")));
-
-//        Log.printLog1(e.getText(),Zdarzenie.class,40);
         String [] tab = e.getText().split(" ");
 
         return tab[0];
     }
 
-    public static String wspolrzedneCelu(WebDriver w, int nr)
+    /**
+     * Sprawdza czy wskazana misja, to wrogi atak.
+     * @param w WebDriver
+     * @param nr Numer misji na liście.
+     * @return Jeżeli jest to wrogi atak, to zwraca <b>true</b>.
+     */
+    static boolean wrogiAtak(WebDriver w, int nr)
+    {
+        SciezkaWebElementu tmp = zdarzenie;
+        tmp.setVar(nr);
+
+        WebElement e = w.findElement(By.xpath(tmp.append("/td[1]/span")));
+
+        return e.getAttribute("class").contains("hostile");
+    }
+
+    /**
+     * Pobiera współrzędne celu.
+     * @param w WebDriver
+     * @param nr Numer misji na liście.
+     * @return Współrzędne.
+     */
+    static String wspolrzedneCelu(WebDriver w, int nr)
     {
         SciezkaWebElementu tmp = zdarzenie;
         tmp.setVar(nr);
@@ -50,27 +87,96 @@ public class Zdarzenie
         return e.getText();
     }
 
+    /**
+     * Sprawdza czy misja jest na księżyc.
+     * @param w WebDriver
+     * @param nr Numer misji na liście.
+     * @return Jeżeli misja jest na księżyc zwraca <b>true</b>.
+     */
     public static boolean naKsiezyc(WebDriver w, int nr)
     {
         SciezkaWebElementu tmp = zdarzenie;
         tmp.setVar(nr);
 
+        String [] paths = {
+                tmp.append("/td[8]/span/figure"),
+                tmp.append("/td[8]/figure")
+        };
 
-        WebElement e = w.findElement(By.xpath(tmp.append("/td[8]/span/figure")));
+        WebElement e;
+        int index = 0;
+        boolean bool = true;
 
+        while(bool)
+        {
+            try
+            {
+                e = w.findElement(By.xpath(paths[index]));
+                bool = false;
+                return e.getAttribute("class").contains("planetIcon moon");
+            }
+            catch(Exception ex)
+            {
+                index++;
+            }
+            finally
+            {
+                if(index >= paths.length)
+                {
+                    bool = false;
+                    Log.printLog(Zdarzenie.class.getName(),"Sprawdzono wszystkie ścieżki, żadna nie pasuje.");
+                }
 
-        return e.getAttribute("class").contains("planetIcon moon");
+                if(bool)
+                    Log.printLog(Zdarzenie.class.getName(), "Nie wczytano Tytuł Header. Zmieniam ścieżkę "+ index);
+            }
+        }
+        return false;
     }
 
-    public static boolean naPlanete(WebDriver w, int nr)
+    /**
+     * Sprawdza misja jest na planetę.
+     * @param w WebDriver
+     * @param nr Numer misji na liście.
+     * @return Jeżeli misja jest na planetę zwraca <b>true</b>.
+     */
+    static boolean naPlanete(WebDriver w, int nr)
     {
         SciezkaWebElementu tmp = zdarzenie;
         tmp.setVar(nr);
+        String [] paths = {
+                tmp.append("/td[8]/span/figure"),
+                tmp.append("/td[8]/figure")
+        };
 
+        WebElement e;
+        int index = 0;
+        boolean bool = true;
 
-        WebElement e = w.findElement(By.xpath(tmp.append("/td[8]/span/figure")));
+        while(bool)
+        {
+            try
+            {
+                e = w.findElement(By.xpath(paths[index]));
+                bool = false;
+                return e.getAttribute("class").contains("planetIcon planet");
+            }
+            catch(Exception ex)
+            {
+                index++;
+            }
+            finally
+            {
+                if(index >= paths.length)
+                {
+                    bool = false;
+                    Log.printLog(Zdarzenie.class.getName(),"Sprawdzono wszystkie ścieżki, żadna nie pasuje.");
+                }
 
-
-        return e.getAttribute("class").contains("planetIcon planet");
+                if(bool)
+                    Log.printLog(Zdarzenie.class.getName(), "Nie wczytano Tytuł Header. Zmieniam ścieżkę "+ index);
+            }
+        }
+        return false;
     }
 }
