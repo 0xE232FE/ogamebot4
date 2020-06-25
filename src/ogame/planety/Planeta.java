@@ -1,9 +1,11 @@
 package ogame.planety;
 
+import app.OgameWeb;
+import app.Wspolrzedne;
 import com.DifferentMethods;
 import com.Log;
 //import ogame.budynki.Budynki;
-import org.openqa.selenium.WebDriver;
+import ogame.ruchflot.ObiektLotu;
 
 public class Planeta
 {
@@ -18,12 +20,16 @@ public class Planeta
         private boolean moonConstructionInProgress = false;
         private boolean attack = false;
         private boolean moonAttack = false;
+        private boolean flotaZPlanetyWyslanaNaFS = false;
+        private boolean flotaZKsiezycaWyslanaNaFS = false;
+        private ObiektLotu obiektFSZPlanety;
+        private ObiektLotu obiektFSZKsiezyca;
+//        private FleetSave planetFS = new FleetSave(this);
+//        private FleetSave moonFS;
 //        private Surowce surowce = new Surowce();
 //        private Surowce surowceMoon = null;
 //        private Wydobycie wydobycie = new Wydobycie();
 //        private Budynki budynki = new Budynki();
-
-        private WebDriver webDriver;
 
     public Planeta(int pozycjaNaLiscie, String wspolrzedne, String nazwa, boolean moon, int id) {
         this.pozycjaNaLiscie = pozycjaNaLiscie;
@@ -33,34 +39,44 @@ public class Planeta
         this.id = id;
 
 //        if(moon)
+//            moonFS = new FleetSave(this,true);
+
+
+//        if(moon)
 //            surowceMoon = new Surowce();
     }
 
     @Override
     public boolean equals(Object obj) {
-        Planeta p = (Planeta) obj;
         return this.id == ((Planeta) obj).getId();
     }
     /*
         EXECUTING METHODS
      */
+
+    /**
+     * Klika w planetę.
+     */
     public void clickPlanet()
     {
-        if(webDriver != null)
-            ListaPlanet.kliknijPlanete(webDriver,pozycjaNaLiscie);
+        if(OgameWeb.webDriver != null && moon)
+            ListaPlanet.kliknijPlanete(OgameWeb.webDriver,pozycjaNaLiscie);
         else
             Log.printLog(Planeta.class.getName(),"Nie wykonano polecenia clickPlanet na planecie "+nazwa+" "
-                    + wspolrzedne + " z powodu WebDriver == null");
+                    + wspolrzedne + (moon ? " z powodu WebDriver == null":" z powodu braku księżyca."));
     }
 
-     public void clickMoon()
-     {
-         if(webDriver != null)
-             ListaPlanet.kliknijKsiezyc(webDriver,pozycjaNaLiscie);
+    /**
+     * Klika w księżyc, jeżeli posiada.
+     */
+    public void clickMoon()
+    {
+         if(OgameWeb.webDriver != null)
+             ListaPlanet.kliknijKsiezyc(OgameWeb.webDriver,pozycjaNaLiscie);
          else
              Log.printLog(Planeta.class.getName(),"Nie wykonano polecenia clickMoon na planecie "+nazwa+" "
                      + wspolrzedne + " z powodu WebDriver == null");
-     }
+    }
 
     /*
         SETTERS
@@ -89,8 +105,20 @@ public class Planeta
         this.moonSelected = moonSelected;
     }
 
-    public void setWebDriver(WebDriver webDriver) {
-        this.webDriver = webDriver;
+    public void setFlotaZPlanetyWyslanaNaFS(boolean flotaZPlanetyWyslanaNaFS) {
+        this.flotaZPlanetyWyslanaNaFS = flotaZPlanetyWyslanaNaFS;
+    }
+
+    public void setFlotaZKsiezycaWyslanaNaFS(boolean flotaZKsiezycaWyslanaNaFS) {
+        this.flotaZKsiezycaWyslanaNaFS = flotaZKsiezycaWyslanaNaFS;
+    }
+
+    public void setObiektFSZPlanety(ObiektLotu obiektFSZPlanety) {
+        this.obiektFSZPlanety = obiektFSZPlanety;
+    }
+
+    public void setObiektFSZKsiezyca(ObiektLotu obiektFSZKsiezyca) {
+        this.obiektFSZKsiezyca = obiektFSZKsiezyca;
     }
 
     /*
@@ -105,6 +133,11 @@ public class Planeta
         return wspolrzedne;
     }
 
+    public Wspolrzedne wspolrzedne()
+    {
+        return new Wspolrzedne(wspolrzedne);
+    }
+
     public String getNazwa() {
         return nazwa;
     }
@@ -116,6 +149,31 @@ public class Planeta
     public int getId() {
         return id;
     }
+
+    public ObiektLotu getObiektFSZPlanety() {
+        return obiektFSZPlanety;
+    }
+
+    public ObiektLotu getObiektFSZKsiezyca() {
+        return obiektFSZKsiezyca;
+    }
+
+    public boolean isFlotaZPlanetyWyslanaNaFS() {
+        return flotaZPlanetyWyslanaNaFS;
+    }
+
+    public boolean isFlotaZKsiezycaWyslanaNaFS() {
+        return flotaZKsiezycaWyslanaNaFS;
+    }
+
+    //
+//    public FleetSave getPlanetFS() {
+//        return planetFS;
+//    }
+//
+//    public FleetSave getMoonFS() {
+//        return moonFS;
+//    }
 
     public boolean isSelected() {
         return selected;
