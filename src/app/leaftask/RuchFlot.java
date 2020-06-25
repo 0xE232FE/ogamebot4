@@ -52,7 +52,7 @@ public class RuchFlot extends LeafTask {
         }
         else
         {
-            if(czasWykonania.ileMineło(CzasGry.getCzas(),CzasGry.getData()) > 60)
+            if(czasWykonania.ileMinelo(CzasGry.getCzas(),CzasGry.getData()) > 60)
             {
                 Log.printLog(RuchFlot.class.getName(), "OFF");
                 czasWykonania.setCzasString(CzasGry.getCzas().toString());

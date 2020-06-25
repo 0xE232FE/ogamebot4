@@ -1,11 +1,13 @@
 package app.czas;
 
+import com.Log;
+
 import java.io.Serializable;
 
 public class Czas implements Serializable
 {
         private int hour = 0, minute = 0, second = 0;
-        public static final long MAX_SECONDS_DAY = 60*60*24;
+        public static final int MAX_SECONDS_DAY = 60*60*24;
 
         Czas()
         {
@@ -35,22 +37,31 @@ public class Czas implements Serializable
          * Rozbija czas na godziny, minuty, sekundy.
          * @param czas Czas w formacie [xx:xx:xx] lub [x:xx:xx]
          */
-        void setTimeVariable(String czas)
+        public void setTimeVariable(String czas)
         {
             StringBuilder sb = new StringBuilder(czas);
+            try
+            {
+                if(sb.charAt(7) == ' ')
+                {
+                    hour = Integer.valueOf(sb.substring(0,1));
+                    minute = Integer.valueOf(sb.substring(2,4));
+                    second = Integer.valueOf(sb.substring(5,7));
+                }
+                else
+                {
+                    hour = Integer.valueOf(sb.substring(0,2));
+                    minute = Integer.valueOf(sb.substring(3,5));
+                    second = Integer.valueOf(sb.substring(6,8));
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.printErrorLog(Czas.class.getName(),"sb.toString() = " +  sb.toString());
+                Log.printErrorLog(Czas.class.getName(),"sb.length() = " +  sb.length());
+                Log.printErrorLog(Czas.class.getName(),"sb.charAt(7) = " +  sb.charAt(7));
+            }
 
-            if(sb.charAt(7) == ' ')
-            {
-                hour = Integer.valueOf(sb.substring(0,1));
-                minute = Integer.valueOf(sb.substring(2,4));
-                second = Integer.valueOf(sb.substring(5,7));
-            }
-            else
-            {
-                hour = Integer.valueOf(sb.substring(0,2));
-                minute = Integer.valueOf(sb.substring(3,5));
-                second = Integer.valueOf(sb.substring(6,8));
-            }
         }
 
         /**

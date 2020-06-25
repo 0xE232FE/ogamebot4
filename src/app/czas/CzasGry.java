@@ -18,8 +18,11 @@ public class CzasGry implements Serializable
     }
 
     public void setData(Data data) {
-        this.data = data;
+        CzasGry.data = data;
     }
+
+
+    public void setCzas(Czas czas) { CzasGry.czas = czas;}
 
 
 
@@ -44,4 +47,8 @@ public class CzasGry implements Serializable
         return data.toString() + " " + czas.toString();
     }
 
+    public static String string()
+    {
+        return data.toString() + " " + czas.toString();
+    }
 }

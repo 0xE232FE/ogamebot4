@@ -94,7 +94,7 @@ public class FleetSaveAttack extends LeafTask {
                                 {
                                     Log.printLog1("1.1",FleetSaveAttack.class,64);
 
-                                    if(wrogaMisja.getKlikaniePodglad().ileMineło(CzasGry.getCzas(),CzasGry.getData()) > 15)
+                                    if(wrogaMisja.getKlikaniePodglad().ileMinelo(CzasGry.getCzas(),CzasGry.getData()) > 15)
                                     {
                                         LeftMenu.pressPodglad(OgameWeb.webDriver,FleetSaveAttack.class.getName(),true);
                                         wrogaMisja.getKlikaniePodglad().setCzasString(CzasGry.getCzas().toString());
@@ -340,7 +340,7 @@ public class FleetSaveAttack extends LeafTask {
         }
         else
         {
-            if(czasWykonania.ileMineło(CzasGry.getCzas(),CzasGry.getData()) > 60)
+            if(czasWykonania.ileMinelo(CzasGry.getCzas(),CzasGry.getData()) > 60)
             {
                 Log.printLog(FleetSaveAttack.class.getName(), "OFF");
                 czasWykonania.setCzasString(CzasGry.getCzas().toString());

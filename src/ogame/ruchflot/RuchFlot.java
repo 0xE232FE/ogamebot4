@@ -128,7 +128,7 @@ public class RuchFlot
             if(CzasGry.getCzas().czasWSekundach() > czasLotu.getCzas().czasWSekundach())
                 czasLotu.setData(CzasGry.getData().getTommorowDate());
             else
-                czasLotu.setData(CzasGry.getData());
+                czasLotu.setDataString(CzasGry.getData().toString());
 
             return czasLotu;
         }
@@ -360,7 +360,7 @@ public class RuchFlot
         if(CzasGry.getCzas().czasWSekundach() > czasLotu.getCzas().czasWSekundach())
             czasLotu.setData(CzasGry.getData().getTommorowDate());
         else
-            czasLotu.setData(CzasGry.getData());
+            czasLotu.setDataString(CzasGry.getData().toString());
 
         return czasLotu;
     }

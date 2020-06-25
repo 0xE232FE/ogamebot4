@@ -39,7 +39,7 @@ public class Planety extends LeafTask {
         }
         else
         {
-            if(czasWykonania.ileMineło(CzasGry.getCzas(),CzasGry.getData()) > 60)
+            if(czasWykonania.ileMinelo(CzasGry.getCzas(),CzasGry.getData()) > 60)
             {
                 Log.printLog(Planety.class.getName(), "OFF");
                 czasWykonania.setCzasString(CzasGry.getCzas().toString());
