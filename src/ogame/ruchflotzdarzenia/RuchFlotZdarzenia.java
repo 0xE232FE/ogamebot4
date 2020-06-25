@@ -5,7 +5,6 @@ import app.czas.Czas;
 import com.DifferentMethods;
 import com.Log;
 import com.Waiter;
-import ogame.SciezkaWebElementu;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,24 +21,28 @@ public class RuchFlotZdarzenia
 
     private static final String ILOSC_MISJI_P = "/html/body/div[5]/div[1]/div[4]/div/div[1]/div[1]/p";
     private static final String MISJE_TBODY = "//*[@id=\"eventContent\"]/tbody";
-    private SciezkaWebElementu zdarzenie = new SciezkaWebElementu("//*[@id=\"eventContent\"]/tbody/tr[","]");
+//    private SciezkaWebElementu zdarzenie = new SciezkaWebElementu("//*[@id=\"eventContent\"]/tbody/tr[","]");
 
 
+    /**
+     * Jeżeli jest niewidoczny to zwróci true.
+     */
     public static boolean eventBoxNiewidoczny(WebDriver w)
     {
         WebElement e = w.findElement(By.xpath("//*[@id=\"eventboxContent\"]"));
-
-//        Log.printLog1(e.getAttribute("style"), RuchFlotZdarzenia.class,29);
         return e.getAttribute("style").contains("none");
     }
 
+    /**
+     * Pobiera i zwraca wrogie misje z EventBoxa.
+     */
     public static List<WrogaMisja> getWrogieMisje(WebDriver w)
     {
         List<WrogaMisja> tmp = new ArrayList<>();
         int a = iloscZdarzen(w);
         for(int i = 1; i <= a; i++)
         {
-            if(Zdarzenie.eventType(w,i) == 1)
+            if(Zdarzenie.eventType(w,i) == 1 && Zdarzenie.wrogiAtak(w,i))
             {
                 Log.printLog(RuchFlotZdarzenia.class.getName(),"Rozpoczynam pobieranie misji wrogiej z pozycji " + i + ".");
                 WrogaMisja wrogaMisja = new WrogaMisja(new Czas(Zdarzenie.time(w,i)),Zdarzenie.naPlanete(w,i),
@@ -52,6 +55,9 @@ public class RuchFlotZdarzenia
         return tmp;
     }
 
+    /**
+     * Klika w button rozwijający misje w EventBoxie.
+     */
     public static void rozwin(WebDriver w)
     {
             WebElement e = w.findElement(By.xpath("//*[@id=\"js_eventDetailsClosed\"]"));
@@ -59,8 +65,26 @@ public class RuchFlotZdarzenia
 
             if(eventBoxNiewidoczny(w))
             {
-                e.click();
-                Waiter.sleep(100,100);
+                boolean test = true;
+                byte counter = 0;
+                try
+                {
+                   while(test)
+                   {
+                       counter++;
+                       e.click();
+                       test = false;
+                       Waiter.sleep(100,100);
+                   }
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                    Log.printErrorLog(RuchFlotZdarzenia.class.getName(), "Nie kliknięto buttona do rozwinięcia ruchu flot. Próba "+counter);
+                    if(counter >= 10)
+                        return;
+                }
+
                 Log.printLog(RuchFlotZdarzenia.class.getName(),"Klikam w button: Rozwiń box Zdarzenia.");
             }
             else
@@ -68,14 +92,28 @@ public class RuchFlotZdarzenia
 
     }
 
-    public static int iloscZdarzen(WebDriver w)
+    /**
+     * Zwraca ilość zdarzeń wyświetlanych na głownie stronie gry.
+     */
+    private static int iloscZdarzen(WebDriver w)
     {
-        WebElement e = w.findElement(By.xpath(MISJE_TBODY));
-        List<WebElement> tmp = e.findElements(By.tagName("tr"));
+        List<WebElement> tmp = new ArrayList<>();
+        try
+        {
+            WebElement e = w.findElement(By.xpath(MISJE_TBODY));
+            tmp = e.findElements(By.tagName("tr"));
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
 
         return tmp.size();
     }
 
+    /**
+     * Metoda klikająca w button zwijający EventBox
+     */
     public static void zwin(WebDriver w)
     {
         WebElement e = w.findElement(By.xpath("//*[@id=\"js_eventDetailsOpen\"]"));
@@ -85,7 +123,10 @@ public class RuchFlotZdarzenia
         Log.printLog(RuchFlotZdarzenia.class.getName(),"Klikam w button: Zwiń box Zdarzenia.");
     }
 
-    public static List<Misja>  misje(WebDriver w)
+    /**
+     * Pobiera misje z EventBoca i zwraca je w postaci listy.
+     */
+    private static List<Misja>  misje(WebDriver w)
     {
         if(!brakRuchuFlot(w))
         {
@@ -126,7 +167,9 @@ public class RuchFlotZdarzenia
         }
         return null;
     }
-
+    /**
+     * Zwraca ilości misji własnych w EventBoxie.
+     */
     public static int iloscMisjiWlasnych(WebDriver w)
     {
         try {
@@ -148,6 +191,9 @@ public class RuchFlotZdarzenia
         return -1;
     }
 
+    /**
+     * Zwraca ilości misji wrogich w EventBoxie
+     */
     public static int iloscMisjiWrogich(WebDriver w)
     {
         try {
@@ -164,17 +210,23 @@ public class RuchFlotZdarzenia
         }
         catch (Exception e)
         {
-            Log.printErrorLog(RuchFlotZdarzenia.class.getName(),"-> iloscMisjiWlasnych()");
+            Log.printErrorLog(RuchFlotZdarzenia.class.getName(),"-> iloscMisjiWrogich()");
         }
         return -1;
     }
 
+    /**
+     * Sprawdza czy w EventBoxie są jakieś misje.
+     * @return Jeżeli są misję zwróci <b>true</b>
+     */
     private static boolean brakRuchuFlot(WebDriver w)
     {
         return w.findElement(By.xpath("//*[@id=\"eventboxBlank\"]")).getAttribute("style").equals("");
     }
 
-
+    /**
+     * Klasa przechowująca dane o misjach. Nazwe misji i ilość misji o określonej nazwie.
+     */
     public static class Misja
     {
         private String nazwa;
@@ -189,16 +241,8 @@ public class RuchFlotZdarzenia
             return nazwa;
         }
 
-        public void setNazwa(String nazwa) {
-            this.nazwa = nazwa;
-        }
-
         int getIlosc() {
             return ilosc;
-        }
-
-        public void setIlosc(int ilosc) {
-            this.ilosc = ilosc;
         }
 
         @Override
