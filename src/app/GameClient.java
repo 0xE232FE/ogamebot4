@@ -9,21 +9,23 @@ import org.openqa.selenium.*;
 public class GameClient extends Task
 {
     private WebDriver webDriver;
-    private MainController mainController;
+//    private MainController mainController;
 
     private CzasGry czasGry;
 
-    private GUIUpdater guiUpdater;
-    private TaskManager taskManager;
+//    private GUIUpdater guiUpdater;
+//    private TaskManager taskManager;
     private BotLogic botLogic;
 
     GameClient(WebDriver webDriver, MainController mainController)
     {
-        guiUpdater = new GUIUpdater(webDriver,mainController);
-        taskManager = new TaskManager(webDriver,mainController);
+//        GUIUpdater guiUpdater = new GUIUpdater(webDriver,mainController);
+        new GUIUpdater(webDriver,mainController);
+//        TaskManager taskManager = new TaskManager(webDriver);
+        new TaskManager(webDriver);
         setRun(false);
         this.webDriver = webDriver;
-        this.mainController = mainController;
+//        this.mainController = mainController;
         setThread(new Thread(this));
         startThread();
 
@@ -66,32 +68,27 @@ public class GameClient extends Task
 
     }
 
-    public static boolean isElementPresent (By by, WebElement webElement)
-    {
-        try
-        {
-            webElement.findElement(by);
-            return true;
-        }
-        catch (NoSuchElementException e)
-        {
-            return false;
-        }
-
-    }
-
+    /**
+     * Przesuwa stronę do wskazanego elementu..
+     */
     public static void scrollToElement(WebDriver w, WebElement e)
     {
         JavascriptExecutor js = (JavascriptExecutor) w;
         js.executeScript("arguments[0].scrollIntoView();", e);
     }
 
+    /**
+     * Przesuwa stronę na dół.
+     */
     public static void scrollToBottom(WebDriver w)
     {
         JavascriptExecutor js = (JavascriptExecutor) w;
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
     }
 
+    /**
+     * Przesuwa stronę na góre.
+     */
     public static void scrollToTop(WebDriver w)
     {
         JavascriptExecutor js = (JavascriptExecutor) w;

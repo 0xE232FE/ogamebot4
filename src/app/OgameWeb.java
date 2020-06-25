@@ -7,7 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class OgameWeb {
 
-    private static WebDriver webDriver;
+    public static WebDriver webDriver;
 
     OgameWeb(String loginPage, String driverPath)
     {
@@ -25,7 +25,9 @@ public class OgameWeb {
         return webDriver;
     }
 
-
+    /**
+     * Zamyka uruchomioną przeglądarkę.
+     */
     public void close()
     {
         if(webDriver.getTitle().equals("OGame"))

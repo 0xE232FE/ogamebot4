@@ -3,7 +3,9 @@ package app;
 
 import app.gui.controller.MainController;
 import app.leaftask.AttackDetector;
+import app.leaftask.FleetSaveAttack;
 import app.leaftask.Planety;
+import app.leaftask.RuchFlot;
 import com.Log;
 import org.openqa.selenium.WebDriver;
 
@@ -11,23 +13,23 @@ import org.openqa.selenium.WebDriver;
 public class TaskManager
 {
     private static  LeafTask[] tasks;
-    private MainController mainController;
     private WebDriver webDriver;
 
-    TaskManager(WebDriver webDriver, MainController controller) {
-        this.mainController = controller;
+    TaskManager(WebDriver webDriver) {
         this.webDriver = webDriver;
         initTasks();
     }
 
-    /*
-        Index 0 - Attack Detector
+    /**
+     * Metoda inicjalizująca Taski. Task który powinien zostać uruchomiony ma się znajdować w ciele tej metody.
      */
     private void initTasks()
     {
         tasks = new LeafTask[]{
-                new AttackDetector(webDriver,0,5),
-                new Planety(webDriver,1,60*1000)
+                new Planety(webDriver,0,60*1000),
+                new AttackDetector(webDriver,1,5),
+                new FleetSaveAttack(webDriver,2,30*1000),
+                new RuchFlot(webDriver,3,0)
         };
         Log.printLog(TaskManager.class.getName(), "Utworzono " +tasks.length + " Tasków.");
     }
