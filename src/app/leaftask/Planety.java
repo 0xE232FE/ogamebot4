@@ -1,12 +1,16 @@
 package app.leaftask;
 
 import app.LeafTask;
+import app.czas.CzasGry;
+import app.czas.CzasWykonania;
 import com.Log;
 import ogame.planety.ListaPlanet;
 import ogame.planety.Planeta;
 import org.openqa.selenium.WebDriver;
 
 public class Planety extends LeafTask {
+
+    private CzasWykonania czasWykonania = new CzasWykonania();
 
     public Planety(WebDriver w, int index, long sleep) {
         super(w, index, sleep, "Planety");
@@ -27,14 +31,28 @@ public class Planety extends LeafTask {
                 else
                 {
                     update();
-                    app.planety.Planety.print();
+//                    app.planety.Planety.print();
                     setSleep(5*60*1000);
                 }
                 setLastTimeExecute(System.currentTimeMillis());
             }
         }
         else
-            Log.printLog(Planety.class.getName(), "OFF");
+        {
+            if(czasWykonania.ileMineło(CzasGry.getCzas(),CzasGry.getData()) > 60)
+            {
+                Log.printLog(Planety.class.getName(), "OFF");
+                czasWykonania.setCzasString(CzasGry.getCzas().toString());
+                czasWykonania.setDataString(CzasGry.getData().toString());
+            }
+
+            if(!czasWykonania.isActive())
+            {
+                czasWykonania.setActive(true);
+                czasWykonania.setCzasString(CzasGry.getCzas().toString());
+                czasWykonania.setDataString(CzasGry.getData().toString());
+            }
+        }
     }
 
     private void init()

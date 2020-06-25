@@ -52,10 +52,10 @@ public class BotLogic extends Task {
         }
         else
         {
-//            Log.printLog(BotLogic.class.getName(),"Aktualny data "+CzasGry.getData().toString() + " Data ostatniego wykonania"
-//            + czasWykonania.getData() + " Aktualnu czas " + CzasGry.getCzas().toString() + " Czas ostatniego wykonania " +
-//                    czasWykonania.getCzas().toString() +" \n Różnica " + (CzasGry.getCzas().czasWSekundach() - czasWykonania.getCzas().czasWSekundach()));
-            if(CzasGry.getData().toString().equals(czasWykonania.getData()) &&
+            Log.printLog(BotLogic.class.getName(),"Aktualny data "+CzasGry.getData().toString() + " Data ostatniego wykonania"
+            + czasWykonania.getData() + " Aktualnu czas " + CzasGry.getCzas().toString() + " Czas ostatniego wykonania " +
+                    czasWykonania.getCzas().toString() +" \n Różnica " + (CzasGry.getCzas().czasWSekundach() - czasWykonania.getCzas().czasWSekundach()));
+            if(CzasGry.getData().toString().equals(czasWykonania.getData().toString()) &&
                     CzasGry.getCzas().czasWSekundach() - czasWykonania.getCzas().czasWSekundach() >=  210)
             {
                 LeftMenu.pressPodglad(OgameWeb.webDriver,BotLogic.class.getName(),true);
