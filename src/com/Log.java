@@ -31,6 +31,17 @@ public class Log
     {
         System.out.println(com.DifferentMethods.fullDateFormat()+"[1] " + c.getName() + " - " + wiersz +" - " + log);
     }
+
+    /**
+     * Stosować w metodach w celu zoobrazowania w którym miejscu metody się znajduję. Przykładowo, spośród którego bloku if
+     * została wybrana zmienna.
+     * @param log Treść wyświetlanego loga.
+     */
+    public static void printLog1(String log,Class c,String nazwaMetody, int wiersz)
+    {
+        System.out.println(com.DifferentMethods.fullDateFormat()+"[1] [" + c.getName() + "->"+ nazwaMetody+ " - " + wiersz
+                +"] - " + log);
+    }
     /**
      * Wypisuje wiersz w konsoli z podaniem aktualnej daty i godziny systemowej.
      * @param className Klasa w której wywoływana jest metoda. Scieżka klasy jest wypisywana w konsoli.
