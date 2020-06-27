@@ -119,18 +119,26 @@ public class RuchFlot
     private static CzasLotu czasUCelu(WebDriver w, String className, int nrLotu)
     {
         CzasLotu czasLotu = new CzasLotu();
-        if(zawrocDostepne(Objects.requireNonNull(misjaFloty(w, nrLotu, className))))
+        try
         {
-            czas1.setVar(nrLotu);
-            String s = w.findElement(By.xpath(czas1.toString())).getText();
-            czasLotu.setCzasString(s);
+            if(zawrocDostepne(Objects.requireNonNull(misjaFloty(w, nrLotu, className))))
+            {
+                czas1.setVar(nrLotu);
+                String s = w.findElement(By.xpath(czas1.toString())).getText();
+                czasLotu.setCzasString(s);
 
-            if(CzasGry.getCzas().czasWSekundach() > czasLotu.getCzas().czasWSekundach())
-                czasLotu.setData(CzasGry.getData().getTommorowDate());
-            else
-                czasLotu.setDataString(CzasGry.getData().toString());
+                if(CzasGry.getCzas().czasWSekundach() > czasLotu.getCzas().czasWSekundach())
+                    czasLotu.setData(CzasGry.getData().getTommorowDate());
+                else
+                    czasLotu.setDataString(CzasGry.getData().toString());
 
-            return czasLotu;
+                return czasLotu;
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.printErrorLog(RuchFlot.class.getName(), "Nie wczytano z misji czasu u celu.");
+            ex.printStackTrace();
         }
         return czasLotu;
     }
