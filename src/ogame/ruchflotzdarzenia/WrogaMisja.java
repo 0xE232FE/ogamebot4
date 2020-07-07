@@ -59,6 +59,17 @@ public class WrogaMisja
     }
 
     /**
+     * Oblicza ile czasu zostało do ataku.
+     */
+    public Czas pozostaloDoAtaku(Czas aktualny, Data aktualna)
+    {
+        if(data.equals(aktualna))
+            return new Czas(czas.czasWSekundach() - aktualny.czasWSekundach());
+        else
+            return new Czas(Czas.MAX_SECONDS_DAY - aktualny.czasWSekundach() + czas.czasWSekundach());
+    }
+
+    /**
      * Sprawdza czy do ataku zostało mniej niż 90 sek. (1 min. 30 sek.).
      */
     public boolean wykonacFS(Czas aktualny, Data aktualna)

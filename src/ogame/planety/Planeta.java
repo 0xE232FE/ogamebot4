@@ -2,30 +2,34 @@ package ogame.planety;
 
 import app.OgameWeb;
 import app.Wspolrzedne;
+import app.data.fleet_save_attack.FleetSaveAttackMissionConfiguration;
 import com.DifferentMethods;
 import com.Log;
 //import ogame.budynki.Budynki;
 import ogame.ruchflot.ObiektLotu;
 
+
 public class Planeta
 {
-        private final int pozycjaNaLiscie;
-        private final String wspolrzedne;
-        private final String nazwa;
-        private final boolean moon;
-        private final int id;
-        private boolean selected = false;
-        private boolean moonSelected = false;
-        private boolean constructionInProgress = false;
-        private boolean moonConstructionInProgress = false;
-        private boolean attack = false;
-        private boolean moonAttack = false;
-        private boolean flotaZPlanetyWyslanaNaFS = false;
-        private boolean flotaZKsiezycaWyslanaNaFS = false;
-        private ObiektLotu obiektFSZPlanety;
-        private ObiektLotu obiektFSZKsiezyca;
-//        private FleetSave planetFS = new FleetSave(this);
-//        private FleetSave moonFS;
+    private final int pozycjaNaLiscie;
+    private final String wspolrzedne;
+    private final String nazwa;
+    private final boolean moon;
+    private final int id;
+    private final String planetFileName;
+    private final String moonFileName;
+    private boolean selected = false;
+    private boolean moonSelected = false;
+    private boolean constructionInProgress = false;
+    private boolean moonConstructionInProgress = false;
+    private boolean attack = false;
+    private boolean moonAttack = false;
+    private boolean flotaZPlanetyWyslanaNaFS = false;
+    private boolean flotaZKsiezycaWyslanaNaFS = false;
+    private ObiektLotu obiektFSZPlanety;
+    private ObiektLotu obiektFSZKsiezyca;
+    private FleetSaveAttackMissionConfiguration attackFleetSaveConfiguration;
+
 //        private Surowce surowce = new Surowce();
 //        private Surowce surowceMoon = null;
 //        private Wydobycie wydobycie = new Wydobycie();
@@ -38,10 +42,11 @@ public class Planeta
         this.moon = moon;
         this.id = id;
 
-//        if(moon)
-//            moonFS = new FleetSave(this,true);
+        // Ustawianie nazwy pliku
+        planetFileName = new Wspolrzedne(wspolrzedne).fileName();
+        moonFileName = planetFileName +"_M";
 
-
+        attackFleetSaveConfiguration = FleetSaveAttackMissionConfiguration.load(planetFileName);
 //        if(moon)
 //            surowceMoon = new Surowce();
     }
@@ -166,14 +171,17 @@ public class Planeta
         return flotaZKsiezycaWyslanaNaFS;
     }
 
-    //
-//    public FleetSave getPlanetFS() {
-//        return planetFS;
-//    }
-//
-//    public FleetSave getMoonFS() {
-//        return moonFS;
-//    }
+    public FleetSaveAttackMissionConfiguration getAttackFleetSaveConfiguration() {
+        return attackFleetSaveConfiguration;
+    }
+
+    public String getPlanetFileName() {
+        return planetFileName;
+    }
+
+    public String getMoonFileName() {
+        return moonFileName;
+    }
 
     public boolean isSelected() {
         return selected;

@@ -2,8 +2,11 @@ package ogame.ruchflot;
 
 import com.DifferentMethods;
 
-public class ObiektLotu
+import java.io.Serializable;
+
+public class ObiektLotu implements Serializable
 {
+    private static final long serialVersionUID = 1L;
     private final String wspolrzedne;
     private final boolean planeta;
     private final boolean ksiezyc;

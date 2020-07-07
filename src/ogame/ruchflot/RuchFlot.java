@@ -53,19 +53,19 @@ public class RuchFlot
             misja.setVar(nr);
             try
             {
-               WebElement e =  w.findElement(By.xpath(misja.toString()));
-               return e.getText();
+                WebElement e =  w.findElement(By.xpath(misja.toString()));
+                return e.getText();
             }
             catch (Exception e)
             {
                 Log.printLog(RuchFlot.class.getName(),"Brak misji floty.");
             }
-            return null;
+            return "";
         }
         else
         {
             LeftMenu.pressRuchFlot(w,className);
-            return null;
+            return "";
         }
     }
 
@@ -415,13 +415,21 @@ public class RuchFlot
     }
     public static String id(WebDriver w, int i)
     {
+        String id = "";
         if(isDobryHeaderWyswietlony(w, RuchFlot.class.getName()))
         {
             lotBox.setVar(i);
 
-            return w.findElement(By.xpath(lotBox.toString())).getAttribute("id");
+            try
+            {
+                id = w.findElement(By.xpath(lotBox.toString())).getAttribute("id");
+            }
+            catch (Exception ex)
+            {
+                Log.printErrorLog(RuchFlot.class.getName(),"Nie wczytano id lotu.");
+            }
         }
-        return "";
+        return id;
     }
 
     /**
@@ -454,8 +462,7 @@ public class RuchFlot
                 // id
                 l.setId(id(w,i));
                 // czy flota wraca
-                assert s != null;
-                boolean zawrocDostepne = !zawrocDostepne(s);
+                boolean zawrocDostepne = s != null && !zawrocDostepne(s);
                 l.setWraca(zawrocDostepne);
 
                 // wysłana z księzyca
@@ -467,9 +474,9 @@ public class RuchFlot
 
                 if(zawrocDostepne)
                 {
-                    String [] tab =  (s != null ? s.split(" "):null);
+                    String [] tab = s.split(" ");
                     // ustawienie nazwy misji
-                    l.setRodzaj(tab != null ? tab[0]:"Brak lotu");
+                    l.setRodzaj(tab.length>1 ? tab[0]:"Brak lotu");
                 }
                 else
                     l.setRodzaj(s);
