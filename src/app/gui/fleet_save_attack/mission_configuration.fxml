@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox fx:id="hBox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onClick" prefHeight="22.0" prefWidth="385.0" spacing="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.fleet_save_attack.MissionConfigurationController">
+   <padding>
+      <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+   </padding>
+   <children>
+      <Label fx:id="labelMisja" prefWidth="150.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelWspolrzedne" prefWidth="150.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelObiekt" prefWidth="75.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+   </children>
+</HBox>

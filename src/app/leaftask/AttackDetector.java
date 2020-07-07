@@ -5,8 +5,10 @@ import app.OgameWeb;
 import app.atak.WrogieMisje;
 import app.czas.CzasGry;
 import app.czas.CzasWykonania;
+import app.data.fleet_save_attack.KliknijPodglad;
 import com.Log;
 import com.Waiter;
+import ogame.LeftMenu;
 import ogame.attack.Attack;
 import ogame.ruchflotzdarzenia.RuchFlotZdarzenia;
 import org.openqa.selenium.WebDriver;
@@ -33,9 +35,9 @@ public class AttackDetector extends LeafTask
                 {
 
                     int tmp = RuchFlotZdarzenia.iloscMisjiWrogich(getW());
-                    Log.printLog(Attack.class.getName(), "Wykryto " + tmp + " " +
-                            (tmp == 1 ? "atak" : tmp >=2 && tmp <=4 ? "ataki" :"ataków") + ". Lista posiada "
-                            + WrogieMisje.misje.size() + " misje.");
+//                    Log.printLog(Attack.class.getName(), "Wykryto " + tmp + " " +
+//                            (tmp == 1 ? "atak" : tmp >=2 && tmp <=4 ? "ataki" :"ataków") + ". Lista posiada "
+//                            + WrogieMisje.misje.size() + " misje.");
                     if(tmp != iloscMisjiWrogich)
                     {
                         while(RuchFlotZdarzenia.eventBoxNiewidoczny(OgameWeb.webDriver))
@@ -59,6 +61,8 @@ public class AttackDetector extends LeafTask
 //                    Log.printLog(Attack.class.getName(), "Brak ataku.");
                 }
                 setLastTimeExecute(System.currentTimeMillis());
+
+                klikPodglad();
             }
         }
         else
@@ -72,9 +76,43 @@ public class AttackDetector extends LeafTask
 
             if(!czasWykonania.isActive())
             {
-                czasWykonania.setActive(true);
-                czasWykonania.setCzasString(CzasGry.getCzas().toString());
-                czasWykonania.setDataString(CzasGry.getData().toString());
+                if(CzasGry.getCzas().czasWSekundach() > 0)
+                {
+                    czasWykonania.setActive(true);
+                    czasWykonania.setCzasString(CzasGry.getCzas().toString());
+                    czasWykonania.setDataString(CzasGry.getData().toString());
+                }
+            }
+        }
+    }
+
+    private boolean init = true;
+    private CzasWykonania czasWykonaniaKlikPodglad = new CzasWykonania();
+    private void klikPodglad()
+    {
+        if(init)
+        {
+            if(CzasGry.getCzas().czasWSekundach() > 0)
+            {
+                czasWykonaniaKlikPodglad.setCzasString(CzasGry.getCzas().toString());
+                czasWykonaniaKlikPodglad.setDataString(CzasGry.getData().toString());
+                init = false;
+                Log.printLog(AttackDetector.class.getName(),"Inicjalizuję dane do metody klikPodglad(). Czas "+czasWykonaniaKlikPodglad.getCzas() +
+                        " Data " + czasWykonaniaKlikPodglad.getData());
+            }
+        }
+        else
+        {
+//            Log.printLog(AttackDetector.class.getName(),"Aktualna data "+CzasGry.getData().toString() + " Data ostatniego wykonania "
+//            + czasWykonaniaKlikPodglad.getData() + " Aktualny czas " + CzasGry.getCzas().toString() + " Czas ostatniego wykonania " +
+//                    czasWykonaniaKlikPodglad.getCzas().toString() +" \n Różnica " + (CzasGry.getCzas().czasWSekundach() - czasWykonaniaKlikPodglad.getCzas().czasWSekundach()));
+            if(CzasGry.getData().toString().equals(czasWykonaniaKlikPodglad.getData().toString()) &&
+                    CzasGry.getCzas().czasWSekundach() - czasWykonaniaKlikPodglad.getCzas().czasWSekundach() >= KliknijPodglad.getCoIleSekundOdswiezyc())
+            {
+                LeftMenu.pressPodglad(OgameWeb.webDriver,AttackDetector.class.getName(),true);
+                Log.printLog(AttackDetector.class.getName(),"Kliknięto Podgląd, żeby odświeżyć stronę.");
+                czasWykonaniaKlikPodglad.setCzasString(CzasGry.getCzas().toString());
+                czasWykonaniaKlikPodglad.setDataString(CzasGry.getData().toString());
             }
         }
     }

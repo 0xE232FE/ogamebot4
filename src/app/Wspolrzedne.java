@@ -32,7 +32,17 @@ public class Wspolrzedne implements Serializable {
         this.uklad = uklad;
         this.planeta = planeta;
     }
+    /*
+    EXECUTING
+     */
 
+    public String fileName()
+    {
+        return galaktyka+"_"+uklad+"_"+planeta;
+    }
+    /*
+    GETTERS
+     */
     public int getGalaktyka() {
         return galaktyka;
     }

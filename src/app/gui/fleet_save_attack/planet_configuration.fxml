@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="789.0" spacing="2.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.fleet_save_attack.PlanetConfigurationController">
+   <children>
+      <HBox prefHeight="15.0" prefWidth="200.0" spacing="2.0">
+         <children>
+            <Label prefWidth="100.0" text="Współrzędne">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelWspolrzedne" prefWidth="100.0">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </Label>
+            <Label prefWidth="100.0" text="Nazwa">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelNazwa" prefWidth="100.0">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </HBox>
+      <Separator prefWidth="200.0" />
+      <HBox prefHeight="235.0" prefWidth="781.0" spacing="2.0">
+         <children>
+            <VBox prefHeight="235.0" prefWidth="385.0">
+               <children>
+                  <HBox prefHeight="19.0" prefWidth="385.0" spacing="5.0">
+                     <children>
+                        <Label text="PLANETA">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </HBox.margin>
+                        </Label>
+                        <CheckBox fx:id="chceckBoxPlanetaAuto" mnemonicParsing="false" text="Auto">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </CheckBox>
+                     </children>
+                  </HBox>
+                  <VBox fx:id="vBoxPlaneta" prefHeight="170.0" prefWidth="385.0" />
+                  <HBox prefHeight="22.0" prefWidth="385.0" spacing="5.0">
+                     <children>
+                        <TextField fx:id="editTextMisjaP" maxHeight="20.0" prefHeight="20.0" prefWidth="150.0" promptText="Misja">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="editTextWspolrzedneP" maxHeight="20.0" prefHeight="20.0" prefWidth="150.0" promptText="Współrzędne">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="editTextObiektP" maxHeight="20.0" prefHeight="20.0" prefWidth="75.0" promptText="Obiekt">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="27.0" prefWidth="385.0" spacing="15.0">
+                     <children>
+                        <Button fx:id="buttonDodajP" mnemonicParsing="false" onAction="#dodajP" text="Dodaj">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="buttonUsunP" mnemonicParsing="false" onAction="#usunP" text="Usuń">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <VBox fx:id="vBoxKsiezycRoot" prefHeight="200.0" prefWidth="385.0">
+               <children>
+                  <HBox prefHeight="15.0" prefWidth="385.0" spacing="5.0">
+                     <children>
+                        <Label text="KSIĘŻYC">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <CheckBox fx:id="checkBoxKsiezycAuto" mnemonicParsing="false" text="Auto">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </CheckBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <VBox fx:id="vBoxKsiezyc" prefHeight="170.0" prefWidth="385.0" />
+                  <HBox prefHeight="22.0" prefWidth="385.0" spacing="5.0">
+                     <children>
+                        <TextField fx:id="editTextMisjaM" prefHeight="20.0" prefWidth="150.0" promptText="Misja">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="editTextWspolrzedneM" prefHeight="20.0" prefWidth="150.0" promptText="Współrzędne">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="editTextObiektM" prefHeight="20.0" prefWidth="75.0" promptText="Obiekt">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="15.0" prefWidth="385.0" spacing="15.0">
+                     <children>
+                        <Button fx:id="buttonDodajM" mnemonicParsing="false" onAction="#dodajM" text="Dodaj">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="buttonUsunM" mnemonicParsing="false" onAction="#usunM" text="Usuń">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </VBox.margin>
+      </HBox>
+      <Separator prefWidth="200.0" />
+   </children>
+   <padding>
+      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+   </padding>
+</VBox>

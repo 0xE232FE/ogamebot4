@@ -21,7 +21,7 @@ public class CzasWykonania
         if(this.czas.czasWSekundach() == 0)
             return 0;
 
-        if(this.data.equals(data))
+        if(this.data.toString().equals(data.toString()))
             return czas.czasWSekundach() - this.czas.czasWSekundach();
         else
             return (Czas.MAX_SECONDS_DAY - this.czas.czasWSekundach()) + czas.czasWSekundach();

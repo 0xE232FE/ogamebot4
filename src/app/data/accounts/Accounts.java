@@ -28,7 +28,10 @@ public class Accounts
     public static void addAccount(Account a)
     {
         if(!isDuplicated(a))
+        {
             accountList.add(a);
+            createAccountFolder();
+        }
         else
             Log.printLog(Accounts.class.getName(),"");
     }
@@ -157,5 +160,37 @@ public class Accounts
             Log.printLog(Accounts.class.getName(),"Sciezka "+pathName +" nie istnieje. Nie wczytano ostatnio wybranego konta.");
         }
         return null;
+    }
+
+    /**
+     * Tworzenie folderu dla konta.
+     */
+    private static boolean createAccountFolder()
+    {
+        File file = new File(accountDataSavePath());
+        if(file.exists())
+            return true;
+        else
+        {
+            Log.printLog(Accounts.class.getName(),"Utworzyłen podfolder konta pod ścieżką " + accountDataSavePath());
+            return file.mkdir();
+        }
+    }
+    /**
+     * Sciezka do folderu z danymi do konta.
+     */
+    public static String accountDataSavePath()
+    {
+        return StartConfiguration.gameFolderPath + "\\"+accountFolder()+"\\";
+    }
+
+    /**
+     * Zwraca nazwę folderu dla danego konta, określoną jako nazwa serwera i login
+     */
+    private static String accountFolder()
+    {
+        StringBuilder sb = new StringBuilder(selected.getLogin());
+
+        return selected.getSerwer()+"_"+sb.substring(0,sb.indexOf("@"));
     }
 }

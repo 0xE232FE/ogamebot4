@@ -1,6 +1,7 @@
 package app.gui.controller;
 
 import app.Run;
+import app.gui.fleet_save_attack.FleetSaveAttackRootController;
 import app.tasks.BotLogic;
 import com.Log;
 import javafx.fxml.FXML;
@@ -10,7 +11,6 @@ import javafx.scene.layout.VBox;
 
 public class MainController
 {
-    private Run run;
     private BotLogic botLogic;
 
     @FXML
@@ -19,9 +19,16 @@ public class MainController
     @FXML
     public void initialize()
     {
-        run = new Run(this);
+        Run run = new Run(this);
         run.setRun(true);
     }
+
+//    @FXML
+//    public void initialize()
+//    {
+//        run = new Run(this);
+//        run.setRun(true);
+//    }
 
     @FXML
     private Button buttonStopBot;
@@ -49,6 +56,16 @@ public class MainController
 
     @FXML
     private Label labelGameTime;
+
+    /*
+        Fleet Save Attack GUI
+     */
+
+    FleetSaveAttackRootController fleetSaveAttackRootController;
+
+    public FleetSaveAttackRootController getFleetSaveAttackRootController() {
+        return fleetSaveAttackRootController;
+    }
 
     public void setTime(String time)
     {

@@ -39,6 +39,7 @@ public class Planety extends LeafTask {
         }
         else
         {
+            // Wypisywanie info o wyłączonym module.
             if(czasWykonania.ileMinelo(CzasGry.getCzas(),CzasGry.getData()) > 60)
             {
                 Log.printLog(Planety.class.getName(), "OFF");
@@ -48,9 +49,12 @@ public class Planety extends LeafTask {
 
             if(!czasWykonania.isActive())
             {
-                czasWykonania.setActive(true);
-                czasWykonania.setCzasString(CzasGry.getCzas().toString());
-                czasWykonania.setDataString(CzasGry.getData().toString());
+                if(CzasGry.getCzas().czasWSekundach() > 0)
+                {
+                    czasWykonania.setActive(true);
+                    czasWykonania.setCzasString(CzasGry.getCzas().toString());
+                    czasWykonania.setDataString(CzasGry.getData().toString());
+                }
             }
         }
     }

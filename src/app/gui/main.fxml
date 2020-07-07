@@ -44,7 +44,13 @@
       </VBox>
       <Separator orientation="VERTICAL" />
       <TabPane prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
-      </TabPane>
+         <tabs>
+            <Tab text="Fleet Save Attack">
+               <content>
+                  <fx:include fx:id="fleetSaveAttackRoot" source="fleet_save_attack/fleet_save_attack_root.fxml" />
+               </content>
+            </Tab>
+         </tabs></TabPane>
       <Separator orientation="VERTICAL" />
       <VBox prefWidth="178.0">
          <children>

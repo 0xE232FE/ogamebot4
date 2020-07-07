@@ -376,7 +376,7 @@ public class WrogieMisje
     {
         for(WrogaMisja misja : misje)
         {
-            Czas czas = misja.pozostaloDoAtaku(CzasGry.getCzas());
+            Czas czas = misja.pozostaloDoAtaku(CzasGry.getCzas(),CzasGry.getData());
             int a  = czas.czasWSekundach();
 
             if(a <= 15)

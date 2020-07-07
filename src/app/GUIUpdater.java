@@ -27,6 +27,7 @@ public class GUIUpdater extends Task
                 Runnable updater = () -> {
                     updateCzasGry();
                     updateAktywneWatki();
+                    updateFleetSaveAttack();
                 };
                 Platform.runLater(updater);
             }
@@ -52,6 +53,14 @@ public class GUIUpdater extends Task
                 getController().getvBoxActiveTask().getChildren().add(activeTask.gethBox());
                 initAktywneWatki = false;
             }
+        }
+    }
+
+    private void updateFleetSaveAttack()
+    {
+        if(getController() != null)
+        {
+            getController().getFleetSaveAttackRootController().update();
         }
     }
 

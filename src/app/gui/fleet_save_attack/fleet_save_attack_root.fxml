@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="611.0" prefWidth="799.0" spacing="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.fleet_save_attack.FleetSaveAttackRootController">
+   <children>
+      <HBox fx:id="hBoxCzasOdswiezaniaStronyToggleGroup" alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="789.0" spacing="2.0">
+         <children>
+            <Label text="Co ile sekund odświeżać stronę">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </HBox>
+      <HBox fx:id="hBoxToggleButtonPlaneta" prefHeight="34.0" prefWidth="789.0" spacing="2.0">
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </HBox>
+      <HBox fx:id="hBoxToggleButtonPlaneta2" prefHeight="34.0" prefWidth="789.0" spacing="2.0">
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </HBox>
+      <fx:include fx:id="planetConfiguration" source="planet_configuration.fxml" />
+
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</VBox>

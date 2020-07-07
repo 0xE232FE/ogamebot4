@@ -9,14 +9,6 @@ public class Configuration
 {
     public static boolean firstConfiguration = load();
 
-//    private static boolean isFirstConfiguration()
-//    {
-//        URLFactory urlFactory = new URLFactory(Configuration.class.getClassLoader().getResource("").toString());
-//        urlFactory.disk();
-//        Log.printLog(Configuration.class.getName(), urlFactory.disk());
-//        return load();
-//    }
-
     /**
      * Wczytuje z pliku inforamcję czy wykonano konfigurację pierszego uruchomienia.
      */

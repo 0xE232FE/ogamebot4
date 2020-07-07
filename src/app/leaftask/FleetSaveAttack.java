@@ -129,7 +129,6 @@ public class FleetSaveAttack extends LeafTask {
                                         }
                                     }
                                 }
-
                                 break;
                             }
                             case 2:
@@ -190,7 +189,6 @@ public class FleetSaveAttack extends LeafTask {
                                             // Flota nie jest wysłana na FS'a lub została już zawrócona z FS'a
                                             else
                                             {
-
                                                 wrogaMisja.setCounter(3);
                                                 Log.printLog1("2.1.1.1.2",FleetSaveAttack.class,195);
                                             }
@@ -333,13 +331,14 @@ public class FleetSaveAttack extends LeafTask {
                     if(delete != null)
                     {
                         WrogieMisje.remove(delete);
-                        delete = null;
+//                        delete = null;
                     }
                 }
             }
         }
         else
         {
+            // Wypisywanie info o wyłączonym module.
             if(czasWykonania.ileMinelo(CzasGry.getCzas(),CzasGry.getData()) > 60)
             {
                 Log.printLog(FleetSaveAttack.class.getName(), "OFF");
@@ -349,9 +348,12 @@ public class FleetSaveAttack extends LeafTask {
 
             if(!czasWykonania.isActive())
             {
-                czasWykonania.setActive(true);
-                czasWykonania.setCzasString(CzasGry.getCzas().toString());
-                czasWykonania.setDataString(CzasGry.getData().toString());
+                if(CzasGry.getCzas().czasWSekundach() > 0)
+                {
+                    czasWykonania.setActive(true);
+                    czasWykonania.setCzasString(CzasGry.getCzas().toString());
+                    czasWykonania.setDataString(CzasGry.getData().toString());
+                }
             }
         }
     }

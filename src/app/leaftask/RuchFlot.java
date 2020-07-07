@@ -61,9 +61,12 @@ public class RuchFlot extends LeafTask {
 
             if(!czasWykonania.isActive())
             {
-                czasWykonania.setActive(true);
-                czasWykonania.setCzasString(CzasGry.getCzas().toString());
-                czasWykonania.setDataString(CzasGry.getData().toString());
+                if(CzasGry.getCzas().czasWSekundach() > 0)
+                {
+                    czasWykonania.setActive(true);
+                    czasWykonania.setCzasString(CzasGry.getCzas().toString());
+                    czasWykonania.setDataString(CzasGry.getData().toString());
+                }
             }
         }
 
