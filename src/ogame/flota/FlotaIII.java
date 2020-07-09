@@ -52,6 +52,40 @@ public class FlotaIII
     }
 
     /**
+     * Zwraca rozdaj misji w postaci Integer. Wartość domyślna jest 2 - misja kolonizuj.
+     * @param missionType
+     *      *           1 - Ekspedycja
+     *      *           2 - Kolonizuj
+     *      *           3 - Recykluj pola
+     *      *           4 - Transportuj
+     *      *           5 - Stacjonuj
+     *      *           6 - Szpieguj
+     *      *           7 - Zatrzymaj
+     *      *           8 - Atakuj
+     *      *           9 - Atak związku
+     *      *           10 - Niszcz
+     * @return Wartość domyślna jest 2 - misja kolonizuj lub jak powyżej
+     */
+    public static int intMissionType(String missionType)
+    {
+        switch (missionType)
+        {
+            case "Ekspedycja": return 1;
+            case "Kolonizuj": return 2;
+            case "Recykluj pola": return 3;
+            case "Transportuj": return 4;
+            case "Stacjonuj": return 5;
+            case "Szpieguj": return 6;
+            case "Zatrzymaj": return 7;
+            case "Atakuj": return 8;
+            case "Atak związku": return 9;
+            case "Niszcz": return 10;
+
+        }
+        return 2;
+    }
+
+    /**
      * Klika w button wszystkie suurowce.
      */
     public static void clickWszystkieSurowce(WebDriver w)

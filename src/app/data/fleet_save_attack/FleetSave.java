@@ -2,6 +2,7 @@ package app.data.fleet_save_attack;
 
 import app.Wspolrzedne;
 import com.DifferentMethods;
+import ogame.flota.FlotaIII;
 
 import java.io.Serializable;
 
@@ -9,6 +10,7 @@ public class FleetSave implements Serializable
 {
     private static final long serialVersionUID = 1L;
     private final String misja;
+    private final int misjaInt;
     private final String wspolrzedne;
     private final int obiekt;
 
@@ -22,6 +24,7 @@ public class FleetSave implements Serializable
         this.misja = misja;
         this.wspolrzedne = wspolrzedne;
         this.obiekt = obiekt;
+        misjaInt = FlotaIII.intMissionType(misja);
     }
 
     /**
@@ -34,6 +37,7 @@ public class FleetSave implements Serializable
         this.misja = misja;
         this.wspolrzedne = wspolrzedne.toString();
         this.obiekt = obiekt;
+        misjaInt = FlotaIII.intMissionType(misja);
     }
 
     public String getMisja() {
@@ -46,6 +50,10 @@ public class FleetSave implements Serializable
 
     public int getObiekt() {
         return obiekt;
+    }
+
+    public int getMisjaInt() {
+        return misjaInt;
     }
 
     @Override

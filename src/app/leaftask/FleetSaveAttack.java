@@ -7,8 +7,8 @@ import app.atak.WrogieMisje;
 import app.czas.Czas;
 import app.czas.CzasGry;
 import app.czas.CzasWykonania;
+import app.data.fleet_save_attack.FleetSave;
 import app.planety.Planety;
-import app.planety.StaticCoord;
 import app.ruchflot.Loty;
 import com.Log;
 import com.Waiter;
@@ -47,53 +47,57 @@ public class FleetSaveAttack extends LeafTask {
                     WrogaMisja delete = null;
                     for(WrogaMisja wrogaMisja : WrogieMisje.misje)
                     {
-                        Log.printLog(FleetSaveAttack.class.getName(),"START---------------"+wrogaMisja.getId()+"--------------------");
+//                        Log.printLog(FleetSaveAttack.class.getName(),"START---------------"+wrogaMisja.getId()+"--------------------");
                         Planeta p = Planety.getPlaneta(wrogaMisja.getWspolrzedne());
                         switch (wrogaMisja.getCounter())
                         {
                             case 0:
                             {
 //                                Log.printLog1("0",FleetSaveAttack.class,50);
+                                // Sprawdza czy wykonać FS - pozsotało mniej niż 90 sek do ataku
                                 if(wrogaMisja.wykonacFS(CzasGry.getCzas(),CzasGry.getData()))
                                 {
-
+                                    // Atak na księżyc
                                     if(wrogaMisja.isNaKsiezyc())
                                     {
+                                        // Flota została wysłana na FS
                                         if(p.isFlotaZKsiezycaWyslanaNaFS())
                                         {
                                             wrogaMisja.setCounter(1);
                                             wrogaMisja.getDaneWyslanegoFS().setObiektLotu(p.getObiektFSZKsiezyca());
                                         }
+                                        // Wysyła flotę na FS
                                         else
                                         {
                                             sentFleet(p,wrogaMisja.isNaKsiezyc(),wrogaMisja);
                                             wrogaMisja.setCounter(1);
                                         }
                                     }
+                                    // Atak na planetę
                                     else
                                     {
+                                        // Flota została wysłana na FS
                                         if(p.isFlotaZPlanetyWyslanaNaFS())
                                         {
                                             wrogaMisja.setCounter(1);
                                             wrogaMisja.getDaneWyslanegoFS().setObiektLotu(p.getObiektFSZPlanety());
                                         }
+                                        // Wysyła flotę na FS
                                         else
                                         {
                                             sentFleet(p,wrogaMisja.isNaKsiezyc(),wrogaMisja);
                                             wrogaMisja.setCounter(1);
                                         }
                                     }
-//                                    Log.printLog1("0.1",FleetSaveAttack.class,55);
                                 }
                                 break;
                             }
                             case 1:
                             {
-//                                Log.printLog1("1",FleetSaveAttack.class,61);
+                                // Klikanie w podgląd jest aktywne
                                 if(wrogaMisja.getKlikaniePodglad().isActive())
                                 {
-                                    Log.printLog1("1.1",FleetSaveAttack.class,64);
-
+                                    // Jeżeli minął czas to kliknij podgląd
                                     if(wrogaMisja.getKlikaniePodglad().ileMinelo(CzasGry.getCzas(),CzasGry.getData()) > 15)
                                     {
                                         LeftMenu.pressPodglad(OgameWeb.webDriver,FleetSaveAttack.class.getName(),true);
@@ -101,58 +105,44 @@ public class FleetSaveAttack extends LeafTask {
                                         wrogaMisja.getKlikaniePodglad().setDataString(CzasGry.getData().toString());
                                     }
 
-
                                     Waiter.sleep(50,50);
                                     RuchFlotZdarzenia.rozwin(getW());
                                     Waiter.sleep(50,50);
                                     List<WrogaMisja> tmp = RuchFlotZdarzenia.getWrogieMisje(OgameWeb.webDriver);
+                                    // Sprawdza czy flota nie została opóźniona
                                     if(wrogaMisja.zostalaOpozniona(tmp))
-                                    {
                                         wrogaMisja.setCounter(2);
-                                        Log.printLog1("1.1.1",FleetSaveAttack.class,68);
-                                    }
                                 }
+                                // Klikanie w podgląd nie jest aktywne
                                 else
                                 {
+                                    // Sprawdza czy atak minął
                                     if(wrogaMisja.atakMinal(CzasGry.getCzas()))
                                     {
-                                        Log.printLog1("1.1",FleetSaveAttack.class,64);
                                         LeftMenu.pressPodglad(OgameWeb.webDriver,FleetSaveAttack.class.getName());
                                         Waiter.sleep(50,50);
                                         RuchFlotZdarzenia.rozwin(getW());
                                         Waiter.sleep(50,50);
                                         List<WrogaMisja> tmp = RuchFlotZdarzenia.getWrogieMisje(OgameWeb.webDriver);
+                                        // Sprawdza czy flota nie została opóźniona
                                         if(wrogaMisja.zostalaOpozniona(tmp))
-                                        {
                                             wrogaMisja.setCounter(2);
-                                            Log.printLog1("1.1.1",FleetSaveAttack.class,68);
-                                        }
                                     }
                                 }
                                 break;
                             }
                             case 2:
                             {
-                                Log.printLog1("2",FleetSaveAttack.class,137);
                                 // Czy są dodatkowe ataki na te wspolrzedne
                                 List<WrogaMisja> dodatkoweAtakiTmp  = WrogieMisje.getMisje(wrogaMisja.getWspolrzedne(),wrogaMisja.isNaKsiezyc());
                                 if(wrogaMisja.dodatkoweAtakiNaTeWspolrzedne(dodatkoweAtakiTmp))
                                 {
-                                    Log.printLog1("2.1",FleetSaveAttack.class,142);
                                     WrogaMisja tmpKolejnyAtak = WrogieMisje.najblizszaMisja(wrogaMisja.getId(),dodatkoweAtakiTmp, wrogaMisja.isNaKsiezyc());
                                     // Czy kolejna misja wchodzi tego samego dnia
-//                                    if(tmpKolejnyAtak.getData().equals(wrogaMisja.getData()))
                                     if(tmpKolejnyAtak.getData().equals(CzasGry.getData()))
                                     {
-                                        Log.printLog1("2.1.1",FleetSaveAttack.class,148);
-                                        // Za jaki czas wejdzie atak po wysłaniu Fs'a
-//                                        String tmp1 = tmpKolejnyAtak.getCzas().toString();
-//                                        String tmp2 = wrogaMisja.getDaneWyslanegoFS().getCzas().toString();
-//                                        String tmp3 = CzasGry.getCzas().toString();
-
                                         // Czas najbliższego wejscia ataku - aktualny czas
                                         int a = tmpKolejnyAtak.getCzas().czasWSekundach() - CzasGry.getCzas().czasWSekundach();
-//                                        Log.printLog1("2.1.2 - a=" + a +"; tmp1="+tmp1 +"; tmp3="+tmp3, FleetSaveAttack.class,122);
                                         // Czas jaki minął od wysłania FS'a
                                         int zaIleWrociFlota;
                                         // FS wysłany dzisiejszego dnia
@@ -164,61 +154,43 @@ public class FleetSaveAttack extends LeafTask {
 
                                         Log.printLog1("Aktualny czas gry " + CzasGry.getCzas() +". Czas wysłanego FS'a " + wrogaMisja.getDaneWyslanegoFS().getCzas().toString()+
                                                 ". Flota wróci za " + zaIleWrociFlota +"sek.",FleetSaveAttack.class,167);
-//                                        Log.printLog1("2.1.3 - zaIleWrociFlota=" + zaIleWrociFlota +"; tmp3="+tmp3 +"; tmp2="+tmp2,FleetSaveAttack.class,118);
-
-                                        // Czas najbliższego wejscia ataku - czas wysłania flory na FS
-//                                        int c = tmpKolejnyAtak.getCzas().czasWSekundach() - wrogaMisja.getDaneWyslanegoFS().getCzas().czasWSekundach();
-//                                        Log.printLog1("2.1.4 - c=" + c +"; tmp1="+tmp1 +"; tmp2="+tmp2,FleetSaveAttack.class,131);
-
+//
                                         // Jeśli zawróci flotę, to po powrocie będzie 90 sekund na ponowny lot.
                                         // wykona się gdy będzie conajmniej 90 sek. zapasu od powrotu floty do wejścia
                                         // następnego ataku
-                                        Log.printLog1("2.1.6 - Jeśli zawrócisz, flota wróci za  " + (zaIleWrociFlota)
+                                        Log.printLog1("Jeśli zawrócisz, flota wróci za  " + (zaIleWrociFlota)
                                                 + "sek. Do następnego ataku pozsotało "+a+"sek.",FleetSaveAttack.class,178);
                                         if(zaIleWrociFlota > a)
                                         {
-                                            Log.printLog1("2.1.1.1",FleetSaveAttack.class,181);
+                                            // Zawraca wysłaną flotę na FS
                                             if(wrogaMisja.isNaKsiezyc() ? p.isFlotaZKsiezycaWyslanaNaFS() : p.isFlotaZPlanetyWyslanaNaFS())
-                                            {
                                                 if(zawroc(wrogaMisja,p))
-                                                {
                                                     wrogaMisja.setCounter(3);
-                                                    Log.printLog1("2.1.1.1.1",FleetSaveAttack.class,187);
-                                                }
-                                            }
                                             // Flota nie jest wysłana na FS'a lub została już zawrócona z FS'a
                                             else
-                                            {
                                                 wrogaMisja.setCounter(3);
-                                                Log.printLog1("2.1.1.1.2",FleetSaveAttack.class,195);
-                                            }
                                         }
                                         else
                                         {
-                                            // Sprawdza czy od powrotu floty na planetę po zawroceniu do wejścia ataku
+                                            // Sprawdza czy od powrotu floty na planetę po zawroceniu do wejścia  kolejnego ataku
                                             // będzie conajmniej 120 sek różnicy.
-                                            Log.printLog1("2.1.1.2 - Jeśli zawrócisz, to po powrocie na planetę pozsotanie " +
+                                            Log.printLog1("Jeśli zawrócisz, to po powrocie na planetę pozsotanie " +
                                                     + (a - zaIleWrociFlota) + "sek. do następnego ataku.",FleetSaveAttack.class,162);
                                             if(a - zaIleWrociFlota > 120)
                                             {
-                                                Log.printLog1("2.1.1.1",FleetSaveAttack.class,163);
+                                                // Jeżeli warunek został spełniony, czy następny atak wejdzie za conajmniej
+                                                // 120 sek. to zawróci flotę.
                                                 if(wrogaMisja.isNaKsiezyc() ? p.isFlotaZKsiezycaWyslanaNaFS() : p.isFlotaZPlanetyWyslanaNaFS())
-                                                {
                                                     if(zawroc(wrogaMisja,p))
-                                                    {
                                                         wrogaMisja.setCounter(3);
-                                                        Log.printLog1("2.1.1.1.1",FleetSaveAttack.class,171);
-                                                    }
-                                                }
                                                 // Flota nie jest wysłana na FS'a lub została już zawrócona z FS'a
                                                 else
-                                                {
                                                     wrogaMisja.setCounter(3);
-                                                    Log.printLog1("2.1.1.1.2",FleetSaveAttack.class,179);
-                                                }
                                             }
                                             else
                                             {
+                                                // Gdyby zawrocił pozostało by za mało czasu na ponowne wysłanie.
+                                                // Sprawdzanie zaczyna się od początku.
                                                 wrogaMisja.setCounter(1);
                                                 Log.printLog1("Ustawiam counter na wartość 1.",FleetSaveAttack.class,185);
                                             }
@@ -241,22 +213,12 @@ public class FleetSaveAttack extends LeafTask {
 
                                         if(zaIleWrociFlota > zaIleSekundWejdzieKolejnyAtak)
                                         {
-//                                            Log.printLog1("2.1.1.1",FleetSaveAttack.class,140);
                                             if(wrogaMisja.isNaKsiezyc() ? p.isFlotaZKsiezycaWyslanaNaFS() : p.isFlotaZPlanetyWyslanaNaFS())
-                                            {
                                                 if(zawroc(wrogaMisja,p))
-                                                {
                                                     wrogaMisja.setCounter(3);
-//                                                    Log.printLog1("2.1.1.1.1",FleetSaveAttack.class,146);
-                                                }
-                                            }
                                             // Flota nie jest wysłana na FS'a lub została już zawrócona z FS'a
                                             else
-                                            {
-
                                                 wrogaMisja.setCounter(3);
-//                                                Log.printLog1("2.1.1.1.2",FleetSaveAttack.class,154);
-                                            }
                                         }
                                         else
                                         {
@@ -266,41 +228,23 @@ public class FleetSaveAttack extends LeafTask {
                                                     + (zaIleSekundWejdzieKolejnyAtak - zaIleWrociFlota) + "sek. do następnego ataku.",FleetSaveAttack.class,261);
                                             if(zaIleSekundWejdzieKolejnyAtak - zaIleWrociFlota > 120)
                                             {
-//                                                Log.printLog1("2.1.1.1",FleetSaveAttack.class,163);
                                                 if(wrogaMisja.isNaKsiezyc() ? p.isFlotaZKsiezycaWyslanaNaFS() : p.isFlotaZPlanetyWyslanaNaFS())
-                                                {
                                                     if(zawroc(wrogaMisja,p))
-                                                    {
                                                         wrogaMisja.setCounter(3);
-//                                                        Log.printLog1("2.1.1.1.1",FleetSaveAttack.class,171);
-                                                    }
-                                                }
                                                 // Flota nie jest wysłana na FS'a lub została już zawrócona z FS'a
                                                 else
-                                                {
                                                     wrogaMisja.setCounter(3);
-//                                                    Log.printLog1("2.1.1.1.2",FleetSaveAttack.class,179);
-                                                }
                                             }
                                             else
-                                            {
                                                 wrogaMisja.setCounter(1);
-//                                                Log.printLog1("Ustawiam counter na wartość 1.",FleetSaveAttack.class,185);
-                                            }
                                         }
                                     }
                                 }
                                 else
                                 {
-                                    Log.printLog1("2.2",FleetSaveAttack.class,226);
                                     if(wrogaMisja.isNaKsiezyc() ? p.isFlotaZKsiezycaWyslanaNaFS():p.isFlotaZPlanetyWyslanaNaFS())
-                                    {
                                         if(zawroc(wrogaMisja,p))
-                                        {
                                             wrogaMisja.setCounter(3);
-                                            Log.printLog1("2.2.1",FleetSaveAttack.class,230);
-                                        }
-                                    }
                                     else
                                     {
                                         if(wrogaMisja.atakMinal(CzasGry.getCzas(),5))
@@ -327,7 +271,6 @@ public class FleetSaveAttack extends LeafTask {
                         }
                         Log.printLog(FleetSaveAttack.class.getName(),"STOP----------------"+wrogaMisja.getId()+"--------------------");
                     }
-
                     if(delete != null)
                     {
                         WrogieMisje.remove(delete);
@@ -375,47 +318,104 @@ public class FleetSaveAttack extends LeafTask {
         Log.printLog(FleetSaveAttack.class.getName(),"Rozpoczynam wysyłanie FS'a z "+ (moon ? "księżyca " : "planety ")
                 + p.getWspolrzedne());
         Waiter.sleep(50,50);
-        Wspolrzedne wspolrzedne = StaticCoord.KALYKE_FS_1_9_12;
+        Wspolrzedne wspolrzedne;
+        FleetSave fleetSave = null;
         if(FlotaI.isAnyShips(OgameWeb.webDriver))
         {
             FlotaI.chooseAllShips(OgameWeb.webDriver);
             FlotaI.clickContinue(OgameWeb.webDriver);
             Waiter.sleep(50,50);
-            // Wysyłany z księżyca - wyślij na planetę
+            // Atak na księżyc
             if(moon)
             {
-                FlotaII.setGalaxy(OgameWeb.webDriver,p.wspolrzedne().getGalaktyka());
-                FlotaII.setUklad(OgameWeb.webDriver,p.wspolrzedne().getUklad());
-                FlotaII.setPlaneta(OgameWeb.webDriver,p.wspolrzedne().getPlaneta());
-                FlotaII.setSpeed(OgameWeb.webDriver,1);
-                FlotaII.clickPlaneta(OgameWeb.webDriver);
-                FlotaII.clickContinue(OgameWeb.webDriver);
-                Waiter.sleep(100,100);
-                wrogaMisja.getDaneWyslanegoFS().setObiektLotu(new ObiektLotu(p.getWspolrzedne(),true));
-                p.setObiektFSZKsiezyca(wrogaMisja.getDaneWyslanegoFS().getObiektLotu());
-            }
-            else
-            {
-                // Posiada księżyć - wyślij na księżyc
-                if(p.isMoon())
+                // Ustawiono auto fleetsave z księżyca - wyślij na planetę
+                if(p.getAttackFleetSaveConfiguration().isAutoFleetSaveMoon())
                 {
                     FlotaII.setGalaxy(OgameWeb.webDriver,p.wspolrzedne().getGalaktyka());
                     FlotaII.setUklad(OgameWeb.webDriver,p.wspolrzedne().getUklad());
                     FlotaII.setPlaneta(OgameWeb.webDriver,p.wspolrzedne().getPlaneta());
                     FlotaII.setSpeed(OgameWeb.webDriver,1);
-                    FlotaII.clickKsiezyc(OgameWeb.webDriver);
+                    FlotaII.clickPlaneta(OgameWeb.webDriver);
                     FlotaII.clickContinue(OgameWeb.webDriver);
                     Waiter.sleep(100,100);
-                    wrogaMisja.getDaneWyslanegoFS().setObiektLotu(new ObiektLotu(p.getWspolrzedne(),false));
-                    p.setObiektFSZPlanety(wrogaMisja.getDaneWyslanegoFS().getObiektLotu());
+                    wrogaMisja.getDaneWyslanegoFS().setObiektLotu(new ObiektLotu(p.getWspolrzedne(),true));
+                    p.setObiektFSZKsiezyca(wrogaMisja.getDaneWyslanegoFS().getObiektLotu());
                 }
+                // Wyślij na podane wpsółrzędne
                 else
                 {
+                    fleetSave  = p.getAttackFleetSaveConfiguration().getRandomMoonMissionConfiguration();
+                    wspolrzedne = new Wspolrzedne(fleetSave.getWspolrzedne());
                     FlotaII.setGalaxy(OgameWeb.webDriver,wspolrzedne.getGalaktyka());
                     FlotaII.setUklad(OgameWeb.webDriver,wspolrzedne.getUklad());
                     FlotaII.setPlaneta(OgameWeb.webDriver,wspolrzedne.getPlaneta());
                     FlotaII.setSpeed(OgameWeb.webDriver,1);
-                    FlotaII.clickPlaneta(OgameWeb.webDriver);
+
+                    if(fleetSave.getObiekt() == 0)
+                        FlotaII.clickPlaneta(OgameWeb.webDriver);
+                    else
+                        FlotaII.clickKsiezyc(OgameWeb.webDriver);
+
+                    FlotaII.clickContinue(OgameWeb.webDriver);
+                    Waiter.sleep(100,100);
+                    wrogaMisja.getDaneWyslanegoFS().setObiektLotu(new ObiektLotu(p.getWspolrzedne(),true));
+                    p.setObiektFSZKsiezyca(wrogaMisja.getDaneWyslanegoFS().getObiektLotu());
+                }
+
+            }
+            // Atak na planetę
+            else
+            {
+                // Planeta posiada księżyc
+                if(p.isMoon())
+                {
+                    if(p.getAttackFleetSaveConfiguration().isAutoFleetSavePlaneta())
+                    {
+                        FlotaII.setGalaxy(OgameWeb.webDriver,p.wspolrzedne().getGalaktyka());
+                        FlotaII.setUklad(OgameWeb.webDriver,p.wspolrzedne().getUklad());
+                        FlotaII.setPlaneta(OgameWeb.webDriver,p.wspolrzedne().getPlaneta());
+                        FlotaII.setSpeed(OgameWeb.webDriver,1);
+                        FlotaII.clickKsiezyc(OgameWeb.webDriver);
+                        FlotaII.clickContinue(OgameWeb.webDriver);
+                        Waiter.sleep(100,100);
+                        wrogaMisja.getDaneWyslanegoFS().setObiektLotu(new ObiektLotu(p.getWspolrzedne(),false));
+                        p.setObiektFSZPlanety(wrogaMisja.getDaneWyslanegoFS().getObiektLotu());
+                    }
+                    else
+                    {
+                        fleetSave  = p.getAttackFleetSaveConfiguration().getRandomPlanetaMissionConfiguration();
+                        wspolrzedne = new Wspolrzedne(fleetSave.getWspolrzedne());
+                        FlotaII.setGalaxy(OgameWeb.webDriver,wspolrzedne.getGalaktyka());
+                        FlotaII.setUklad(OgameWeb.webDriver,wspolrzedne.getUklad());
+                        FlotaII.setPlaneta(OgameWeb.webDriver,wspolrzedne.getPlaneta());
+                        FlotaII.setSpeed(OgameWeb.webDriver,1);
+
+                        if(fleetSave.getObiekt() == 0)
+                            FlotaII.clickPlaneta(OgameWeb.webDriver);
+                        else
+                            FlotaII.clickKsiezyc(OgameWeb.webDriver);
+
+                        FlotaII.clickContinue(OgameWeb.webDriver);
+                        Waiter.sleep(100,100);
+                        wrogaMisja.getDaneWyslanegoFS().setObiektLotu(new ObiektLotu(wspolrzedne.toString(),true));
+                        p.setObiektFSZPlanety(wrogaMisja.getDaneWyslanegoFS().getObiektLotu());
+                    }
+
+                }
+                else
+                {
+                    fleetSave  = p.getAttackFleetSaveConfiguration().getRandomPlanetaMissionConfiguration();
+                    wspolrzedne = new Wspolrzedne(fleetSave.getWspolrzedne());
+                    FlotaII.setGalaxy(OgameWeb.webDriver,wspolrzedne.getGalaktyka());
+                    FlotaII.setUklad(OgameWeb.webDriver,wspolrzedne.getUklad());
+                    FlotaII.setPlaneta(OgameWeb.webDriver,wspolrzedne.getPlaneta());
+                    FlotaII.setSpeed(OgameWeb.webDriver,1);
+
+                    if(fleetSave.getObiekt() == 0)
+                        FlotaII.clickPlaneta(OgameWeb.webDriver);
+                    else
+                        FlotaII.clickKsiezyc(OgameWeb.webDriver);
+
                     FlotaII.clickContinue(OgameWeb.webDriver);
                     Waiter.sleep(100,100);
                     wrogaMisja.getDaneWyslanegoFS().setObiektLotu(new ObiektLotu(wspolrzedne.toString(),true));
@@ -426,10 +426,15 @@ public class FleetSaveAttack extends LeafTask {
             boolean missionSelected = false;
             while(!missionSelected)
             {
-                if(moon || p.isMoon())
+                if(p.getAttackFleetSaveConfiguration().isAutoFleetSavePlaneta() ||
+                        p.getAttackFleetSaveConfiguration().isAutoFleetSaveMoon() )
                     FlotaIII.kliknijMisje(OgameWeb.webDriver,5);
                 else
-                    FlotaIII.kliknijMisje(OgameWeb.webDriver,8);
+                    FlotaIII.kliknijMisje(OgameWeb.webDriver,fleetSave.getMisjaInt());
+//                if(moon || p.isMoon())
+//                    FlotaIII.kliknijMisje(OgameWeb.webDriver,5);
+//                else
+//                    FlotaIII.kliknijMisje(OgameWeb.webDriver,8);
 
                 Waiter.sleep(25,25);
                 missionSelected = FlotaIII.isMissionSelected(OgameWeb.webDriver, FleetSaveAttack.class.getName());

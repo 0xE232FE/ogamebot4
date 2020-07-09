@@ -9,6 +9,8 @@ import ogame.planety.Planeta;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 public class FleetSaveAttackMissionConfiguration implements Serializable
 {
     private static final long serialVersionUID = 1L;
@@ -21,6 +23,39 @@ public class FleetSaveAttackMissionConfiguration implements Serializable
     /*
     EXECUTING
      */
+
+    /**
+     * Zwraca losową wybraną konfigurację FS'a z księżyca.
+     */
+    public FleetSave getRandomMoonMissionConfiguration()
+    {
+        Random r = new Random();
+        if(moonFleetSaveObject.size() > 0)
+            return moonFleetSaveObject.get(r.nextInt(moonFleetSaveObject.size())).getFleetSave();
+        else
+        {
+            Log.printLog(FleetSaveAttackMissionConfiguration.class.getName(),"Nie zwrocno konfiguracji FleetSave dla ksieżyca," +
+                    " ponieważ lista jest pusta.");
+            return null;
+        }
+    }
+
+    /**
+     * Zwraca losową wybraną konfigurację FS'a z księżyca.
+     */
+    public FleetSave getRandomPlanetaMissionConfiguration()
+    {
+        Random r = new Random();
+        if(planetFleetSaveObject.size() > 0)
+            return planetFleetSaveObject.get(r.nextInt(planetFleetSaveObject.size())).getFleetSave();
+        else
+        {
+            Log.printLog(FleetSaveAttackMissionConfiguration.class.getName(),"Nie zwrocno konfiguracji FleetSave dla planety," +
+                    " ponieważ lista jest pusta.");
+            return null;
+        }
+    }
+
     /**
      * Dodaje konfigurację misji podaną w argumencie do listy dla kplanety. Jeżeli nie znajduje się na liście.
      * @return true - gdy doda do listy.
@@ -31,7 +66,7 @@ public class FleetSaveAttackMissionConfiguration implements Serializable
         {
             if(mission.getFleetSave().equals(missionConfiguration.getFleetSave()))
             {
-                Log.printLog(Planeta.class.getName(),"Nie dodano obiektu MissionConfiguration do listy PlanetFleetSaveObject." +
+                Log.printLog(FleetSaveAttackMissionConfiguration.class.getName(),"Nie dodano obiektu MissionConfiguration do listy PlanetFleetSaveObject." +
                         "Obiekt znajduję się już na liście.");
                 return false;
             }

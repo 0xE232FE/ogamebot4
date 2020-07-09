@@ -60,8 +60,8 @@ public class MainController
     /*
         Fleet Save Attack GUI
      */
-
-    FleetSaveAttackRootController fleetSaveAttackRootController;
+    @FXML
+    private FleetSaveAttackRootController fleetSaveAttackRootController;
 
     public FleetSaveAttackRootController getFleetSaveAttackRootController() {
         return fleetSaveAttackRootController;
