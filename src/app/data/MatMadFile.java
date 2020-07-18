@@ -36,6 +36,8 @@ public class MatMadFile
         else
         {
             Log.printLog(MatMadFile.class.getName(),"Folder o podanej ścieżce nie istnieje. "+path);
+            file.mkdir();
+            Log.printLog(MatMadFile.class.getName(),"U tworzyłem folder o podanej ścieżce "+path);
             return false;
         }
     }

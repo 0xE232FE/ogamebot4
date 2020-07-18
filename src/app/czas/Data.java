@@ -1,5 +1,7 @@
 package app.czas;
 
+import com.Log;
+
 import java.io.Serializable;
 
 public class Data implements Serializable {
@@ -115,7 +117,7 @@ public class Data implements Serializable {
      */
     public void setTommorowData(Data data)
     {
-        int[] maxDay = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+//        int[] maxDay = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         boolean leapYear = data.getYear() % 4 == 0;
 
         if(data.getDay() >= 28)
@@ -216,13 +218,13 @@ public class Data implements Serializable {
                 }
 
                 if(!changed)
-                    setDataVariable(((data.getDay()+1) > 10 ? (data.getDay()+1) : "0"+(data.getDay()+1)) + "." +
-                            (data.getMonth() > 10 ? data.getMonth():"0"+data.getMonth()) + "." + data.getYear());
+                    setDataVariable(((data.getDay()+1) >= 10 ? (data.getDay()+1) : "0"+(data.getDay()+1)) + "." +
+                            (data.getMonth() >= 10 ? data.getMonth():"0"+data.getMonth()) + "." + data.getYear());
             }
         }
         else
-            setDataVariable(((data.getDay()+1) > 10 ? (data.getDay()+1) : "0"+(data.getDay()+1)) + "." +
-                    (data.getMonth() > 10 ? data.getMonth():"0"+data.getMonth()) + "." + data.getYear());
+            setDataVariable(((data.getDay()+1) >= 10 ? (data.getDay()+1) : "0"+(data.getDay()+1)) + "." +
+                    (data.getMonth() >= 10 ? data.getMonth():"0"+data.getMonth()) + "." + data.getYear());
     }
 
     /**
@@ -231,7 +233,7 @@ public class Data implements Serializable {
     public Data getTommorowDate()
     {
         Data tmp = new Data();
-        int[] maxDay = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+//        int[] maxDay = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         boolean leapYear = getYear() % 4 == 0;
 
         if(getDay() >= 28)
@@ -331,13 +333,14 @@ public class Data implements Serializable {
                 }
 
                 if(!changed)
-                    tmp.setDataVariable(((getDay()+1) > 10 ? (getDay()+1) : "0"+(getDay()+1)) + "." +
-                            (getMonth() > 10 ? getMonth():"0"+getMonth()) + "." + getYear());
+                    tmp.setDataVariable(((getDay()+1) >= 10 ? (getDay()+1) : "0"+(getDay()+1)) + "." +
+                            (getMonth() >= 10 ? getMonth():"0"+getMonth()) + "." + getYear());
             }
         }
         else
-            tmp.setDataVariable(((getDay()+1) > 10 ? (getDay()+1) : "0"+(getDay()+1)) + "." +
-                    (getMonth() > 10 ? getMonth():"0"+getMonth()) + "." + getYear());
+            tmp.setDataVariable(((getDay()+1) >= 10 ? (getDay()+1) : "0"+(getDay()+1)) + "." +
+                    (getMonth() >= 10 ? getMonth():"0"+getMonth()) + "." + getYear());
+
 
         return tmp;
     }

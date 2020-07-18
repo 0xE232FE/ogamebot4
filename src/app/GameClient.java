@@ -2,6 +2,7 @@ package app;
 
 import app.gui.controller.MainController;
 import app.tasks.BotLogic;
+import app.tasks.CloseAd;
 import app.tasks.CzasGry;
 import org.openqa.selenium.*;
 
@@ -23,6 +24,8 @@ public class GameClient extends Task
         new GUIUpdater(webDriver,mainController);
 //        TaskManager taskManager = new TaskManager(webDriver);
         new TaskManager(webDriver);
+        // Zamykanie reklam
+        new CloseAd(webDriver);
         setRun(false);
         this.webDriver = webDriver;
 //        this.mainController = mainController;

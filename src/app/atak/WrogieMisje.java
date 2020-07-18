@@ -3,6 +3,7 @@ package app.atak;
 import app.czas.Czas;
 import app.czas.CzasGry;
 import app.czas.Data;
+import app.log.LogFleetSaveAttack;
 import com.Log;
 import ogame.ruchflotzdarzenia.WrogaMisja;
 
@@ -22,6 +23,13 @@ public class WrogieMisje
         if(!exists(wrogaMisja))
         {
             misje.add(wrogaMisja);
+            LogFleetSaveAttack.addLog(new app.log.Log(WrogieMisje.class.getName(),"Wykryto nową wrogą misję. Planeta - "+wrogaMisja.isNaPlanete() + " Księżyc - "+wrogaMisja.isNaKsiezyc()
+                    + " Współrzędne - "+wrogaMisja.getWspolrzedne() + " Data - "+wrogaMisja.getData().toString() +
+                    " Czas - "+ wrogaMisja.getCzas().toString()));
+//            LogFleetSaveAttack.addLog(LogFleetSaveAttack.log(WrogieMisje.class,
+//                    "Wykryto nową wrogą misję. Planeta - "+wrogaMisja.isNaPlanete() + " Księżyc - "+wrogaMisja.isNaKsiezyc()
+//            + " Współrzędne - "+wrogaMisja.getWspolrzedne() + " Data - "+wrogaMisja.getData().toString() +
+//                    " Czas - "+ wrogaMisja.getCzas().toString()));
             Log.printLog(WrogieMisje.class.getName(), "Dodałem nową wrogą misję do listy.");
         }
         else
@@ -65,6 +73,13 @@ public class WrogieMisje
     {
         misje.remove(wrogaMisja);
         Log.printLog(WrogieMisje.class.getName(), "Usunięto wrogą misję z listy.");
+        LogFleetSaveAttack.addLog(new app.log.Log(WrogieMisje.class.getName(),"Usunięto wrogą misję z listy. Planeta - "+wrogaMisja.isNaPlanete() + " Księżyc - "+wrogaMisja.isNaKsiezyc()
+                + " Współrzędne - "+wrogaMisja.getWspolrzedne() + " Data - "+wrogaMisja.getData().toString() +
+                " Czas - "+ wrogaMisja.getCzas().toString()));
+//        LogFleetSaveAttack.addLog(LogFleetSaveAttack.log(WrogieMisje.class,
+//                "Usunięto wrogą misję z listy. Planeta - "+wrogaMisja.isNaPlanete() + " Księżyc - "+wrogaMisja.isNaKsiezyc()
+//                        + " Współrzędne - "+wrogaMisja.getWspolrzedne() + " Data - "+wrogaMisja.getData().toString() +
+//                        " Czas - "+ wrogaMisja.getCzas().toString()));
     }
 
 
@@ -381,16 +396,16 @@ public class WrogieMisje
 
             if(a <= 15)
                 Log.printLog(WrogieMisje.class.getName(),"Pozostało " +czas.toString()
-                    + " do ataku na " + misja.getWspolrzedne() + " - " + (misja.isNaPlanete() ? "PLANETA" : "KSIEŻYC"));
+                    + " do ataku na " + misja.getWspolrzedne() + " - " + (misja.isNaPlanete() ? "PLANETA" : "KSIEŻYC") + " - " + misja.getId());
             else if(a <= 180 && a % 5 == 0)
                 Log.printLog(WrogieMisje.class.getName(),"Pozostało " +czas.toString()
-                        + " do ataku na " + misja.getWspolrzedne() + " - " + (misja.isNaPlanete() ? "PLANETA" : "KSIEŻYC"));
+                        + " do ataku na " + misja.getWspolrzedne() + " - " + (misja.isNaPlanete() ? "PLANETA" : "KSIEŻYC") + " - " + misja.getId());
             else if(a <= 600 && a > 180 && a%15 == 0)
                 Log.printLog(WrogieMisje.class.getName(),"Pozostało " +czas.toString()
-                        + " do ataku na " + misja.getWspolrzedne() + " - " + (misja.isNaPlanete() ? "PLANETA" : "KSIEŻYC"));
+                        + " do ataku na " + misja.getWspolrzedne() + " - " + (misja.isNaPlanete() ? "PLANETA" : "KSIEŻYC") + " - " + misja.getId());
             else if(a > 600 && a%60 == 0)
                 Log.printLog(WrogieMisje.class.getName(),"Pozostało " +czas.toString()
-                        + " do ataku na " + misja.getWspolrzedne() + " - " + (misja.isNaPlanete() ? "PLANETA" : "KSIEŻYC"));
+                        + " do ataku na " + misja.getWspolrzedne() + " - " + (misja.isNaPlanete() ? "PLANETA" : "KSIEŻYC") + " - " + misja.getId());
         }
     }
 }

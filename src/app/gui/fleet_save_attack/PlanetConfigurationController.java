@@ -64,6 +64,8 @@ public class PlanetConfigurationController
     @FXML
     private TextField editTextMisjaM;
 
+    private boolean flagEmptyVboxPlaneta = false;
+
     @FXML
     public void initialize()
     {
@@ -120,10 +122,21 @@ public class PlanetConfigurationController
             MissionConfiguration missionConfiguration = new MissionConfiguration(fleetSave);
             Planeta p = FleetSaveAttackRootController.getSelectedToogleButtonPlaneta().getPlaneta();
             if(p.getAttackFleetSaveConfiguration().addPlanetFleetSaveObject(missionConfiguration, p))
+            {
+                if(flagEmptyVboxPlaneta)
+                {
+                    // ustawia domyślny style VBox
+                    vBoxPlaneta.setStyle("");
+                    vBoxPlaneta.getChildren().clear();
+                    flagEmptyVboxPlaneta = false;
+                }
                 vBoxPlaneta.getChildren().add(missionConfiguration.gethBox());
+            }
+
         }
         else
             Log.printLog(PlanetConfigurationController.class.getName(),"Uzupełnij pola danych.");
+
     }
 
     @FXML
@@ -154,6 +167,15 @@ public class PlanetConfigurationController
         for(FleetSaveAttackMissionConfiguration.MissionConfigurationFile missionConfiguration : fsa.getPlanetFleetSaveObject())
         {
             vBoxPlaneta.getChildren().add(missionConfiguration.configuration().gethBox());
+        }
+        // Brak misji fleet save oraz księżyca. Ustaw alert!
+        if(vBoxPlaneta.getChildren().size() == 0 & !p.isMoon())
+        {
+            flagEmptyVboxPlaneta = true;
+            Label label = new Label("Set Mission Object");
+            label.setStyle("-fx-font-size: 18px; -fx-text-fill: white");
+            vBoxPlaneta.setStyle("-fx-background-color: tomato; -fx-alignment: center");
+            vBoxPlaneta.getChildren().add(label);
         }
     }
 
@@ -211,6 +233,7 @@ public class PlanetConfigurationController
 
     void update(Planeta p)
     {
+        vBoxPlaneta.setStyle("");
         labelNazwa.setText(p.getNazwa());
         labelWspolrzedne.setText(p.getWspolrzedne());
 
@@ -244,6 +267,16 @@ public class PlanetConfigurationController
         for(FleetSaveAttackMissionConfiguration.MissionConfigurationFile missionConfiguration : p.getAttackFleetSaveConfiguration().getMoonFleetSaveObject())
         {
             vBoxKsiezyc.getChildren().add(missionConfiguration.configuration().gethBox());
+        }
+
+        // Brak misji fleet save oraz księżyca. Ustaw alert!
+        if(vBoxPlaneta.getChildren().size() == 0 & !p.isMoon())
+        {
+            flagEmptyVboxPlaneta = true;
+            Label label = new Label("Set Mission Object");
+            label.setStyle("-fx-font-size: 18px; -fx-text-fill: white");
+            vBoxPlaneta.setStyle("-fx-background-color: tomato; -fx-alignment: center");
+            vBoxPlaneta.getChildren().add(label);
         }
     }
 }

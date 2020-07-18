@@ -29,18 +29,18 @@ public class GameTime
             }
             catch(Exception e)
             {
-                Log.printLog(GameTime.class.getName(),"Nie wczytano czasu gry. Sprawdzono ścieżkę nr "+index+".");
+//                Log.printLog(GameTime.class.getName(),"Nie wczytano czasu gry. Sprawdzono ścieżkę nr "+index+".");
             }
             finally
             {
                 index++;
-                if(bool)
-                    Log.printLog(GameTime.class.getName(),"Nie wczytano czasu gry. Powtarzam próbę.");
+//                if(bool)
+//                    Log.printLog(GameTime.class.getName(),"Nie wczytano czasu gry. Powtarzam próbę.");
                 if(index > paths.length)
                     bool = false;
             }
         }
-        Log.printLog(GameTime.class.getName(),"Nie wczytano czasu gry. Zwracam null.");
+//        Log.printLog(GameTime.class.getName(),"Nie wczytano czasu gry. Zwracam null.");
         return null;
     }
 
@@ -66,19 +66,19 @@ public class GameTime
             }
             catch(Exception e)
             {
-                Log.printLog(GameTime.class.getName(),"Nie wczytano daty gry. Sprawdzono ścieżkę nr "+index+".");
+//                Log.printLog(GameTime.class.getName(),"Nie wczytano daty gry. Sprawdzono ścieżkę nr "+index+".");
             }
             finally
             {
                 index++;
-                if(bool)
-                    Log.printLog(GameTime.class.getName(),"Nie wczytano daty gry. Powtarzam próbę.");
+//                if(bool)
+//                    Log.printLog(GameTime.class.getName(),"Nie wczytano daty gry. Powtarzam próbę.");
 
                 if(index > paths.length)
                     bool = false;
             }
         }
-        Log.printLog(GameTime.class.getName(),"Nie wczytano daty gry. Zwracam null.");
+//        Log.printLog(GameTime.class.getName(),"Nie wczytano daty gry. Zwracam null.");
         return null;
     }
 }

@@ -52,7 +52,7 @@ public class MissionConfigurationController
         else
         {
             missionConfiguration.getMissionConfigurationFile().setSelected(true);
-            hBox.setStyle("-fx-background-color: lime");
+            hBox.setStyle("-fx-background-color: tomato");
         }
     }
 }

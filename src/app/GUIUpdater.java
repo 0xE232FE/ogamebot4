@@ -4,6 +4,7 @@ package app;
 import app.czas.CzasGry;
 import app.gui.active_task.ActiveTask;
 import app.gui.controller.MainController;
+import app.log.LogFleetSaveAttack;
 import com.Waiter;
 import javafx.application.Platform;
 import org.openqa.selenium.WebDriver;
@@ -61,6 +62,7 @@ public class GUIUpdater extends Task
         if(getController() != null)
         {
             getController().getFleetSaveAttackRootController().update();
+            getController().getFleetSaveAttackRootController().updateLog();
         }
     }
 

@@ -97,6 +97,32 @@ public class Czas implements Serializable
             return second + (minute *60) + (hour *3600);
         }
 
+    /**
+     *
+     * @return Data w formacie hhmmss
+     */
+    public String toStringFileFormat()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        if(hour <10)
+            sb.append("0").append(hour);
+        else
+            sb.append(hour);
+
+        if(minute <10)
+            sb.append("0").append(minute);
+        else
+            sb.append(minute);
+
+        if(second <10)
+            sb.append("0").append(second);
+        else
+            sb.append(second);
+
+        return sb.toString();
+    }
+
         /**
          *
          * @return Czas w formacie 00:00:00.

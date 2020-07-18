@@ -1,12 +1,15 @@
 package app.gui.fleet_save_attack;
 
 import app.data.fleet_save_attack.KliknijPodglad;
+import app.log.LogFleetSaveAttack;
 import app.planety.Planety;
 import com.Log;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import ogame.planety.Planeta;
 
@@ -99,6 +102,28 @@ public class FleetSaveAttackRootController
                 return toggleButtonPlaneta;
         }
         return null;
+    }
+
+    @FXML
+    private VBox vBoxLog;
+    private int logSize = 0;
+
+    public void updateLog()
+    {
+        Label label;
+//        Log.printLog1("TMP log size : " + logSize + " Size log list: " + LogFleetSaveAttack.getLogList().size());
+        if(logSize < LogFleetSaveAttack.getLogList().size())
+        {
+            vBoxLog.getChildren().clear();
+            for(String s : LogFleetSaveAttack.get50LastLog())
+            {
+                label = new Label();
+                label.setStyle("-fx-font-size: 10px");
+                label.setText(s);
+                vBoxLog.getChildren().add(label);
+            }
+            logSize = LogFleetSaveAttack.getLogList().size();
+        }
     }
 
     static ToggleButtonPlaneta getSelectedToogleButtonPlaneta() {

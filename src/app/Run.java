@@ -6,6 +6,7 @@ import app.data.configuration.StartConfiguration;
 //import app.gui.Controller;
 import app.gui.controller.MainController;
 //import app.gui.data.Account;
+import app.log.LogFleetSaveAttack;
 import com.DifferentMethods;
 import com.Log;
 import com.Waiter;
@@ -51,7 +52,9 @@ public class Run extends Task
             {
                 if(ogameWeb.getWebDriver().getTitle().equals(serverName))
                 {
-                    Log.printLog(Run.class.getName(),"Zalogowałem się do gry na serwerze " + ogameWeb.getWebDriver().getTitle());
+                    Log.printLog(Run.class.getName(),"Zalogowałem się ponownie do gry na serwerze " + ogameWeb.getWebDriver().getTitle());
+                    LogFleetSaveAttack.addLog(new app.log.Log(Run.class.getName(),"Zalogowałem się ponownie do gry na serwerze: "
+                            + ogameWeb.getWebDriver().getTitle()));
                 }
                 else
                 {
@@ -60,6 +63,8 @@ public class Run extends Task
                     else
                     {
                         reLogin(ogameWeb.getWebDriver());
+                        LogFleetSaveAttack.addLog(new app.log.Log(Run.class.getName(),"Zalogowałem się ponownie do gry na serwerze: "
+                                + ogameWeb.getWebDriver().getTitle()));
                     }
                 }
             }
@@ -67,6 +72,8 @@ public class Run extends Task
             {
                 gameClient = new GameClient(ogameWeb.getWebDriver(), mainController);
                 Log.printLog(Run.class.getName(),"Zalogowałem się do gry na serwerze: " + ogameWeb.getWebDriver().getTitle());
+                LogFleetSaveAttack.addLog(new app.log.Log(Run.class.getName(),"Zalogowałem się do gry na serwerze: "
+                        + ogameWeb.getWebDriver().getTitle()));
                 gameClient.setRun(true);
             }
 
@@ -89,6 +96,7 @@ public class Run extends Task
     {
         Waiter.sleep(250,250);
         Log.printLog(Run.class.getName(),"Wykryto wylogowanie. Rozpoczynam proces ponownego zalogowania się.");
+        LogFleetSaveAttack.addLog(new app.log.Log(Run.class.getName(),"Wykryto wylogowanie. Rozpoczynam proces ponownego zalogowania się."));
         pressPlay(w);
         pressSecondPlay(w);
         zmienZakladke(w,serverName);

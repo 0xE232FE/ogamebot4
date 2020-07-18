@@ -361,8 +361,16 @@ public class RuchFlot
         else
         {
             czas1.setVar(nrLotu);
-            String s = w.findElement(By.xpath(czas1.toString())).getText();
-            czasLotu.setCzasString(s);
+            try
+            {
+                String s = w.findElement(By.xpath(czas1.toString())).getText();
+                czasLotu.setCzasString(s);
+            }
+            catch (Exception ec)
+            {
+                Log.printErrorLog(RuchFlot.class.getName(),"Nie wczytano czasu powrotu floty.");
+            }
+
         }
 
         if(CzasGry.getCzas().czasWSekundach() > czasLotu.getCzas().czasWSekundach())

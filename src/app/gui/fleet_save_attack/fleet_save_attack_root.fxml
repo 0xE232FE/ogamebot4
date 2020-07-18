@@ -32,6 +32,15 @@
          </padding>
       </HBox>
       <fx:include fx:id="planetConfiguration" source="planet_configuration.fxml" />
+      <ScrollPane prefHeight="227.0" prefWidth="789.0">
+         <content>
+            <VBox fx:id="vBoxLog" prefHeight="227.0" prefWidth="789.0" spacing="1.0">
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
 
    </children>
    <padding>

@@ -8,6 +8,7 @@ import app.czas.Czas;
 import app.czas.CzasGry;
 import app.czas.CzasWykonania;
 import app.data.fleet_save_attack.FleetSave;
+import app.log.LogFleetSaveAttack;
 import app.planety.Planety;
 import app.ruchflot.Loty;
 import com.Log;
@@ -37,8 +38,7 @@ public class FleetSaveAttack extends LeafTask {
     @Override
     public void execute()
     {
-
-        if (isRun())
+        if(isRun())
         {
             if (isSleepTimeOut(System.currentTimeMillis()))
             {
@@ -153,13 +153,13 @@ public class FleetSaveAttack extends LeafTask {
                                             zaIleWrociFlota = CzasGry.getCzas().czasWSekundach() + Czas.MAX_SECONDS_DAY - wrogaMisja.getDaneWyslanegoFS().getCzas().czasWSekundach();
 
                                         Log.printLog1("Aktualny czas gry " + CzasGry.getCzas() +". Czas wysłanego FS'a " + wrogaMisja.getDaneWyslanegoFS().getCzas().toString()+
-                                                ". Flota wróci za " + zaIleWrociFlota +"sek.",FleetSaveAttack.class,167);
+                                                ". Flota wróci za " + zaIleWrociFlota +"sek.",FleetSaveAttack.class,156);
 //
                                         // Jeśli zawróci flotę, to po powrocie będzie 90 sekund na ponowny lot.
                                         // wykona się gdy będzie conajmniej 90 sek. zapasu od powrotu floty do wejścia
                                         // następnego ataku
                                         Log.printLog1("Jeśli zawrócisz, flota wróci za  " + (zaIleWrociFlota)
-                                                + "sek. Do następnego ataku pozsotało "+a+"sek.",FleetSaveAttack.class,178);
+                                                + "sek. Do następnego ataku pozsotało "+a+"sek.",FleetSaveAttack.class,162);
                                         if(zaIleWrociFlota > a)
                                         {
                                             // Zawraca wysłaną flotę na FS
@@ -175,7 +175,7 @@ public class FleetSaveAttack extends LeafTask {
                                             // Sprawdza czy od powrotu floty na planetę po zawroceniu do wejścia  kolejnego ataku
                                             // będzie conajmniej 120 sek różnicy.
                                             Log.printLog1("Jeśli zawrócisz, to po powrocie na planetę pozsotanie " +
-                                                    + (a - zaIleWrociFlota) + "sek. do następnego ataku.",FleetSaveAttack.class,162);
+                                                    + (a - zaIleWrociFlota) + "sek. do następnego ataku.",FleetSaveAttack.class,178);
                                             if(a - zaIleWrociFlota > 120)
                                             {
                                                 // Jeżeli warunek został spełniony, czy następny atak wejdzie za conajmniej
@@ -192,7 +192,7 @@ public class FleetSaveAttack extends LeafTask {
                                                 // Gdyby zawrocił pozostało by za mało czasu na ponowne wysłanie.
                                                 // Sprawdzanie zaczyna się od początku.
                                                 wrogaMisja.setCounter(1);
-                                                Log.printLog1("Ustawiam counter na wartość 1.",FleetSaveAttack.class,185);
+                                                Log.printLog1("Ustawiam counter na wartość 1.",FleetSaveAttack.class,195);
                                             }
                                         }
                                     }
@@ -206,10 +206,10 @@ public class FleetSaveAttack extends LeafTask {
                                         int zaIleWrociFlota = CzasGry.getCzas().czasWSekundach() - wrogaMisja.getDaneWyslanegoFS().getCzas().czasWSekundach();
                                         Log.printLog1("Aktualny czas gry " + CzasGry.getData().toString() +" "+CzasGry.getCzas().toString()
                                                 +". Czas wysłanego FS'a " + wrogaMisja.getDaneWyslanegoFS().getData().toString() + " " +
-                                                wrogaMisja.getDaneWyslanegoFS().getCzas().toString()+ ". Flota wróci za " + zaIleWrociFlota +"sek.",FleetSaveAttack.class,231);
+                                                wrogaMisja.getDaneWyslanegoFS().getCzas().toString()+ ". Flota wróci za " + zaIleWrociFlota +"sek.",FleetSaveAttack.class,209);
 
                                         Log.printLog1("Jeśli zawrócisz, flota wróci za  " + (zaIleWrociFlota)
-                                                + "sek. Do następnego ataku pozsotało "+zaIleSekundWejdzieKolejnyAtak+"sek.",FleetSaveAttack.class,235);
+                                                + "sek. Do następnego ataku pozsotało "+zaIleSekundWejdzieKolejnyAtak+"sek.",FleetSaveAttack.class,212);
 
                                         if(zaIleWrociFlota > zaIleSekundWejdzieKolejnyAtak)
                                         {
@@ -225,7 +225,7 @@ public class FleetSaveAttack extends LeafTask {
                                             // Sprawdza czy od powrotu floty na planetę po zawroceniu do wejścia ataku
                                             // będzie conajmniej 120 sek różnicy.
                                             Log.printLog1("Jeśli zawrócisz, to po powrocie na planetę pozsotanie " +
-                                                    + (zaIleSekundWejdzieKolejnyAtak - zaIleWrociFlota) + "sek. do następnego ataku.",FleetSaveAttack.class,261);
+                                                    + (zaIleSekundWejdzieKolejnyAtak - zaIleWrociFlota) + "sek. do następnego ataku.",FleetSaveAttack.class,228);
                                             if(zaIleSekundWejdzieKolejnyAtak - zaIleWrociFlota > 120)
                                             {
                                                 if(wrogaMisja.isNaKsiezyc() ? p.isFlotaZKsiezycaWyslanaNaFS() : p.isFlotaZPlanetyWyslanaNaFS())
@@ -269,7 +269,7 @@ public class FleetSaveAttack extends LeafTask {
                                 delete = wrogaMisja;
                                 break;
                         }
-                        Log.printLog(FleetSaveAttack.class.getName(),"STOP----------------"+wrogaMisja.getId()+"--------------------");
+//                        Log.printLog(FleetSaveAttack.class.getName(),"STOP----------------"+wrogaMisja.getId()+"--------------------");
                     }
                     if(delete != null)
                     {
@@ -299,6 +299,8 @@ public class FleetSaveAttack extends LeafTask {
                 }
             }
         }
+
+        saveLog();
     }
 
     /**
@@ -320,6 +322,7 @@ public class FleetSaveAttack extends LeafTask {
         Waiter.sleep(50,50);
         Wspolrzedne wspolrzedne;
         FleetSave fleetSave = null;
+
         if(FlotaI.isAnyShips(OgameWeb.webDriver))
         {
             FlotaI.chooseAllShips(OgameWeb.webDriver);
@@ -345,6 +348,9 @@ public class FleetSaveAttack extends LeafTask {
                 else
                 {
                     fleetSave  = p.getAttackFleetSaveConfiguration().getRandomMoonMissionConfiguration();
+                    // Lista obiektów na FS'a jest pusta
+                    if(fleetSave == null)
+                        fleetSave = new FleetSave("Stacjonuj",p.getWspolrzedne(),0);
                     wspolrzedne = new Wspolrzedne(fleetSave.getWspolrzedne());
                     FlotaII.setGalaxy(OgameWeb.webDriver,wspolrzedne.getGalaktyka());
                     FlotaII.setUklad(OgameWeb.webDriver,wspolrzedne.getUklad());
@@ -384,6 +390,8 @@ public class FleetSaveAttack extends LeafTask {
                     else
                     {
                         fleetSave  = p.getAttackFleetSaveConfiguration().getRandomPlanetaMissionConfiguration();
+                        if(fleetSave == null)
+                            fleetSave = new FleetSave("Stacjonuj",p.getWspolrzedne(),1);
                         wspolrzedne = new Wspolrzedne(fleetSave.getWspolrzedne());
                         FlotaII.setGalaxy(OgameWeb.webDriver,wspolrzedne.getGalaktyka());
                         FlotaII.setUklad(OgameWeb.webDriver,wspolrzedne.getUklad());
@@ -405,6 +413,8 @@ public class FleetSaveAttack extends LeafTask {
                 else
                 {
                     fleetSave  = p.getAttackFleetSaveConfiguration().getRandomPlanetaMissionConfiguration();
+//                    if(fleetSave == null)
+//                        fleetSave = new FleetSave("Stacjonuj",p.getWspolrzedne(),0);
                     wspolrzedne = new Wspolrzedne(fleetSave.getWspolrzedne());
                     FlotaII.setGalaxy(OgameWeb.webDriver,wspolrzedne.getGalaktyka());
                     FlotaII.setUklad(OgameWeb.webDriver,wspolrzedne.getUklad());
@@ -447,6 +457,16 @@ public class FleetSaveAttack extends LeafTask {
 
             Log.printLog(FleetSaveAttack.class.getName(),"Dane wysłanego FS'a z "+ (moon ? "księżyca " : "planety ")
                     + p.getWspolrzedne() +"\n "+ wrogaMisja.getDaneWyslanegoFS().toString());
+//            LogFleetSaveAttack.addLog(LogFleetSaveAttack.log(FleetSaveAttack.class,
+//                    "Wysłano FS'a z " + (moon ? "księżyc " : "planeta ")
+//                            + p.getWspolrzedne() + " Dane FS'a: Cel - "+wrogaMisja.getDaneWyslanegoFS().getObiektLotu()+
+//                    " Data - " + wrogaMisja.getDaneWyslanegoFS().getData().toString() + " Czas - " +
+//                            wrogaMisja.getDaneWyslanegoFS().getCzas().toString()));
+            LogFleetSaveAttack.addLog(new app.log.Log(FleetSaveAttack.class.getName(),
+                    "Wysłano FS'a z " + (moon ? "księżyc " : "planeta ")
+                            + p.getWspolrzedne() + " Dane FS'a: Cel - "+wrogaMisja.getDaneWyslanegoFS().getObiektLotu()+
+                            " Data - " + wrogaMisja.getDaneWyslanegoFS().getData().toString() + " Czas - " +
+                            wrogaMisja.getDaneWyslanegoFS().getCzas().toString()));
 
             if(moon)
                 p.setFlotaZKsiezycaWyslanaNaFS(true);
@@ -454,8 +474,17 @@ public class FleetSaveAttack extends LeafTask {
                 p.setFlotaZPlanetyWyslanaNaFS(true);
         }
         else
+        {
+//            LogFleetSaveAttack.addLog(LogFleetSaveAttack.log(FleetSaveAttack.class,
+//                    "Nie wysłano FS'a z " + (moon ? "księżyc " : "planeta ")
+//                + p.getWspolrzedne() + " z powodu braku statków na planecie."));
+            LogFleetSaveAttack.addLog(new app.log.Log(FleetSaveAttack.class.getName(),
+                    "Nie wysłano FS'a z " + (moon ? "księżyc " : "planeta ")
+                            + p.getWspolrzedne() + " z powodu braku statków na planecie."));
             Log.printLog(FleetSaveAttack.class.getName(),"Brak statków na "+ (moon ? "księżyc " : "planeta ")
                     + p.getWspolrzedne());
+        }
+
 
         Log.printLog(FleetSaveAttack.class.getName(),"Zakończyłem wysyłanie FS'a z "+ (moon ? "księżyca " : "planety ")
                 + p.getWspolrzedne());
@@ -479,6 +508,13 @@ public class FleetSaveAttack extends LeafTask {
         Log.printLog(FleetSaveAttack.class.getName(),"Zawrócono FS'a z "+ wrogMisja.getWspolrzedne() +
                 (wrogMisja.isNaPlanete() ? " PLANETA" : " KSIĘZYC"));
 
+        LogFleetSaveAttack.addLog(new app.log.Log(FleetSaveAttack.class.getName(),
+                "Zawrócono FS'a z "+ wrogMisja.getWspolrzedne() +
+                        (wrogMisja.isNaPlanete() ? " PLANETA" : " KSIĘZYC")));
+//        LogFleetSaveAttack.addLog(LogFleetSaveAttack.log(FleetSaveAttack.class,
+//                "Zawrócono FS'a z "+ wrogMisja.getWspolrzedne() +
+//                        (wrogMisja.isNaPlanete() ? " PLANETA" : " KSIĘZYC")));
+
         if(wrogMisja.isNaKsiezyc())
             p.setFlotaZKsiezycaWyslanaNaFS(false);
         else
@@ -498,5 +534,30 @@ public class FleetSaveAttack extends LeafTask {
         Log.printLog(FleetSaveAttack.class.getName(),"Sprawdzam czy jest flota na "+ p.getWspolrzedne() + " " +
                 (b ? " Flota jest na planecie." : " Brak floty na planecie."));
         return  b;
+    }
+
+    private void saveLog()
+    {
+        if(!LogFleetSaveAttack.getCzasWykonania().isActive())
+        {
+            if(CzasGry.getCzas().czasWSekundach() > 0)
+            {
+                LogFleetSaveAttack.getCzasWykonania().setActive(true);
+                LogFleetSaveAttack.getCzasWykonania().setCzasString(CzasGry.getCzas().toString());
+                LogFleetSaveAttack.getCzasWykonania().setDataString(CzasGry.getData().toString());
+                LogFleetSaveAttack.setFileNamePart1(CzasGry.getCzas(),CzasGry.getData());
+                LogFleetSaveAttack.setFileNamePart2(CzasGry.getCzas(),CzasGry.getData());
+            }
+        }
+        else
+        {
+            if(LogFleetSaveAttack.getCzasWykonania().ileMinelo(CzasGry.getCzas(),CzasGry.getData()) > 600)
+            {
+                LogFleetSaveAttack.setFileNamePart2(CzasGry.getCzas(),CzasGry.getData());
+                LogFleetSaveAttack.getCzasWykonania().setCzasString(CzasGry.getCzas().toString());
+                LogFleetSaveAttack.getCzasWykonania().setDataString(CzasGry.getData().toString());
+                LogFleetSaveAttack.save();
+            }
+        }
     }
 }

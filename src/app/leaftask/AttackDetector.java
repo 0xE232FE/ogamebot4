@@ -6,6 +6,7 @@ import app.atak.WrogieMisje;
 import app.czas.CzasGry;
 import app.czas.CzasWykonania;
 import app.data.fleet_save_attack.KliknijPodglad;
+import app.log.LogFleetSaveAttack;
 import com.Log;
 import com.Waiter;
 import ogame.LeftMenu;
@@ -56,10 +57,10 @@ public class AttackDetector extends LeafTask
                     }
                     FleetSaveAttack.attack = true;
                 }
-                else
-                {
+//                else
+//                {
 //                    Log.printLog(Attack.class.getName(), "Brak ataku.");
-                }
+//                }
                 setLastTimeExecute(System.currentTimeMillis());
 
                 klikPodglad();
@@ -106,13 +107,28 @@ public class AttackDetector extends LeafTask
 //            Log.printLog(AttackDetector.class.getName(),"Aktualna data "+CzasGry.getData().toString() + " Data ostatniego wykonania "
 //            + czasWykonaniaKlikPodglad.getData() + " Aktualny czas " + CzasGry.getCzas().toString() + " Czas ostatniego wykonania " +
 //                    czasWykonaniaKlikPodglad.getCzas().toString() +" \n Różnica " + (CzasGry.getCzas().czasWSekundach() - czasWykonaniaKlikPodglad.getCzas().czasWSekundach()));
-            if(CzasGry.getData().toString().equals(czasWykonaniaKlikPodglad.getData().toString()) &&
-                    CzasGry.getCzas().czasWSekundach() - czasWykonaniaKlikPodglad.getCzas().czasWSekundach() >= KliknijPodglad.getCoIleSekundOdswiezyc())
+            if(CzasGry.getData().toString().equals(czasWykonaniaKlikPodglad.getData().getTommorowDate().toString()))
             {
                 LeftMenu.pressPodglad(OgameWeb.webDriver,AttackDetector.class.getName(),true);
-                Log.printLog(AttackDetector.class.getName(),"Kliknięto Podgląd, żeby odświeżyć stronę.");
+                Log.printLog(AttackDetector.class.getName(),"Kliknięto Podgląd, żeby odświeżyć stronę. Zaaktualizowano " +
+                        "datę na kolejny dzień "+CzasGry.getData().toString());
+                LogFleetSaveAttack.addLog(new app.log.Log(AttackDetector.class.getName(),"Odświeżono stronę poprzez kliknięcie w podgląd. "));
+//                LogFleetSaveAttack.addLog(LogFleetSaveAttack.log(AttackDetector.class,"Odświeżono stronę poprzez kliknięcie w podgląd. "));
                 czasWykonaniaKlikPodglad.setCzasString(CzasGry.getCzas().toString());
                 czasWykonaniaKlikPodglad.setDataString(CzasGry.getData().toString());
+            }
+            else
+            {
+                if(CzasGry.getData().toString().equals(czasWykonaniaKlikPodglad.getData().toString()) &&
+                        CzasGry.getCzas().czasWSekundach() - czasWykonaniaKlikPodglad.getCzas().czasWSekundach() >= KliknijPodglad.getCoIleSekundOdswiezyc())
+                {
+                    LeftMenu.pressPodglad(OgameWeb.webDriver,AttackDetector.class.getName(),true);
+                    Log.printLog(AttackDetector.class.getName(),"Kliknięto Podgląd, żeby odświeżyć stronę.");
+                    LogFleetSaveAttack.addLog(new app.log.Log(AttackDetector.class.getName(),"Odświeżono stronę poprzez kliknięcie w podgląd. "));
+//                    LogFleetSaveAttack.addLog(LogFleetSaveAttack.log(AttackDetector.class,"Odświeżono stronę poprzez kliknięcie w podgląd. "));
+                    czasWykonaniaKlikPodglad.setCzasString(CzasGry.getCzas().toString());
+                    czasWykonaniaKlikPodglad.setDataString(CzasGry.getData().toString());
+                }
             }
         }
     }
