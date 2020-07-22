@@ -14,6 +14,7 @@ public class Header {
                 "/html/body/div[5]/div[3]/div[2]/div[2]/form/div/div[1]/h2",
                 "/html/body/div[5]/div[3]/div[2]/div/div[1]/div[1]/div[2]/h2/a/p",
                 "/html/body/div[5]/div[3]/div[2]/div/header/h2",
+                "/html/body/div[5]/div[3]/div[2]/div[3]/div/div[1]/h2",
                 "/html/body/div[5]/div[3]/div[2]/div[1]/div/div[2]/h2",
                 "/html/body/div[5]/div[3]/div[2]/div/div/header/h2"
         };

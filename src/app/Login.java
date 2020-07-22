@@ -3,11 +3,8 @@ package app;
 import app.data.accounts.Accounts;
 import com.DifferentMethods;
 import com.Log;
-import ogame.GameTime;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import com.Waiter;
+import org.openqa.selenium.*;
 
 import java.util.Set;
 
@@ -26,7 +23,7 @@ class Login
         //wpisuje hasło.
         setPassword(webDriver,Accounts.getSelected().getPassword());
         //sprawdza czy pojawiła się reklama i ją zamyka.
-        closeAd(webDriver);
+        closeAd();
         //klika przycisk login.
         pressLogin(webDriver);
         //po załadowaniu sie nowej strony klika przycisk graj.
@@ -55,36 +52,27 @@ class Login
         run.setFirst();
     }
 
-    private void closeAd(WebDriver webDriver)
+    /*
+    Zamyka wyświetloną reklamę w oknie wpisywania loginu lub w oknie wybierania serwera.
+     */
+    private boolean closeAd()
     {
-        int counter = 0;
-        while(true)
+        try
         {
-            boolean a = GameClient.isElementPresent(By.className("openX_int_closeButton"),webDriver);
-            if(a)
-            {
-                Log.printLog(Login.class.getName(),"Znaleziono reklamę, zamykam.");
-                WebElement x = webDriver.findElement(By.className("openX_int_closeButton"));
-                x.findElement(By.tagName("a")).click();
-                return;
-            }
-            counter++;
-
-            try
-            {
-                Thread.sleep(100);
-            }
-            catch (InterruptedException e)
-            {
-                e.printStackTrace();
-            }
-            if(counter > 10)
-            {
-//                Log.printLog(Login.class.getName(),"Nie znaleziono reklamy.");
-                return;
-            }
+            WebElement x = OgameWeb.webDriver.findElement(By.className("openX_int_closeButton"));
+            if(x.isDisplayed())
+                Log.printLog(Login.class.getName(),"Reklama jest widoczna.");
+            else
+                Log.printLog(Login.class.getName(),"Reklama jest nie widoczna.");
+            x.findElement(By.tagName("a")).click();
+            Log.printLog(Login.class.getName(),"Znaleziono rekląmę. Kliknięto zamknij.");
+            return true;
         }
-
+        catch (Exception e)
+        {
+            Log.printErrorLog(Login.class.getName(),"Nie znaleziono reklamy.");
+        }
+        return false;
     }
 
     private void setLogin(WebDriver webDriver, String login)
@@ -128,15 +116,35 @@ class Login
 
     private void pressSecondPlay(WebDriver webDriver)
     {
+        int counter = 0;
         while (true)
         {
             boolean a = isElementPresent(By.id("myAccounts"));
             if(a)
             {
+                while(!closeAd())
+                {
+                    if(counter > 10)
+                    {
+                        Log.printLog(Login.class.getName(),"Przekroczono limit prób zamknięcia reklamy.");
+                        break;
+                    }
+
+                    if(counter == 5)
+                    {
+                        webDriver.navigate().refresh();
+                        Log.printLog(Login.class.getName(),"Odświeżam stronę.");
+                        Waiter.sleep(500,1500);
+                    }
+
+                    Waiter.sleep(50,50);
+                    counter++;
+                }
                 WebElement playButton = webDriver.findElement(By.id("myAccounts"));
                 if(playButton.isDisplayed())
+                {
                     playButton.findElement(By.tagName("button")).click();
-
+                }
                 break;
             }
         }

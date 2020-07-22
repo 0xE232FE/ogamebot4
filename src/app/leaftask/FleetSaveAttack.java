@@ -441,10 +441,6 @@ public class FleetSaveAttack extends LeafTask {
                     FlotaIII.kliknijMisje(OgameWeb.webDriver,5);
                 else
                     FlotaIII.kliknijMisje(OgameWeb.webDriver,fleetSave.getMisjaInt());
-//                if(moon || p.isMoon())
-//                    FlotaIII.kliknijMisje(OgameWeb.webDriver,5);
-//                else
-//                    FlotaIII.kliknijMisje(OgameWeb.webDriver,8);
 
                 Waiter.sleep(25,25);
                 missionSelected = FlotaIII.isMissionSelected(OgameWeb.webDriver, FleetSaveAttack.class.getName());
@@ -457,14 +453,10 @@ public class FleetSaveAttack extends LeafTask {
 
             Log.printLog(FleetSaveAttack.class.getName(),"Dane wysłanego FS'a z "+ (moon ? "księżyca " : "planety ")
                     + p.getWspolrzedne() +"\n "+ wrogaMisja.getDaneWyslanegoFS().toString());
-//            LogFleetSaveAttack.addLog(LogFleetSaveAttack.log(FleetSaveAttack.class,
-//                    "Wysłano FS'a z " + (moon ? "księżyc " : "planeta ")
-//                            + p.getWspolrzedne() + " Dane FS'a: Cel - "+wrogaMisja.getDaneWyslanegoFS().getObiektLotu()+
-//                    " Data - " + wrogaMisja.getDaneWyslanegoFS().getData().toString() + " Czas - " +
-//                            wrogaMisja.getDaneWyslanegoFS().getCzas().toString()));
             LogFleetSaveAttack.addLog(new app.log.Log(FleetSaveAttack.class.getName(),
-                    "Wysłano FS'a z " + (moon ? "księżyc " : "planeta ")
-                            + p.getWspolrzedne() + " Dane FS'a: Cel - "+wrogaMisja.getDaneWyslanegoFS().getObiektLotu()+
+                    "Wysłano FS'a z " + (moon ? "KSIĘŻYC " : "PLANETA ")
+                            + p.getWspolrzedne() + " Dane FS'a: Cel - "+wrogaMisja.getDaneWyslanegoFS().getObiektLotu().getWspolrzedne() +
+                            (wrogaMisja.getDaneWyslanegoFS().getObiektLotu().isKsiezyc() ? "KSIĘŻYC " : "PLANETA ") +
                             " Data - " + wrogaMisja.getDaneWyslanegoFS().getData().toString() + " Czas - " +
                             wrogaMisja.getDaneWyslanegoFS().getCzas().toString()));
 
@@ -475,9 +467,6 @@ public class FleetSaveAttack extends LeafTask {
         }
         else
         {
-//            LogFleetSaveAttack.addLog(LogFleetSaveAttack.log(FleetSaveAttack.class,
-//                    "Nie wysłano FS'a z " + (moon ? "księżyc " : "planeta ")
-//                + p.getWspolrzedne() + " z powodu braku statków na planecie."));
             LogFleetSaveAttack.addLog(new app.log.Log(FleetSaveAttack.class.getName(),
                     "Nie wysłano FS'a z " + (moon ? "księżyc " : "planeta ")
                             + p.getWspolrzedne() + " z powodu braku statków na planecie."));
@@ -511,9 +500,6 @@ public class FleetSaveAttack extends LeafTask {
         LogFleetSaveAttack.addLog(new app.log.Log(FleetSaveAttack.class.getName(),
                 "Zawrócono FS'a z "+ wrogMisja.getWspolrzedne() +
                         (wrogMisja.isNaPlanete() ? " PLANETA" : " KSIĘZYC")));
-//        LogFleetSaveAttack.addLog(LogFleetSaveAttack.log(FleetSaveAttack.class,
-//                "Zawrócono FS'a z "+ wrogMisja.getWspolrzedne() +
-//                        (wrogMisja.isNaPlanete() ? " PLANETA" : " KSIĘZYC")));
 
         if(wrogMisja.isNaKsiezyc())
             p.setFlotaZKsiezycaWyslanaNaFS(false);

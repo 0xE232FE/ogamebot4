@@ -97,4 +97,24 @@ public class GameClient extends Task
         JavascriptExecutor js = (JavascriptExecutor) w;
         js.executeScript("window.scrollTo(0, 0)");
     }
+
+    /**
+     * Klika w element
+     */
+
+    public static void clickOnElement(WebDriver w,WebElement e)
+    {
+        JavascriptExecutor executor = (JavascriptExecutor)w;
+        executor.executeScript("arguments[0].click();", e);
+    }
+
+    /**
+     * Ukrywa element
+     */
+
+    public static void hideElement(WebDriver w,WebElement e)
+    {
+        JavascriptExecutor executor = (JavascriptExecutor)w;
+        executor.executeScript("arguments[0].style.visibility='hidden'", e);
+    }
 }

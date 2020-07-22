@@ -27,6 +27,20 @@ public class Zdarzenie
     }
 
     /**
+     * Pobiera informację, czy wskazane zdarzenie, to cześć Ataku Związku.
+     * @param w WebDriver.
+     * @param nr Numer misji na liście.
+     * @return Jeżeli zdarzenie to część ataku związku zwróci <b>true</b> w innym wypadku false.
+     */
+    public static boolean isPartnerInfoOfAllianceAtak(WebDriver w, int nr)
+    {
+        zdarzenie.setVar(nr);
+        WebElement e = w.findElement(By.xpath(zdarzenie.toString()));
+
+        return e.getAttribute("class").contains("partnerInfo");
+    }
+
+    /**
      * Pobiera id misji. Jest to niepowtarzalny identyfikator dla każdej misji w Boxie Zdarzeń.
      * @param w WebDriver
      * @param nr Numer misji na liście.
@@ -36,7 +50,16 @@ public class Zdarzenie
     {
         zdarzenie.setVar(nr);
         WebElement e = w.findElement(By.xpath(zdarzenie.toString()));
-        return Integer.valueOf(e.getAttribute("id").split("-")[1]);
+
+        StringBuilder sb = new StringBuilder(e.getAttribute("id").split("-")[1]);
+        if(sb.toString().contains("union"))
+        {
+            sb.delete(0,5);
+            return Integer.valueOf(sb.toString());
+        }
+        else
+            return Integer.valueOf(sb.toString());
+//            return Integer.valueOf(e.getAttribute("id").split("-")[1]);
     }
 
     /**
@@ -52,7 +75,7 @@ public class Zdarzenie
 
         WebElement e = w.findElement(By.xpath(tmp.append("/td[2]")));
         String [] tab = e.getText().split(" ");
-
+//        Log.printLog1("Czas z boxu zdarzeń: " + tab[0], Zdarzenie.class,64);
         return tab[0];
     }
 

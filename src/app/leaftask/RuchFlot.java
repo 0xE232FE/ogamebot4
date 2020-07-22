@@ -26,21 +26,20 @@ public class RuchFlot extends LeafTask {
     public void execute() {
         if (isRun()) {
             if (isSleepTimeOut(System.currentTimeMillis())) {
-
-                LeftMenu.pressRuchFlot(getW(),RuchFlot.class.getName());
-
-                List<Lot> tmp = ogame.ruchflot.RuchFlot.daneLotow(getW());
-                updateLoty(tmp);
-
-                setLastTimeExecute(System.currentTimeMillis());
-                setSleep(nextTimeExecute(tmp));
-                Log.printLog(RuchFlot.class.getName(),"Ustawiono sleep time na "+getSleep() + " msek.");
-
-                for(Lot l : Loty.listaLotow)
+                if(LeftMenu.pressRuchFlot(getW(),RuchFlot.class.getName()))
                 {
-                    Log.printLog(RuchFlot.class.getName(),l.toString());
-                }
+                    List<Lot> tmp = ogame.ruchflot.RuchFlot.daneLotow(getW());
+                    updateLoty(tmp);
 
+                    setLastTimeExecute(System.currentTimeMillis());
+                    setSleep(nextTimeExecute(tmp));
+                    Log.printLog(RuchFlot.class.getName(),"Ustawiono sleep time na "+getSleep() + " msek.");
+
+                    for(Lot l : Loty.listaLotow)
+                    {
+                        Log.printLog(RuchFlot.class.getName(),l.toString());
+                    }
+                }
             }
 
 //            Log.printLog(RuchFlot.class.getName(),"Rozpoczynam sprawdzanie czy zmieniła się ilość lotów....");

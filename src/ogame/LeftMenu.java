@@ -168,68 +168,32 @@ public class LeftMenu
     }
 
 
-    public static void pressRuchFlot(WebDriver w, String className)
+    public static boolean pressRuchFlot(WebDriver w, String className)
     {
         if(isDobryHeaderWyswietlony(w,"Ruch floty", className))
         {
             Log.printLog(className,"Ruch flot jest wybrany.");
+            return true;
         }
         else
         {
             Waiter.sleep(50,50);
-            WebElement e = w.findElement(By.xpath("/html/body/div[5]/div[2]/div[3]/div/ul/li[9]/span/a/div"));
-            e.click();
-            Log.printLog(className,"Klikam ruch flot.");
-        }
-    }
-
-    /**
-     * Należy używać metod z klasy Header
-     */
-    @Deprecated
-    private static String getTytulHeader(WebDriver w, String className)
-    {
-        String [] paths = {
-                "/html/body/div[2]/div[2]/div[2]/div[2]/div[2]/div[1]/h2",
-                "/html/body/div[5]/div[3]/div[2]/div[2]/form/div/div[1]/h2",
-                "/html/body/div[5]/div[3]/div[2]/div/div[1]/div[1]/div[2]/h2/a/p",
-                "/html/body/div[5]/div[3]/div[2]/div/header/h2",
-                "/html/body/div[5]/div[3]/div[2]/div[1]/div/div[2]/h2",
-                "/html/body/div[5]/div[3]/div[2]/div/div/header/h2"
-        };
-
-        WebElement e;
-        int index = 0;
-        boolean bool = true;
-
-        while(bool)
-        {
             try
             {
-                e = w.findElement(By.xpath(paths[index]));
-                bool = false;
-                return  e.getText();
+                WebElement e = w.findElement(By.xpath("/html/body/div[5]/div[2]/div[3]/div/ul/li[9]/span/a/div"));
+                e.click();
+                Log.printLog(className,"Klikam ruch flot.");
+                return true;
             }
-            catch(Exception ex)
+            catch (Exception e)
             {
-//                Log.printLog("Nie wczytano Tytuł Header.");
-            }
-            finally
-            {
-                index++;
-                if(index >= paths.length)
-                {
-                    bool = false;
-                    Log.printLog(className,"Sprawdzono wszystkie ścieżki, żadna nie pasuje.");
-                }
-
-//                if(bool)
-//                    Log.printLog(className, "Nie wczytano Tytuł Header. Zmieniam ścieżkę "+ index);
+                Log.printErrorLog(LeftMenu.class.getName(),"Wystąpił nieznany błąd podczas próby kliknięcia.");
             }
         }
-        Log.printLog(className, "Nie jest wyświetlony nagłówek Menu.");
-        return null;
+        return false;
     }
+
+
 
     private static String getTytulHeader(WebDriver w, String className, String czescTresciNaglowka)
     {

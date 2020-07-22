@@ -44,11 +44,16 @@ public class RuchFlotZdarzenia
         {
             if(Zdarzenie.eventType(w,i) == 1 && Zdarzenie.wrogiAtak(w,i))
             {
-                Log.printLog(RuchFlotZdarzenia.class.getName(),"Rozpoczynam pobieranie misji wrogiej z pozycji " + i + ".");
-                WrogaMisja wrogaMisja = new WrogaMisja(new Czas(Zdarzenie.time(w,i)),Zdarzenie.naPlanete(w,i),
-                        Zdarzenie.wspolrzedneCelu(w,i),Zdarzenie.id(w,i));
-                tmp.add(wrogaMisja);
-                Log.printLog(RuchFlotZdarzenia.class.getName(),"Zakończono pobieranie misji wrogiej.");
+                if(Zdarzenie.isPartnerInfoOfAllianceAtak(w,i))
+                    Log.printLog(RuchFlotZdarzenia.class.getName(),"Wskazane zdarzenie nr "+ i + " to jedna z flot ataku w związku.");
+                else
+                {
+                    Log.printLog(RuchFlotZdarzenia.class.getName(),"Rozpoczynam pobieranie misji wrogiej z pozycji " + i + ".");
+                    WrogaMisja wrogaMisja = new WrogaMisja(new Czas(Zdarzenie.time(w,i)),Zdarzenie.naPlanete(w,i),
+                            Zdarzenie.wspolrzedneCelu(w,i),Zdarzenie.id(w,i));
+                    tmp.add(wrogaMisja);
+                    Log.printLog(RuchFlotZdarzenia.class.getName(),"Zakończono pobieranie misji wrogiej.");
+                }
             }
         }
 

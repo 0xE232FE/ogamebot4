@@ -19,6 +19,7 @@ public class WrogaMisja
     private boolean naPlanete;
     private final String wspolrzedne;
     private final int id;
+
     /*
         0 - wykryto atak
         1 - wysłano FS'a
