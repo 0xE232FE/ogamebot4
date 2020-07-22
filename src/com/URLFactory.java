@@ -94,12 +94,12 @@ public class URLFactory {
      *             * @return Nowa scieżka
      */
     public String path(int nr, String path) {
-        StringBuilder s = new StringBuilder("file:/");
+        StringBuilder s = new StringBuilder("jar:file:/");
 
         for (int i = 0; i < packages.size() - nr; i++) {
             s.append(packages.get(i)).append("/");
         }
-        return s + path;
+        return s.toString() + path;
     }
 
     /**

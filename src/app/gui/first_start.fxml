@@ -11,9 +11,9 @@
    </padding>
    <children>
       <Label text="Podaj ścieżkę instalacji" />
-      <TextField fx:id="editTextMainPath" promptText="C:\ogamebot4" />
+      <TextField fx:id="editTextMainPath" promptText="C:\ogamebot4" text="C:\ogamebot4" />
       <Label text="Podaj ścieżkę sterownika przeglądarki" />
-      <TextField fx:id="editTextDriverPath" promptText="C:\...\chromedriver.exe" />
+      <TextField fx:id="editTextDriverPath" promptText="C:\...\chromedriver.exe" text="C:\chromedriver.exe" />
       <HBox prefWidth="200.0" spacing="5.0">
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

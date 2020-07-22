@@ -1,6 +1,7 @@
 package app;
 
 import app.data.configuration.Configuration;
+import com.Log;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,7 @@ public class Main extends Application {
         if(Configuration.firstConfiguration)
         {
             Parent root = FXMLLoader.load(getClass().getResource("gui/first_start.fxml"));
+            Log.printLog(Main.class.getName(),getClass().getResource("gui/first_start.fxml").toString());
             primaryStage.setTitle("Pierwsze uruchomienie.");
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
@@ -30,6 +32,7 @@ public class Main extends Application {
         else
         {
             Parent root = FXMLLoader.load(getClass().getResource("gui/start.fxml"));
+            Log.printLog(Main.class.getName(),getClass().getResource("gui/start.fxml").toString());
             primaryStage.setTitle("OgameBot");
             primaryStage.setScene(new Scene(root));
             primaryStage.show();

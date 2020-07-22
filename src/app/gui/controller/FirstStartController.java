@@ -31,6 +31,7 @@ public class FirstStartController
     @FXML
     private Label labelError;
 
+
     @FXML
     void save() throws IOException {
         Stage stage = (Stage) buttonRun.getScene().getWindow();
@@ -39,6 +40,7 @@ public class FirstStartController
 
         File file = new File(s);
         File file2 = new File(s2);
+        // ścieżka do sterowników
         if(file2.exists())
         {
             if(file.exists())
@@ -51,6 +53,7 @@ public class FirstStartController
                 Stage primaryStage = new Stage();
                 URLFactory urlFactory = new URLFactory(getClass().getResource("").toString());
                 URL url = new URL(urlFactory.path(1,"start.fxml"));
+                Log.printLog(FirstStartController.class.getName(),"URL : "+url.toString());
                 Parent root = FXMLLoader.load(url);
                 primaryStage.setTitle("OgameBot");
                 primaryStage.setScene(new Scene(root));
@@ -61,7 +64,6 @@ public class FirstStartController
                     System.exit(0);
                 });
 
-
                 stage.close();
             }
             else
@@ -69,6 +71,13 @@ public class FirstStartController
                 file.mkdir();
                 labelError.setText("Utworzono nową ścieżke gry "+ s);
                 Log.printLog(FirstStartController.class.getName(),"Utworzono nową ścieżke gry "+ s);
+
+                Configuration.saveConfiguration(s,s2);
+                Configuration.save();
+
+                labelError.setText("Zapisano wprowadzone dane.");
+
+                buttonRun.setDisable(false);
             }
         }
         else
@@ -79,7 +88,24 @@ public class FirstStartController
     }
 
     @FXML
-    void run() {
+    void run() throws IOException {
+        Stage stage = (Stage) buttonRun.getScene().getWindow();
 
+        labelError.setText("Zapisano wprowadzone dane.");
+        Stage primaryStage = new Stage();
+        URLFactory urlFactory = new URLFactory(getClass().getResource("").toString());
+        URL url = new URL(urlFactory.path(1,"start.fxml"));
+        Log.printLog(FirstStartController.class.getName(),"URL : "+url.toString());
+        Parent root = FXMLLoader.load(url);
+        primaryStage.setTitle("OgameBot");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+        primaryStage.setOnCloseRequest(e ->
+        {
+            Platform.exit();
+            System.exit(0);
+        });
+
+        stage.close();
     }
 }
