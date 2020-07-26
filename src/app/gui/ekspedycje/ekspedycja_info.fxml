@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="777.0" spacing="2.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.ekspedycje.EkspedycjainfoController">
+   <children>
+      <Label fx:id="labelCzasStartu" prefWidth="100.0" text="Czas startu">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelCzasRozpoczecia" prefWidth="100.0" text="Czas rozpoczęcia">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelCzasZakonczenia" prefWidth="100.0" text="Czas zakończenia">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelCzasPowrotu" prefWidth="100.0" text="Czas powrotu">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelIdLotu" prefWidth="100.0" text="Id lotu">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelZostalaOpozniona" prefWidth="100.0" text="Została opóźniona">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+   </children>
+   <padding>
+      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+   </padding>
+</HBox>

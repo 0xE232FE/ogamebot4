@@ -50,6 +50,11 @@
                   <fx:include fx:id="fleetSaveAttackRoot" source="fleet_save_attack/fleet_save_attack_root.fxml" />
                </content>
             </Tab>
+            <Tab text="Ekspedycje" >
+               <content>
+                  <fx:include fx:id="ekspedycjeTab" source="ekspedycje/ekspedycje_tab.fxml" />
+               </content>
+            </Tab>
          </tabs></TabPane>
       <Separator orientation="VERTICAL" />
       <VBox prefWidth="178.0">

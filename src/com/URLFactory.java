@@ -94,8 +94,8 @@ public class URLFactory {
      *             * @return Nowa scieżka
      */
     public String path(int nr, String path) {
-        StringBuilder s = new StringBuilder("jar:file:/");
-
+//        StringBuilder s = new StringBuilder("jar:file:/"); //todo zmienić na tą linie, gdy będzie build do pliku .jar
+        StringBuilder s = new StringBuilder("file:/");
         for (int i = 0; i < packages.size() - nr; i++) {
             s.append(packages.get(i)).append("/");
         }

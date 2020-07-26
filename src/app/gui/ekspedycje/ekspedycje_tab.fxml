@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="611.0" prefWidth="799.0" spacing="2.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.ekspedycje.EkspedycjeTabController">
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+   <children>
+      <VBox prefHeight="191.0" prefWidth="785.0" spacing="2.0">
+         <children>
+            <Label text="Konfiguracja Wysyłania Ekspedycji">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </Label>
+            <Separator prefWidth="200.0" />
+            <VBox prefHeight="200.0" prefWidth="777.0" spacing="2.0">
+               <children>
+                  <Label text="Określ współrzędne startu">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="769.0" spacing="5.0">
+                     <children>
+                        <Label prefWidth="50.0" text="Galaktyka">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldGalaktyka" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Label prefWidth="50.0" text="Układ">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldUklad" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Label prefWidth="50.0" text="Planeta">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldPlaneta" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Label prefWidth="50.0" text="Czas">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldCzas" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <ComboBox fx:id="comboBox" prefWidth="125.0" visibleRowCount="2" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </HBox>
+                  <Label text="Określ skład floty">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="769.0" spacing="5.0">
+                     <children>
+                        <Label prefWidth="88.0" text="Lekki myśliwiec">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldLM" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Label prefWidth="88.0" text="Ciężki myśliwiec">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldCM" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Label prefWidth="88.0" text="Krążownik">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldKR" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Label prefWidth="88.0" text="Okręt wojenny">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldOW" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Label prefWidth="88.0" text="Pancernik">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldPN" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="769.0" spacing="5.0">
+                     <children>
+                        <Label prefWidth="88.0" text="Bombowiec">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldBMB" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Label prefWidth="88.0" text="Niszczyciel">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldNI" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Label prefWidth="88.0" text="Gwiazda śmierci">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldGS" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Label prefWidth="88.0" text="Rozpruwacz">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldRZ" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Label prefWidth="88.0" text="Pionier">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldPI" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="769.0" spacing="5.0">
+                     <children>
+                        <Label prefWidth="88.0" text="Mały transporter">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldMT" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Label prefWidth="88.0" text="Duży transporter">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldDT" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Label prefWidth="88.0" text="Statek kolonizacyjny">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldSK" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Label prefWidth="88.0" text="Recykler">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldREC" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Label prefWidth="88.0" text="Sonda szpiegowska">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldSS" prefHeight="15.0" prefWidth="50.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                     </padding>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </VBox>
+            <HBox prefHeight="27.0" prefWidth="777.0" spacing="10.0">
+               <VBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#saveConfig" prefHeight="23.0" text="Save Config">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <Separator prefWidth="200.0" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="vBoxAktywneEkspedycje" prefHeight="200.0" prefWidth="789.0" spacing="2.0">
+         <children>
+            <Label prefWidth="150.0" text="Dane aktualnych ekspedycji">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="777.0" spacing="2.0">
+               <VBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+               <children>
+                  <Label prefWidth="100.0" text="Czas startu">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label prefWidth="100.0" text="Czas rozpoczęcia">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label prefWidth="100.0" text="Czas zakończenia">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label prefWidth="100.0" text="Czas powrotu">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label prefWidth="100.0" text="Id lotu">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label prefWidth="100.0" text="Została opóźniona">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </VBox>
+   </children>
+</VBox>
