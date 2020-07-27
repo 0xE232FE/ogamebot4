@@ -65,7 +65,7 @@
                               <Font size="10.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="textFieldCzas" prefHeight="15.0" prefWidth="50.0">
+                        <TextField fx:id="textFieldCzas" disable="true" prefHeight="15.0" prefWidth="50.0" text="1">
                            <font>
                               <Font size="10.0" />
                            </font>
