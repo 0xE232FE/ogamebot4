@@ -26,7 +26,7 @@ public class CloseAd extends Task {
             {
                 closeAd();
             }
-            Waiter.sleep(15*1000,30*1000);
+            Waiter.sleep(1*1000,5*1000);
         }
     }
 
@@ -43,7 +43,7 @@ public class CloseAd extends Task {
             }
             catch (Exception e)
             {
-                com.Log.printErrorLog(CloseAd.class.getName(),"Nie znaleziono reklamy.");
+//                com.Log.printErrorLog(CloseAd.class.getName(),"Nie znaleziono reklamy.");
             }
     }
 }

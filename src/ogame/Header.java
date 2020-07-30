@@ -47,8 +47,8 @@ public class Header {
                     Log.printLog(className,"Sprawdzono wszystkie ścieżki, żadna nie pasuje.");
                 }
 
-                if(bool)
-                    Log.printLog(className, "Nie wczytano Tytuł Header. Zmieniam ścieżkę "+ index);
+//                if(bool)
+//                    Log.printLog(className, "Nie wczytano Tytuł Header. Zmieniam ścieżkę "+ index);
             }
         }
         Log.printLog(className, "Nie jest wyświetlony nagłówek Menu.");

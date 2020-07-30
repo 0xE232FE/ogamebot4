@@ -26,7 +26,7 @@ public class Data implements Serializable {
         {
             day = Integer.valueOf(sb.substring(0,2));
             month = Integer.valueOf(sb.substring(3,5));
-            year = Integer.valueOf(sb.substring(6,8));
+            year = Integer.valueOf("20"+sb.substring(6,8));
         }
 
         this.data = toString();

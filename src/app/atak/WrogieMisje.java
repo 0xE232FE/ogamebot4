@@ -266,7 +266,6 @@ public class WrogieMisje
      */
     public static WrogaMisja najblizszaMisja(int id, List<WrogaMisja> misjeNaWskazaneWspolrzedne, boolean moon)
     {
-
         Data data = CzasGry.getData();
         WrogaMisja tmp = null;
         List<WrogaMisja> tmpList = new ArrayList<>();

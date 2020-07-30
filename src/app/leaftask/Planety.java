@@ -4,6 +4,7 @@ import app.LeafTask;
 import app.czas.CzasGry;
 import app.czas.CzasWykonania;
 import com.Log;
+import com.Waiter;
 import ogame.planety.ListaPlanet;
 import ogame.planety.Planeta;
 import org.openqa.selenium.WebDriver;
@@ -87,6 +88,7 @@ public class Planety extends LeafTask {
 
     private void update()
     {
+        Waiter.sleep(50,50);
         int i = 1;
         for(Planeta p : app.planety.Planety.planety)
         {

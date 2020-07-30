@@ -19,8 +19,15 @@ public class ListaPlanet
             "]/a");
     private static SciezkaWebElementu zKsiezycem = new SciezkaWebElementu("/html/body/div[5]/div[4]/div/div/div/div/div[2]/div[",
             "]/a[2]/img");
-    private static SciezkaWebElementu planetContainer = new SciezkaWebElementu("/html/body/div[5]/div[4]/div/div/div/div/div[2]/div[",
+    //Wersja do 28.07.2020
+//    private static SciezkaWebElementu planetContainer = new SciezkaWebElementu("/html/body/div[5]/div[4]/div/div/div/div/div[2]/div[",
+//            "]");
+    //Wersja do 28.07.2020
+//    private static SciezkaWebElementu planetContainer = new SciezkaWebElementu("/html/body/div[4]/div[4]/div/div/div/div/div[2]/div[",
+//            "]");
+    private static SciezkaWebElementu planetContainer = new SciezkaWebElementu("//*[@id=\"planetList\"]/div[",
             "]");
+
     private static final String HIGHTHLIGHT_PLANET = "hightlightPlanet";
     private static final String HIGHTHLIGHT_MOON = "hightlightMoon";
     private static final String CONSTRUCTION_ON_MOON = "constructionIcon moon";
@@ -102,7 +109,6 @@ public class ListaPlanet
         p.setVar(i);
         if(i <= a)
         {
-
             e = w.findElement(By.xpath(p.toString()));
             List<WebElement> etmp = e.findElements(By.tagName("a"));
 
@@ -122,7 +128,7 @@ public class ListaPlanet
      */
     public static String wspolrzedne(WebDriver w, int i)
     {
-        int a = iloscPlanet(w);
+//        int a = iloscPlanet(w);
         WebElement e;
         SciezkaWebElementu p = planetContainer;
         p.setVar(i);
@@ -201,7 +207,6 @@ public class ListaPlanet
         p.setVar(i);
         if(i <= a)
         {
-
             e = w.findElement(By.xpath(p.toString()));
             List<WebElement> etmp = e.findElements(By.tagName("a"));
 
@@ -221,7 +226,7 @@ public class ListaPlanet
      */
     public static String nazwa(WebDriver w, int i)
     {
-        int a = iloscPlanet(w);
+//        int a = iloscPlanet(w);
         WebElement e;
         SciezkaWebElementu p = planetContainer;
         p.setVar(i);
@@ -254,8 +259,6 @@ public class ListaPlanet
         return 0;
     }
 
-
-
     /**
      * Pobiera aktualną ilość skolonizowanych planet.
      */
@@ -263,7 +266,8 @@ public class ListaPlanet
     {
         String [] paths = {
                 "/html/body/div[5]/div[4]/div/div/div/div/div[1]/p/span",
-                "/html/body/div[2]/div[2]/div[2]/div[3]/div/div/div/div[1]/p/span"
+                "/html/body/div[2]/div[2]/div[2]/div[3]/div/div/div/div[1]/p/span",
+                "/html/body/div[4]/div[4]/div/div/div/div/div[1]/p/span"
         };
 
         WebElement e;
@@ -281,19 +285,19 @@ public class ListaPlanet
                 bool = false;
                 StringBuilder s = new StringBuilder(e.getText());
                 int a = s.indexOf("/");
-                String q = s.substring(0,a);
+//                String q = s.substring(0,a);
 
                 return Integer.valueOf(s.substring(0,a));
             }
             catch(Exception ex)
             {
-                Log.printErrorLog(ListaPlanet.class.getName(),"Nie wczytano ilości planet.");
+//                Log.printErrorLog(ListaPlanet.class.getName(),"Nie wczytano ilości planet.");
             }
             finally
             {
                 if(index >= paths.length)
                 {
-                    Log.printErrorLog(ListaPlanet.class.getName(),"Nie wczytano ilość planet.");
+                    Log.printErrorLog(ListaPlanet.class.getName(),"Nie wczytano ilości planet.");
                 }
                 else
                     index++;

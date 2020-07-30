@@ -115,6 +115,5 @@ public class RuchFlot extends LeafTask {
         }
         else
             return false;
-
     }
 }

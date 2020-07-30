@@ -172,7 +172,7 @@ public class FleetSaveAttackMissionConfiguration implements Serializable
             o.writeObject(this);
             o.close();
             f.close();
-            Log.printLog(Planeta.class.getName(),"Zapisano dane konfiguracji fleet save podczas ataku pod ścieżką "+pathName);
+            Log.printLog(FleetSaveAttackMissionConfiguration.class.getName(),"Zapisano dane konfiguracji fleet save podczas ataku pod ścieżką "+pathName);
             return true;
         } catch (IOException e) {
             e.printStackTrace();

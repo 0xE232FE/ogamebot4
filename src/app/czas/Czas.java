@@ -42,18 +42,28 @@ public class Czas implements Serializable
             StringBuilder sb = new StringBuilder(czas);
             try
             {
-                if(sb.charAt(7) == ' ')
+                if(sb.length() == 8)
+                {
+                    if(sb.charAt(7) == ' ')
+                    {
+                        hour = Integer.valueOf(sb.substring(0,1));
+                        minute = Integer.valueOf(sb.substring(2,4));
+                        second = Integer.valueOf(sb.substring(5,7));
+                    }
+                    else
+                    {
+                        hour = Integer.valueOf(sb.substring(0,2));
+                        minute = Integer.valueOf(sb.substring(3,5));
+                        second = Integer.valueOf(sb.substring(6,8));
+                    }
+                }
+                else if (sb.length() == 7)
                 {
                     hour = Integer.valueOf(sb.substring(0,1));
                     minute = Integer.valueOf(sb.substring(2,4));
                     second = Integer.valueOf(sb.substring(5,7));
                 }
-                else
-                {
-                    hour = Integer.valueOf(sb.substring(0,2));
-                    minute = Integer.valueOf(sb.substring(3,5));
-                    second = Integer.valueOf(sb.substring(6,8));
-                }
+
             }
             catch (Exception ex)
             {

@@ -27,9 +27,10 @@ public class AttackDetector extends LeafTask
     @Override
     public void execute() {
 
-        if (isRun()) {
-            if (isSleepTimeOut(System.currentTimeMillis())) {
-
+        if (isRun())
+        {
+            if(isSleepTimeOut(System.currentTimeMillis()))
+            {
                 boolean attack = Attack.detected(getW());
 
                 if(attack)

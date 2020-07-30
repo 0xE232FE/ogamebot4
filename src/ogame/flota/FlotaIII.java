@@ -1,6 +1,7 @@
 package ogame.flota;
 
 import app.GameClient;
+import app.czas.CzasLotu;
 import com.Log;
 import com.Waiter;
 import ogame.Header;
@@ -31,7 +32,6 @@ public class FlotaIII
      */
     public static void kliknijMisje(WebDriver w, int nr)
     {
-//        if(isDobryHeaderWyswietlony(w,"Wyślij flotę III", FlotaIII.class.getName()))
         if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę III", FlotaIII.class.getName()))
         {
             WebElement e;
@@ -90,7 +90,6 @@ public class FlotaIII
      */
     public static void clickWszystkieSurowce(WebDriver w)
     {
-//        if(isDobryHeaderWyswietlony(w,"Wyślij flotę III", FlotaIII.class.getName()))
         if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę III", FlotaIII.class.getName()))
         {
             WebElement e = w.findElement(By.xpath("/html/body/div[5]/div[3]/div[2]/div[3]/div/div[4]/div[3]/div[2]/form/div[1]/div[2]/div[4]/a/img"));
@@ -107,7 +106,6 @@ public class FlotaIII
      */
     public static void wyslijFlote(WebDriver w)
     {
-//        if(isDobryHeaderWyswietlony(w,"Wyślij flotę III", FlotaIII.class.getName()))
         if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę III", FlotaIII.class.getName()))
         {
             WebElement e = w.findElement(By.xpath("/html/body/div[5]/div[3]/div[2]/div[3]/div/div[4]/div[3]/div[2]/form/div[2]/a[2]/span"));
@@ -117,53 +115,6 @@ public class FlotaIII
         }
         else
             Log.printLog(FlotaIII.class.getName(),"Nie znaleziono WebElementu - Wyślij flotę.");
-    }
-
-
-
-    private static String getTytulHeader(WebDriver w, String className)
-    {
-        String [] paths = {
-                "/html/body/div[5]/div[3]/div[2]/div[3]/div/div[1]/h2",
-        };
-
-        WebElement e;
-        int index = 0;
-        boolean bool = true;
-
-        while(bool)
-        {
-            try
-            {
-                e = w.findElement(By.xpath(paths[index]));
-                bool = false;
-                return  e.getText();
-            }
-            catch(Exception ex)
-            {
-                index++;
-            }
-            finally
-            {
-                if(index >= paths.length)
-                {
-                    bool = false;
-                    Log.printLog(className,"Sprawdzono wszystkie ścieżki, żadna nie pasuje.");
-                }
-
-                if(bool)
-                    Log.printLog(className, "Nie wczytano Tytuł Header. Zmieniam ścieżkę "+ index);
-            }
-        }
-        Log.printLog(className, "Nie jest wyświetlony nagłówek Menu.");
-        return null;
-    }
-
-    @Deprecated
-    private static boolean isDobryHeaderWyswietlony(WebDriver w, String czescTresciNaglowka, String className)
-    {
-        String s = getTytulHeader(w,className);
-        return s != null && s.contains(czescTresciNaglowka);
     }
 
     /**
@@ -217,7 +168,6 @@ public class FlotaIII
      */
     public static boolean isMissionSelected(WebDriver w, String className)
     {
-//        if(isDobryHeaderWyswietlony(w,"Wyślij flotę III", FlotaIII.class.getName()))
         if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę III", FlotaIII.class.getName()))
         {
             WebElement e;
@@ -234,5 +184,57 @@ public class FlotaIII
         }
         Log.printLog(className,"Nie wybrano żadnej misji.");
         return false;
+    }
+
+    public static CzasLotu czasLotu(WebDriver w)
+    {
+        CzasLotu czasLotu = new CzasLotu();
+        if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę III", FlotaIII.class.getName()))
+        {
+            WebElement e = w.findElement(By.xpath("/html/body/div[5]/div[3]/div[2]/div[3]/div/div[4]/div[3]/div[2]/form/div[1]/div[1]/ul/li[4]/span"));
+
+            czasLotu.setCzasString(e.getText().split(" ")[0]);
+            Log.printLog(FlotaIII.class.getName(),"Pobrałem dane o czasie lotu.");
+        }
+        else
+            Log.printLog(FlotaIII.class.getName(),"Nie znaleziono WebElementu - czas lotu.");
+
+        return czasLotu;
+    }
+
+    public static CzasLotu przylot(WebDriver w)
+    {
+        CzasLotu czasLotu = new CzasLotu();
+        if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę III", FlotaIII.class.getName()))
+        {
+            WebElement e = w.findElement(By.xpath("/html/body/div[5]/div[3]/div[2]/div[3]/div/div[4]/div[3]/div[2]/form/div[1]/div[1]/ul/li[5]/span/span"));
+
+            String [] tmp = e.getText().split(" ");
+            czasLotu.setCzasString(tmp[1]);
+            czasLotu.setDataString(tmp[0]);
+            Log.printLog(FlotaIII.class.getName(),"Pobrałem dane o czasie przylotu.");
+        }
+        else
+            Log.printLog(FlotaIII.class.getName(),"Nie znaleziono WebElementu - czas przylotu.");
+
+        return czasLotu;
+    }
+
+    public static CzasLotu powrot(WebDriver w)
+    {
+        CzasLotu czasLotu = new CzasLotu();
+        if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę III", FlotaIII.class.getName()))
+        {
+            WebElement e = w.findElement(By.xpath("/html/body/div[5]/div[3]/div[2]/div[3]/div/div[4]/div[3]/div[2]/form/div[1]/div[1]/ul/li[6]/span/span"));
+
+            String [] tmp = e.getText().split(" ");
+            czasLotu.setCzasString(tmp[1]);
+            czasLotu.setDataString(tmp[0]);
+            Log.printLog(FlotaIII.class.getName(),"Pobrałem dane o czasie powrotu.");
+        }
+        else
+            Log.printLog(FlotaIII.class.getName(),"Nie znaleziono WebElementu - czas powrotu.");
+
+        return czasLotu;
     }
 }

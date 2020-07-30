@@ -27,8 +27,8 @@ public class MissionConfigurationController
      */
     public void setText(FleetSave fleetSave)
     {
-        Log.printLog1(fleetSave.toString(),MissionConfigurationController.class,"setText(FleetSave)"
-                ,33);
+//        Log.printLog1(fleetSave.toString(),MissionConfigurationController.class,"setText(FleetSave)"
+//                ,33);
         labelMisja.setText(fleetSave.getMisja());
         labelWspolrzedne.setText(fleetSave.getWspolrzedne());
         labelObiekt.setText(fleetSave.getObiekt() == 0 ? "Planeta":"Księżyc");

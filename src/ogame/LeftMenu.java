@@ -151,20 +151,41 @@ public class LeftMenu
         }
     }
 
-    public static void pressFlota(WebDriver w, String className)
+    public static boolean pressFlota(WebDriver w, String className)
     {
 
-        if(isDobryHeaderWyswietlony(w,"Wyślij flotę I", className))
+//        if(isDobryHeaderWyswietlony(w,"Wyślij flotę I", className))
+//        {
+//            Log.printLog(className,"Przycisk Flota jest już wybrany.");
+//        }
+//        else
+//        {
+//            WebElement e;
+//            e = w.findElement(By.xpath("/html/body/div[5]/div[2]/div[3]/div/ul/li[9]/a"));
+//            e.click();
+//            Log.printLog(className,"Klikam przycisk flota.");
+//        }
+        if(Header.dobryHeaderWyswietlony(w,"Wyslij flotę I",className))
         {
-            Log.printLog(className,"Przycisk Flota jest już wybrany.");
+            Log.printLog(className,"Ruch flot jest wybrany.");
+            return true;
         }
         else
         {
-            WebElement e;
-            e = w.findElement(By.xpath("/html/body/div[5]/div[2]/div[3]/div/ul/li[9]/a"));
-            e.click();
-            Log.printLog(className,"Klikam przycisk flota.");
+            Waiter.sleep(50,50);
+            try
+            {
+                WebElement e = w.findElement(By.xpath("/html/body/div[5]/div[2]/div[3]/div/ul/li[9]/a"));
+                e.click();
+                Log.printLog(className,"Klikam ruch flot.");
+                return true;
+            }
+            catch (Exception e)
+            {
+                Log.printErrorLog(LeftMenu.class.getName(),"Wystąpił nieznany błąd podczas próby kliknięcia.");
+            }
         }
+        return false;
     }
 
 

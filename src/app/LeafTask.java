@@ -63,10 +63,10 @@ public class LeafTask implements Execute
 
     /**
      * Ustaw czas co ile wykonać wątek.
-     * @param sleep Czas w sekundach.
+     * @param sekundy Czas w sekundach.
      */
-    public void setSleep(long sleep) {
-        this.sleep = sleep*1000;
+    public void setSleep(long sekundy) {
+        this.sleep = sekundy*1000;
     }
     /*
     GETTERS
