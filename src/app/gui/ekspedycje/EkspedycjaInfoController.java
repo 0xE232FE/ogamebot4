@@ -22,4 +22,28 @@ public class EkspedycjaInfoController {
 
     @FXML
     private Label labelCzasPowrotu;
+
+    Label getLabelIdLotu() {
+        return labelIdLotu;
+    }
+
+    Label getLabelZostalaOpozniona() {
+        return labelZostalaOpozniona;
+    }
+
+    public Label getLabelCzasZakonczenia() {
+        return labelCzasZakonczenia;
+    }
+
+    Label getLabelCzasStartu() {
+        return labelCzasStartu;
+    }
+
+    Label getLabelCzasRozpoczecia() {
+        return labelCzasRozpoczecia;
+    }
+
+    Label getLabelCzasPowrotu() {
+        return labelCzasPowrotu;
+    }
 }

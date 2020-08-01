@@ -2,9 +2,6 @@
 
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -287,11 +284,11 @@
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
       </VBox>
-      <VBox fx:id="vBoxAktywneEkspedycje" prefHeight="200.0" prefWidth="789.0" spacing="2.0">
+      <VBox prefHeight="200.0" prefWidth="789.0" spacing="2.0">
          <children>
-            <Label prefWidth="150.0" text="Dane aktualnych ekspedycji">
+            <Label prefWidth="150.0" text="Aktywne ekspedycje">
                <font>
-                  <Font size="10.0" />
+                  <Font name="System Bold" size="10.0" />
                </font>
             </Label>
             <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="777.0" spacing="2.0">
@@ -304,30 +301,113 @@
                <children>
                   <Label prefWidth="100.0" text="Czas startu">
                      <font>
-                        <Font size="10.0" />
+                        <Font name="System Bold" size="10.0" />
                      </font>
                   </Label>
                   <Label prefWidth="100.0" text="Czas rozpoczęcia">
                      <font>
-                        <Font size="10.0" />
+                        <Font name="System Bold" size="10.0" />
                      </font>
                   </Label>
                   <Label prefWidth="100.0" text="Czas zakończenia">
                      <font>
-                        <Font size="10.0" />
+                        <Font name="System Bold" size="10.0" />
                      </font>
                   </Label>
                   <Label prefWidth="100.0" text="Czas powrotu">
                      <font>
-                        <Font size="10.0" />
+                        <Font name="System Bold" size="10.0" />
                      </font>
                   </Label>
                   <Label prefWidth="100.0" text="Id lotu">
                      <font>
-                        <Font size="10.0" />
+                        <Font name="System Bold" size="10.0" />
                      </font>
                   </Label>
                   <Label prefWidth="100.0" text="Została opóźniona">
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox fx:id="vBoxAktywneEkspedycje" prefHeight="149.0" prefWidth="777.0" spacing="2.0">
+               <VBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </VBox>
+            <Separator prefWidth="200.0" />
+         </children>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </VBox>
+      <VBox prefHeight="183.0" prefWidth="785.0" spacing="2.0">
+         <VBox.margin>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+         <children>
+            <HBox prefHeight="20.0" prefWidth="781.0" spacing="2.0">
+               <VBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </VBox.margin>
+               <children>
+                  <Label prefHeight="15.0" prefWidth="150.0" text="Ilość aktywnych ekspedycji">
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelIloscEkspedycji" prefHeight="15.0" prefWidth="50.0" text="-1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="15.0" prefWidth="150.0" text="Maksymalna ilość ekspedycji">
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelMaxIloscEkspedycji" prefHeight="15.0" prefWidth="50.0" text="-1">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="20.0" prefWidth="781.0" spacing="2.0">
+               <children>
+                  <Label prefHeight="15.0" prefWidth="80.0" text="Czas powrotu">
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelCzasPowrotu" prefHeight="15.0" prefWidth="100.0">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="15.0" prefWidth="80.0" text="Id lotu">
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelIdLotu" prefHeight="15.0" prefWidth="100.0">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="15.0" prefWidth="150.0" text="Pozostało do zakończenia lotu">
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelPozostalo" prefHeight="15.0" prefWidth="50.0" text="-1">
                      <font>
                         <Font size="10.0" />
                      </font>
@@ -335,9 +415,6 @@
                </children>
             </HBox>
          </children>
-         <padding>
-            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-         </padding>
       </VBox>
    </children>
 </VBox>

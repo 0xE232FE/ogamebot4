@@ -29,6 +29,7 @@ public class GUIUpdater extends Task
                     updateCzasGry();
                     updateAktywneWatki();
                     updateFleetSaveAttack();
+                    updateAktualneEkspedycje();
                 };
                 Platform.runLater(updater);
             }
@@ -66,6 +67,13 @@ public class GUIUpdater extends Task
         }
     }
 
+    private void updateAktualneEkspedycje()
+    {
+        if(getController() != null)
+        {
+            getController().getEkspedycjeTabController().update();
+        }
+    }
 
     private void updateBadania()
     {

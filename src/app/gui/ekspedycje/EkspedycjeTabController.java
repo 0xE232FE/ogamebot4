@@ -1,18 +1,20 @@
 package app.gui.ekspedycje;
 
+import app.czas.Czas;
+import app.czas.CzasGry;
+import app.data.ekspedycje.Ekspedycja;
 import app.data.ekspedycje.Ekspedycje;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
-public class EkspedycjeTabController {
-    @FXML
-    private TextField textFieldGS;
+import java.util.ArrayList;
+import java.util.List;
 
-    @FXML
-    private TextField textFieldREC;
+public class EkspedycjeTabController {
 
     @FXML
     private TextField textFieldDT;
@@ -24,19 +26,7 @@ public class EkspedycjeTabController {
     private TextField textFieldBMB;
 
     @FXML
-    private TextField textFieldOW;
-
-    @FXML
     private TextField textFieldRZ;
-
-    @FXML
-    private TextField textFieldKR;
-
-    @FXML
-    private TextField textFieldMT;
-
-    @FXML
-    private TextField textFieldCM;
 
     @FXML
     private TextField textFieldNI;
@@ -51,9 +41,6 @@ public class EkspedycjeTabController {
     private TextField textFieldGalaktyka;
 
     @FXML
-    private TextField textFieldSS;
-
-    @FXML
     private TextField textFieldUklad;
 
     @FXML
@@ -63,13 +50,49 @@ public class EkspedycjeTabController {
     private VBox vBoxAktywneEkspedycje;
 
     @FXML
-    private TextField textFieldSK;
-
-    @FXML
     private ComboBox<String> comboBox;
 
     @FXML
+    private Label labelMaxIloscEkspedycji;
+
+    @FXML
     private TextField textFieldPI;
+
+    @FXML
+    private Label labelCzasPowrotu;
+
+    @FXML
+    private TextField textFieldGS;
+
+    @FXML
+    private TextField textFieldREC;
+
+    @FXML
+    private Label labelIdLotu;
+
+    @FXML
+    private TextField textFieldOW;
+
+    @FXML
+    private TextField textFieldKR;
+
+    @FXML
+    private TextField textFieldMT;
+
+    @FXML
+    private TextField textFieldCM;
+
+    @FXML
+    private TextField textFieldSS;
+
+    @FXML
+    private Label labelIloscEkspedycji;
+
+    @FXML
+    private Label labelPozostalo;
+
+    @FXML
+    private TextField textFieldSK;
 
     private static final String [] COMBOBOX_ITEMS = {"Planeta","Księżyc"};
 
@@ -111,21 +134,6 @@ public class EkspedycjeTabController {
         textFieldSK.setText(String.valueOf(Ekspedycje.configuration.getFlota().getSk().getIlosc()));
         textFieldREC.setText(String.valueOf(Ekspedycje.configuration.getFlota().getRec().getIlosc()));
         textFieldSS.setText(String.valueOf(Ekspedycje.configuration.getFlota().getSs().getIlosc()));
-//        textFieldLM.setText(String.valueOf(Ekspedycja.configuration.getLm()));
-//        textFieldCM.setText(String.valueOf(Ekspedycja.configuration.getCm()));
-//        textFieldKR.setText(String.valueOf(Ekspedycja.configuration.getKr()));
-//        textFieldOW.setText(String.valueOf(Ekspedycja.configuration.getOw()));
-//        textFieldPN.setText(String.valueOf(Ekspedycja.configuration.getPanc()));
-//        textFieldBMB.setText(String.valueOf(Ekspedycja.configuration.getBomb()));
-//        textFieldNI.setText(String.valueOf(Ekspedycja.configuration.getNiszcz()));
-//        textFieldGS.setText(String.valueOf(Ekspedycja.configuration.getGs()));
-//        textFieldRZ.setText(String.valueOf(Ekspedycja.configuration.getRoz()));
-//        textFieldPI.setText(String.valueOf(Ekspedycja.configuration.getPion()));
-//        textFieldMT.setText(String.valueOf(Ekspedycja.configuration.getMt()));
-//        textFieldDT.setText(String.valueOf(Ekspedycja.configuration.getDt()));
-//        textFieldSK.setText(String.valueOf(Ekspedycja.configuration.getSk()));
-//        textFieldREC.setText(String.valueOf(Ekspedycja.configuration.getRec()));
-//        textFieldSS.setText(String.valueOf(Ekspedycja.configuration.getSs()));
     }
 
     @FXML
@@ -151,23 +159,120 @@ public class EkspedycjeTabController {
         Ekspedycje.configuration.getFlota().setSk(Integer.valueOf(textFieldSK.getText()));
         Ekspedycje.configuration.getFlota().setRec(Integer.valueOf(textFieldREC.getText()));
         Ekspedycje.configuration.getFlota().setSs(Integer.valueOf(textFieldSS.getText()));
-//        Ekspedycja.configuration.setLm(Integer.valueOf(textFieldLM.getText()));
-//        Ekspedycja.configuration.setCm(Integer.valueOf(textFieldCM.getText()));
-//        Ekspedycja.configuration.setKr(Integer.valueOf(textFieldKR.getText()));
-//        Ekspedycja.configuration.setOw(Integer.valueOf(textFieldOW.getText()));
-//        Ekspedycja.configuration.setPanc(Integer.valueOf(textFieldPN.getText()));
-//        Ekspedycja.configuration.setBomb(Integer.valueOf(textFieldBMB.getText()));
-//        Ekspedycja.configuration.setNiszcz(Integer.valueOf(textFieldNI.getText()));
-//        Ekspedycja.configuration.setGs(Integer.valueOf(textFieldGS.getText()));
-//        Ekspedycja.configuration.setRoz(Integer.valueOf(textFieldRZ.getText()));
-//        Ekspedycja.configuration.setPion(Integer.valueOf(textFieldPI.getText()));
-//        Ekspedycja.configuration.setMt(Integer.valueOf(textFieldMT.getText()));
-//        Ekspedycja.configuration.setDt(Integer.valueOf(textFieldDT.getText()));
-//        Ekspedycja.configuration.setSk(Integer.valueOf(textFieldSK.getText()));
-//        Ekspedycja.configuration.setRec(Integer.valueOf(textFieldREC.getText()));
-//        Ekspedycja.configuration.setSs(Integer.valueOf(textFieldSS.getText()));
 
         Ekspedycje.save();
+    }
+
+    //Wyświetlanie aktualnych ekspedycji
+    private List<EkspedycjaInfo> aktualneEkspedycje = new ArrayList<>();
+    public void update()
+    {
+        //Ustawienie dany o ilości ekspedycji
+        labelMaxIloscEkspedycji.setText(String.valueOf(Ekspedycje.maxIloscEkspedycji));
+        labelIloscEkspedycji.setText(String.valueOf(Ekspedycje.aktualnaIloscEkspedycji));
+        //Sprawdzam czy ilość wyświetlanych ekspedycji jest taka sama jak w liście ekspedycji
+        if(vBoxAktywneEkspedycje.getChildren().size() != Ekspedycje.listaEkspedycji.size())
+        {
+            //Ilość Ekspedycji wyświetlanych jest większa od ilości w liście. Należy usunąć nieaktualne.
+            if(vBoxAktywneEkspedycje.getChildren().size() > Ekspedycje.listaEkspedycji.size())
+            {
+                //Lista tymczasowa z ekspedycjami do usunięcia
+                List<EkspedycjaInfo> tmp = new ArrayList<>();
+                //Wyświetlane ekspedycje
+                for(EkspedycjaInfo e : aktualneEkspedycje)
+                {
+                    boolean usunEkspedycjeZWidoku = true;
+                    //Ekspedycje pobrane do listy
+                    for(Ekspedycja ekspedycja : Ekspedycje.listaEkspedycji)
+                    {
+                        //Ekspedycja jest wyświetlana
+                        if(ekspedycja.getId().equals(e.getEkspedycja().getId()))
+                        {
+                            usunEkspedycjeZWidoku = false;
+                            break;
+                        }
+                    }
+
+                    if(usunEkspedycjeZWidoku)
+                        tmp.add(e);
+                }
+                //Usuwanie ekspedycji z widoku
+                for(EkspedycjaInfo e : tmp)
+                {
+                    aktualneEkspedycje.remove(e);
+                }
+                //update vBoxAktywneEkspedycje
+                vBoxAktywneEkspedycje.getChildren().clear();
+                for(EkspedycjaInfo e : aktualneEkspedycje)
+                {
+                    vBoxAktywneEkspedycje.getChildren().add(e.gethBox());
+                }
+            }
+            //Ilość Ekspedycji wyświetlanych jest mniejsza od ilości w liście. Należy dodać nowe.
+            else
+            {
+                    //Ekspedycje pobrane do listy
+                    for(Ekspedycja ekspedycja : Ekspedycje.listaEkspedycji)
+                    {
+                        boolean tmp = true;
+                        //Wyświetlane ekspedycje
+                        for(EkspedycjaInfo e : aktualneEkspedycje)
+                        {
+                            //Ekspedycja jest wyświetlana
+                            if(ekspedycja.getId().equals(e.getEkspedycja().getId()))
+                            {
+                                tmp = false;
+                                break;
+                            }
+                        }
+                        //Ekspedycja nie jest wyświetlana, dodaj do GUI
+                        if(tmp)
+                        {
+                            aktualneEkspedycje.add(new EkspedycjaInfo(ekspedycja));
+                        }
+                    }
+            }
+            //update vBoxAktywneEkspedycje
+            vBoxAktywneEkspedycje.getChildren().clear();
+            for(EkspedycjaInfo e : aktualneEkspedycje)
+            {
+                vBoxAktywneEkspedycje.getChildren().add(e.gethBox());
+            }
+
+        }
+
+        //Update najbliższa misja
+        if(Ekspedycje.najblizszaEkspedycja != null)
+        {
+            if(!labelIdLotu.getText().equals(Ekspedycje.najblizszaEkspedycja.getId()))
+            {
+                labelIdLotu.setText(Ekspedycje.najblizszaEkspedycja.getId());
+                labelCzasPowrotu.setText(Ekspedycje.najblizszaEkspedycja.getPowrot().toString());
+            }
+            //Update pozostało czasu
+            int czas;
+            if(Ekspedycje.najblizszaEkspedycja.getPowrot().getData().toString().equals(CzasGry.getData().toString()))
+            {
+                czas = Ekspedycje.najblizszaEkspedycja.getPowrot().getCzas().czasWSekundach() - CzasGry.getCzas().czasWSekundach();
+            }
+            else
+            {
+                czas = (Czas.MAX_SECONDS_DAY - CzasGry.getCzas().czasWSekundach()) + Ekspedycje.najblizszaEkspedycja.getPowrot().getCzas().czasWSekundach();
+            }
+
+            labelPozostalo.setText(new Czas(czas).toString());
+        }
+
+        //Update statusu opóźnienia floty
+        if(Ekspedycje.updateOpoznionaVariable)
+        {
+            for(EkspedycjaInfo e : aktualneEkspedycje)
+            {
+                if(e.getEkspedycja().isOpozniona())
+                    e.getController().getLabelZostalaOpozniona().setText(String.valueOf(true));
+            }
+            Ekspedycje.updateOpoznionaVariable = false;
+        }
     }
 
 }

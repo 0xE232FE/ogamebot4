@@ -8,9 +8,10 @@ import app.czas.CzasLotu;
 import app.czas.CzasWykonania;
 import app.data.ekspedycje.Ekspedycja;
 import app.planety.Planety;
+import app.ruchflot.Lot;
+import app.ruchflot.Loty;
 import com.DifferentMethods;
 import com.Log;
-import ogame.GameTime;
 import ogame.LeftMenu;
 import ogame.flota.Flota;
 import ogame.flota.FlotaI;
@@ -22,29 +23,60 @@ import org.openqa.selenium.WebDriver;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class Ekspedycje extends LeafTask {
 
     public Ekspedycje(WebDriver w, int index, long sleep) {
+//        super(w, index, sleep, "Ekspedycje",false);
         super(w, index, sleep, "Ekspedycje");
     }
 
     // Creating date format
 //    DateFormat simple = new SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z");
-    DateFormat simple = new SimpleDateFormat("HH:mm:ss");
+    private DateFormat simple = new SimpleDateFormat("HH:mm:ss");
     private CzasWykonania czasWykonania = new CzasWykonania();
+    private boolean uzupelnijDaneEkspedycji = false;
     @Override
     public void execute()
     {
         if (isRun())
         {
-            printTimeVariable();
+//            printTimeVariable();
             if(isSleepTimeOut(System.currentTimeMillis()))
             {
+                if(app.data.ekspedycje.Ekspedycje.maxIloscEkspedycji == -1 ||
+                        app.data.ekspedycje.Ekspedycje.aktualnaIloscEkspedycji == -1)
+                {
+                    pobierzDaneOIlosciachEkspedycji();
+                }
+
+                Log.printLog(Ekspedycje.class.getName(),"Aktualna ilość ekspedycji = " + app.data.ekspedycje.Ekspedycje.aktualnaIloscEkspedycji +
+                        " Ilosc ekspedycji na liscie = "+ app.data.ekspedycje.Ekspedycje.listaEkspedycji.size());
+                if(app.data.ekspedycje.Ekspedycje.listaEkspedycji.size() != app.data.ekspedycje.Ekspedycje.aktualnaIloscEkspedycji)
+                {
+                    pobierzDaneOTrwajacychEkspedycjach();
+                }
+
                 if(!osiagnietoMaxIloscEkspedycji)
+                {
                     wyslij();
-                else
-                    zweryfikujPowrotuEkspedycji();
+                }
+
+                if(uzupelnijDaneEkspedycji)
+                {
+                    uzupelnijDaneEkspedycji();
+                }
+
+                if(minalCzasPowrotuEkspedycji())
+                {
+                    List<Ekspedycja> tmp = app.data.ekspedycje.Ekspedycje.ukonczoneEkspedycje();
+                    if(tmp.size() > 0)
+                    {
+                        app.data.ekspedycje.Ekspedycje.usunMisje(tmp);
+                        osiagnietoMaxIloscEkspedycji = false;
+                    }
+                }
 
                 setLastTimeExecute(System.currentTimeMillis());
             }
@@ -70,11 +102,10 @@ public class Ekspedycje extends LeafTask {
         }
     }
 
-    private int maxIloscEkspedycji = 0;
-    private int maxIloscMisji = 0;
+    private int maxIloscMisji = -1;
     private boolean osiagnietoMaxIloscEkspedycji = false;
 
-    public void wyslij()
+    private void wyslij()
     {
         Wspolrzedne wspolrzedne = app.data.ekspedycje.Ekspedycje.getWspolrzedneStartu();
         Planeta planeta = Planety.getPlaneta(wspolrzedne.toString());
@@ -86,14 +117,12 @@ public class Ekspedycje extends LeafTask {
 
         //Klikanie w zakładkę
         LeftMenu.pressFlota(OgameWeb.webDriver, Ekspedycje.class.getName());
-        //Pobieranie danych o ilości ekspedycji
-        if(maxIloscEkspedycji == 0 || maxIloscEkspedycji == -1)
-            maxIloscEkspedycji = FlotaI.maxIloscEkspedycji(OgameWeb.webDriver);
 
-        int aktualnaIloscEkspedycji = FlotaI.iloscEkspedycji(OgameWeb.webDriver);
+        //Pobieranei danych o ilości misji
+        app.data.ekspedycje.Ekspedycje.aktualnaIloscEkspedycji = FlotaI.iloscEkspedycji(OgameWeb.webDriver);
 
-        Log.printLog(Ekspedycje.class.getName(),"Aktualna ilość ekspedycji = " + aktualnaIloscEkspedycji +
-                " Maksymalna ilosc ekspedycji = "+ maxIloscEkspedycji);
+        Log.printLog(Ekspedycje.class.getName(),"Aktualna ilość ekspedycji = " + app.data.ekspedycje.Ekspedycje.aktualnaIloscEkspedycji +
+                " Maksymalna ilosc ekspedycji = "+ app.data.ekspedycje.Ekspedycje.maxIloscEkspedycji);
 
         //Pobieranie danych o aktualnych misjach
         if(maxIloscMisji == 0 || maxIloscMisji == -1)
@@ -108,9 +137,9 @@ public class Ekspedycje extends LeafTask {
         if(maxIloscMisji - aktualnaIloscMisji > 2)
         {
             //Warunek ilości ekspedycji
-            if(aktualnaIloscEkspedycji < maxIloscEkspedycji)
+            if(app.data.ekspedycje.Ekspedycje.aktualnaIloscEkspedycji < app.data.ekspedycje.Ekspedycje.maxIloscEkspedycji)
             {
-                Log.printLog(Ekspedycje.class.getName(),"Rozpoczynam wysyłanie ekspedycji nr " + (aktualnaIloscEkspedycji+1)+".");
+                Log.printLog(Ekspedycje.class.getName(),"Rozpoczynam wysyłanie ekspedycji nr " + (app.data.ekspedycje.Ekspedycje.aktualnaIloscEkspedycji+1)+".");
                 //Ustawianie ilości statków do wysłania
                 for(Flota.Statek statek : app.data.ekspedycje.Ekspedycje.configuration.getFlota().statki)
                 {
@@ -169,22 +198,20 @@ public class Ekspedycje extends LeafTask {
                 start.setCzasString(CzasGry.getCzas().toString());
                 // Kontynuuj
                 FlotaIII.wyslijFlote(OgameWeb.webDriver);
-                //Wypisz dane lotu
-//                Log.printLog(Ekspedycje.class.getName(),"Przylot: "+ przylot.getData().toString()+ " " + przylot.getCzas().toString());
-//                Log.printLog(Ekspedycje.class.getName(),"Powrót: "+ powrot.getData().toString()+ " " + powrot.getCzas().toString());
-                //Tworzenie nowego obiektu ekspedycja
                 app.data.ekspedycje.Ekspedycje.dodajEkspedycje(new Ekspedycja(start,przylot,powrot));
-                Log.printLog(Ekspedycje.class.getName(),"Zakończyłem wysyłanie ekspedycji nr " + (aktualnaIloscEkspedycji+1)+".");
-                //Ustawienie sleep time
-                setSleep(30);
+                Log.printLog(Ekspedycje.class.getName(),"Zakończyłem wysyłanie ekspedycji nr " + (app.data.ekspedycje.Ekspedycje.aktualnaIloscEkspedycji+1)+".");
+                //Flaga - wymagane uzupełnienie danych Ekspedycji
+                uzupelnijDaneEkspedycji = true;
+//                //Ustawienie sleep time
+//                setSleep(30);
             }
             else
             {
 //                int a = app.data.ekspedycje.Ekspedycje.iloscSekundDoPowrotuNajblizszejEkspedycji();
-                int a = 600;
-                setSleep(a);
+//                int a = 600;
+//                setSleep(a);
                 Log.printLog(Ekspedycje.class.getName(),"Nie spełniony warunek ilości wolnych ekspedycji. " +
-                        "Ustawiono ponowne sprawdzenie za " + a + " sek");
+                        "Ustawiono ponowne sprawdzenie za " + getSleep() + " sek");
                 osiagnietoMaxIloscEkspedycji = true;
             }
         }
@@ -197,29 +224,102 @@ public class Ekspedycje extends LeafTask {
         }
     }
 
-    private void zweryfikujPowrotuEkspedycji()
+    private boolean minalCzasPowrotuEkspedycji()
     {
-        if(app.data.ekspedycje.Ekspedycje.sprawdzCzyWrocila())
+        if(app.data.ekspedycje.Ekspedycje.najblizszaEkspedycja.getPowrot().getData().toString().equals(CzasGry.getData().toString()))
         {
-            //Klikanie w zakładkę
-            if(LeftMenu.pressFlota(OgameWeb.webDriver, Ekspedycje.class.getName()))
-            {
-                int aktualnaIloscEkspedycji = FlotaI.iloscEkspedycji(OgameWeb.webDriver);
-                if(aktualnaIloscEkspedycji < maxIloscEkspedycji)
-                {
-                    app.data.ekspedycje.Ekspedycje.usunMisje(maxIloscEkspedycji - aktualnaIloscEkspedycji);
-                    osiagnietoMaxIloscEkspedycji = false;
-                    setSleep(30);
-                }
-            }
-            else
-                setSleep(30);
+            if(CzasGry.getCzas().czasWSekundach() > app.data.ekspedycje.Ekspedycje.najblizszaEkspedycja.getPowrot().getCzas().czasWSekundach());
+                return true;
         }
-        else
-            Log.printLog(Ekspedycje.class.getName(),"Flota jeszcze nie wrócila. ");
+
+        return false;
+
+//        if(app.data.ekspedycje.Ekspedycje.sprawdzCzyWrocila())
+//        {
+//            //Klikanie w zakładkę
+//            if(LeftMenu.pressFlota(OgameWeb.webDriver, Ekspedycje.class.getName()))
+//            {
+//                int aktualnaIloscEkspedycji = FlotaI.iloscEkspedycji(OgameWeb.webDriver);
+//                if(aktualnaIloscEkspedycji < app.data.ekspedycje.Ekspedycje.maxIloscEkspedycji)
+//                {
+//                    app.data.ekspedycje.Ekspedycje.usunMisje(app.data.ekspedycje.Ekspedycje.maxIloscEkspedycji - aktualnaIloscEkspedycji);
+//                    osiagnietoMaxIloscEkspedycji = false;
+//                    setSleep(30);
+//                }
+//            }
+//            else
+//                setSleep(30);
+//        }
+//        else
+//            Log.printLog(Ekspedycje.class.getName(),"Flota jeszcze nie wrócila. ");
     }
 
-    int counterTmp = 0;
+    private void uzupelnijDaneEkspedycji()
+    {
+        for(Ekspedycja e : app.data.ekspedycje.Ekspedycje.listaEkspedycji)
+        {
+            if(e.getId().equals(""))
+            {
+                List<Lot> tmp = Loty.getLoty("Ekspedycja");
+                //Sprawdzenie listy lotow
+                for(Lot l : tmp)
+                {
+                    int a = e.getPrzylot().getCzas().czasWSekundach();
+                    int b = l.getCzasUCelu().getCzas().czasWSekundach();
+                    //
+                    if(a > b && (a - b <= 20))
+                    {
+                        e.setId(l.getId());
+                        e.setPrzylot(l.getCzasUCelu());
+                        e.setPowrot(l.getCzasPowrot());
+                        break;
+                    }
+                    else
+                    {
+                        if(b - a <= 20)
+                        {
+                            e.setId(l.getId());
+                            e.setPrzylot(l.getCzasUCelu());
+                            e.setPowrot(l.getCzasPowrot());
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        uzupelnijDaneEkspedycji = false;
+    }
+
+    private void pobierzDaneOIlosciachEkspedycji()
+    {
+        Log.printLog(Ekspedycje.class.getName(),"Rozpoczynam pobieranie danych o ilości ekspedycji.");
+        //Klikanie w zakładkę
+        LeftMenu.pressFlota(OgameWeb.webDriver, Ekspedycje.class.getName());
+        //Pobieranie danych o ilości ekspedycji
+        if(app.data.ekspedycje.Ekspedycje.maxIloscEkspedycji == -1)
+            app.data.ekspedycje.Ekspedycje.maxIloscEkspedycji = FlotaI.maxIloscEkspedycji(OgameWeb.webDriver);
+
+        app.data.ekspedycje.Ekspedycje.aktualnaIloscEkspedycji = FlotaI.iloscEkspedycji(OgameWeb.webDriver);
+
+        Log.printLog(Ekspedycje.class.getName(),"Aktualna ilość ekspedycji = " + app.data.ekspedycje.Ekspedycje.aktualnaIloscEkspedycji +
+                " Maksymalna ilosc ekspedycji = "+ app.data.ekspedycje.Ekspedycje.maxIloscEkspedycji);
+        Log.printLog(Ekspedycje.class.getName(),"Zakończyłem pobieranie danych o ilości ekspedycji.");
+    }
+
+    private void pobierzDaneOTrwajacychEkspedycjach()
+    {
+        Log.printLog(Ekspedycje.class.getName(),"Rozpoczynam pobieranie danych o odbywających się ekspedycjach.");
+        List<Lot> tmp = Loty.getLoty("Ekspedycja");
+        for(Lot l : tmp)
+        {
+            Ekspedycja ekspedycja = new Ekspedycja(new CzasLotu(),l.getCzasUCelu(),l.getCzasPowrot());
+            ekspedycja.setId(l.getId());
+            app.data.ekspedycje.Ekspedycje.dodajEkspedycje(ekspedycja);
+        }
+        Log.printLog(Ekspedycje.class.getName(),"Zakończyłem pobieranie danych o odbywających się ekspedycjach.");
+    }
+
+    private int counterTmp = 0;
     private void printTimeVariable()
     {
         if(counterTmp == 100)
@@ -230,18 +330,22 @@ public class Ekspedycje extends LeafTask {
             String lastTimeExecute = simple.format(new Date(-3600000+getLastTimeExecute()));
             String sleepTime = simple.format(new Date(-3600000+getSleep()));
             String czasOdOstatniegoWykonania = simple.format(new Date(-3600000+tmp - getLastTimeExecute()));
-            String pozostało = simple.format(new Date(-3600000+getSleep() - (tmp - getLastTimeExecute())));
+            String pozostalo = simple.format(new Date(-3600000+getSleep() - (tmp - getLastTimeExecute())));
 
             Log.printLog(Ekspedycje.class.getName(),"\n"+
                     DifferentMethods.initVariable("Uśpienie wątku:",35) + DifferentMethods.initVariable(sleepTime,10) + DifferentMethods.initVariable(String.valueOf(getSleep()),20)+"\n"
                             + DifferentMethods.initVariable("Aktualny czas:",35) + DifferentMethods.initVariable(currentTime,10) + DifferentMethods.initVariable(String.valueOf(tmp),20)+"\n"
                             + DifferentMethods.initVariable("Ostatni czas wykonania wątku:",35) + DifferentMethods.initVariable(lastTimeExecute,10) + DifferentMethods.initVariable(String.valueOf(getLastTimeExecute()),20)+"\n"
                             + DifferentMethods.initVariable("Czas od ostatniego wykonaia:",35) + DifferentMethods.initVariable(czasOdOstatniegoWykonania,10) + DifferentMethods.initVariable(String.valueOf(tmp - getLastTimeExecute()),20)+"\n"
-                            + DifferentMethods.initVariable("Do wykonania wątku pozsotało:",35) + DifferentMethods.initVariable(pozostało,10)+DifferentMethods.initVariable(String.valueOf(getSleep() - (tmp - getLastTimeExecute())),20));
+                            + DifferentMethods.initVariable("Do wykonania wątku pozsotało:",35) + DifferentMethods.initVariable(pozostalo,10)+DifferentMethods.initVariable(String.valueOf(getSleep() - (tmp - getLastTimeExecute())),20));
         }
         else
             counterTmp++;
 
+    }
+
+    public void czyEkspedycjaZostalaOpozniona()
+    {
 
     }
 

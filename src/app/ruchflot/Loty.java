@@ -15,25 +15,6 @@ public class Loty
     public static String czasAktualizacji = "";
     public static List<Lot> listaLotow = new ArrayList<>();
 
-//    public void setLista(List<Lot> lista) {
-//        this.listaLotow = lista;
-//    }
-
-//    public static Lot getLot(String misja, Wspolrzedne start, int obiektStart, Wspolrzedne cel)
-//    {
-//        for (Lot l : listaLotow)
-//        {
-//            boolean check0 = l.getRodzaj().equals(misja);
-//            boolean check1 = l.getStart().equals(start);
-//            boolean check2 = (l.iszKsiezyca() ? 1:0) == obiektStart;
-//            boolean check3 = l.getCel().equals(cel);
-//
-//            if(check0 && check1 && check2 && check3)
-//                return l;
-//        }
-//        return null;
-//    }
-
     /**
      * Zwraca lot o wskazanych parametrach z listy  lotów.
      * @param misja Rodzaj misji. Np. Transportuj
@@ -80,5 +61,17 @@ public class Loty
                 return l;
         }
         return null;
+    }
+
+    public static List<Lot> getLoty(String nazwaMisji)
+    {
+        List<Lot> tmp = new ArrayList<>();
+        for (Lot l : listaLotow)
+        {
+            if(l.getRodzaj().equals(nazwaMisji))
+                tmp.add(l);
+        }
+
+        return tmp;
     }
 }

@@ -1,6 +1,7 @@
 package app.gui.controller;
 
 import app.Run;
+import app.gui.ekspedycje.EkspedycjeTabController;
 import app.gui.fleet_save_attack.FleetSaveAttackRootController;
 import app.tasks.BotLogic;
 import com.Log;
@@ -58,8 +59,17 @@ public class MainController
     private Label labelGameTime;
 
     /*
-        Fleet Save Attack GUI
+        Ekspedycje
      */
+    @FXML private EkspedycjeTabController ekspedycjeTabController;
+
+    public EkspedycjeTabController getEkspedycjeTabController() {
+        return ekspedycjeTabController;
+    }
+
+    /*
+            Fleet Save Attack GUI
+         */
     @FXML
     private FleetSaveAttackRootController fleetSaveAttackRootController;
 

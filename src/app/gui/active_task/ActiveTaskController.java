@@ -24,7 +24,7 @@ public class ActiveTaskController {
     }
 
     @FXML
-    void click(ActionEvent event)
+    void click()
     {
             if(task.isRun())
             {
@@ -42,13 +42,13 @@ public class ActiveTaskController {
     {
         if(task.isRun())
         {
-            task.setRun(false);
-            buttonOnOff.setText("OFF");
+//            task.setRun(false);
+            buttonOnOff.setText("ON");
         }
         else
         {
-            task.setRun(true);
-            buttonOnOff.setText("ON");
+//            task.setRun(true);
+            buttonOnOff.setText("OFF");
         }
     }
 

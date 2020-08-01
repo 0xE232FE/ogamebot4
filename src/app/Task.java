@@ -14,58 +14,10 @@ public class Task implements Runnable {
     private WebDriver w;
     private MainController controller;
     private Thread thread;
-//    private TaskManager taskManager;
-//    private GameData gameData;
     private long lastTimeExecute = 0;
     private long sleep = 0;
     private int index = -1;
     private String name = "Empty name";
-//
-//    public Task(WebDriver w, Controller controller, TaskManager taskManager, GameData gameData,
-//                long sleep, int index, String name) {
-//        this.w = w;
-//        this.controller = controller;
-//        this.taskManager = taskManager;
-//        this.gameData = gameData;
-//        this.sleep = sleep;
-//        this.index = index;
-//        this.name = name;
-//    }
-//
-//    public Task(WebDriver w, Controller controller, TaskManager taskManager, long sleep, int index, String name) {
-//        this.w = w;
-//        this.controller = controller;
-//        this.taskManager = taskManager;
-//        this.sleep = sleep;
-//        this.index = index;
-//        this.name = name;
-//    }
-//
-//    public Task(WebDriver w, Controller controller, TaskManager taskManager, long sleep, int index) {
-//        this.w = w;
-//        this.controller = controller;
-//        this.taskManager = taskManager;
-//        this.sleep = sleep;
-//        this.index = index;
-//    }
-//
-//    public Task(WebDriver w, Controller controller, TaskManager taskManager, long sleep) {
-//        this.w = w;
-//        this.controller = controller;
-//        this.taskManager = taskManager;
-//        this.sleep = sleep;
-//    }
-//
-//    public Task(WebDriver w, Controller controller, TaskManager taskManager) {
-//        this.w = w;
-//        this.controller = controller;
-//        this.taskManager = taskManager;
-//    }
-//
-//    public Task(WebDriver w, Controller controller) {
-//        this.w = w;
-//        this.controller = controller;
-//    }
 
     Task()
     {
@@ -183,7 +135,7 @@ public class Task implements Runnable {
 
     /**
      * Ustaw czas ostatniego wykonania Taska.
-     * @param lastTimeExecute
+     * @param lastTimeExecute Aktualny czas systemowy.
      */
     protected void setLastTimeExecute(long lastTimeExecute) {
         this.lastTimeExecute = lastTimeExecute;
@@ -208,8 +160,8 @@ public class Task implements Runnable {
     /**
      * Sprawdza czy czas podany w parametrze (aktualny czas systemu/gry) odjęty od czasu ostatniego wykonania Taska,
      * jest większy od czasu określającego co ile uruchomić Task.
-     * @param currentTime
-     * @return
+     * @param currentTime Aktualny czas systemowy.
+     * @return Jeżeli czas minął zwróci <b>true</b>
      */
     protected boolean isSleepTimeOut(long currentTime)
     {

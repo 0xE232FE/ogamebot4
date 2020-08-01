@@ -5,8 +5,8 @@ import com.DifferentMethods;
 
 public class Ekspedycja
 {
-    private final CzasLotu przylot;
-    private final CzasLotu powrot;
+    private CzasLotu przylot;
+    private CzasLotu powrot;
     private final CzasLotu start;
     private String id = "";
     private boolean opozniona;
@@ -28,6 +28,10 @@ public class Ekspedycja
         return powrot;
     }
 
+    public CzasLotu getStart() {
+        return start;
+    }
+
     public String getId() {
         return id;
     }
@@ -43,8 +47,16 @@ public class Ekspedycja
         this.id = id;
     }
 
-    public void setOpozniona(boolean opozniona) {
+    void setOpozniona(boolean opozniona) {
         this.opozniona = opozniona;
+    }
+
+    public void setPrzylot(CzasLotu przylot) {
+        this.przylot = przylot;
+    }
+
+    public void setPowrot(CzasLotu powrot) {
+        this.powrot = powrot;
     }
 
     @Override

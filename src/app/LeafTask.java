@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 
 public class LeafTask implements Execute
 {
-    private boolean run = false;
+    private boolean run = true;
     private WebDriver w;
     private long lastTimeExecute = 0;
     private long sleep;
@@ -17,6 +17,14 @@ public class LeafTask implements Execute
         this.sleep = sleep;
         this.name = name;
         this.index = index;
+    }
+
+    public LeafTask(WebDriver w, int index, long sleep, String name, boolean run) {
+        this.w = w;
+        this.sleep = sleep;
+        this.name = name;
+        this.index = index;
+        this.run = run;
     }
 
     /*
@@ -105,7 +113,7 @@ public class LeafTask implements Execute
     /**
      * @return Czas ostatniego wykonania Taska.
      */
-    public long getLastTimeExecute() {
+    protected long getLastTimeExecute() {
         return lastTimeExecute;
     }
 
