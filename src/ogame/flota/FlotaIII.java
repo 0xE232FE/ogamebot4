@@ -237,4 +237,52 @@ public class FlotaIII
 
         return czasLotu;
     }
+
+    /**
+     * Pobiera dane o wolnej przestrzeni ładunkowej wysyłanej floty.
+     */
+    public static int wolnaPrzestrzenLadunkowa(WebDriver w)
+    {
+
+        if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę III", FlotaIII.class.getName()))
+        {
+            WebElement e =  w.findElement(By.xpath("//*[@id=\"remainingresources\"]"));
+            String [] tmpTab = e.getText().split("\\.");
+
+            StringBuilder tmpString = new StringBuilder();
+            for(String s : tmpTab)
+            {
+                tmpString.append(s);
+            }
+            return Integer.valueOf(tmpString.toString());
+        }
+        else
+            Log.printLog(FlotaIII.class.getName(),"Nie znaleziono WebElementu - czas powrotu.");
+
+        return -1;
+    }
+
+    /**
+     * Metoda pobierająca dane o maksymalne przestrzeni ładunkowej wysyłanej floty.
+     */
+    public static int maksymalnaPrzestrzenLadunkowa(WebDriver w)
+    {
+
+        if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę III", FlotaIII.class.getName()))
+        {
+            WebElement e =  w.findElement(By.xpath("//*[@id=\"maxresources\"]"));
+            String [] tmpTab = e.getText().split("\\.");
+
+            StringBuilder tmpString = new StringBuilder();
+            for(String s : tmpTab)
+            {
+                tmpString.append(s);
+            }
+            return Integer.valueOf(tmpString.toString());
+        }
+        else
+            Log.printLog(FlotaIII.class.getName(),"Nie znaleziono WebElementu - czas powrotu.");
+
+        return -1;
+    }
 }

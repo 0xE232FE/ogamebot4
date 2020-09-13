@@ -16,7 +16,8 @@ public class Header {
                 "/html/body/div[5]/div[3]/div[2]/div/header/h2",
                 "/html/body/div[5]/div[3]/div[2]/div[3]/div/div[1]/h2",
                 "/html/body/div[5]/div[3]/div[2]/div[1]/div/div[2]/h2",
-                "/html/body/div[5]/div[3]/div[2]/div/div/header/h2"
+                "/html/body/div[5]/div[3]/div[2]/div/div/header/h2",
+                "//*[@id=\"planet\"]/h2"
         };
 
         WebElement e;
@@ -46,9 +47,6 @@ public class Header {
                     bool = false;
                     Log.printLog(className,"Sprawdzono wszystkie ścieżki, żadna nie pasuje.");
                 }
-
-//                if(bool)
-//                    Log.printLog(className, "Nie wczytano Tytuł Header. Zmieniam ścieżkę "+ index);
             }
         }
         Log.printLog(className, "Nie jest wyświetlony nagłówek Menu.");

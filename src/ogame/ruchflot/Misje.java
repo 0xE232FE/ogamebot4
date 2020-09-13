@@ -6,7 +6,7 @@ class Misje
     private static final Misja EKSPEDYCJA = new Misja(15,"Ekspedycja");
     private static final Misja KOLONIZUJ = new Misja(7,"Kolonizuj");
     private static final Misja TANSPORTUJ = new Misja(3,"Transportuj");
-    private static final Misja RECYKLUJ_POLA = new Misja(-1,"Recykluj pola");
+    private static final Misja RECYKLUJ_POLA = new Misja(8,"Zbieraj");
     private static final Misja SZPIEGUJ = new Misja(-1,"Szpieguj");
     private static final Misja ZATRZYMAJ = new Misja(-1,"Zatrzymaj");
     private static final Misja ATAKUJ = new Misja(1,"Atakuj");

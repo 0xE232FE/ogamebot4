@@ -64,11 +64,11 @@ public class Planeta
      */
     public void clickPlanet()
     {
-        if(OgameWeb.webDriver != null && moon)
+        if(OgameWeb.webDriver != null)
             ListaPlanet.kliknijPlanete(OgameWeb.webDriver,pozycjaNaLiscie);
         else
             Log.printLog(Planeta.class.getName(),"Nie wykonano polecenia clickPlanet na planecie "+nazwa+" "
-                    + wspolrzedne + (moon ? " z powodu WebDriver == null":" z powodu braku księżyca."));
+                    + wspolrzedne + " z powodu WebDriver == null");
     }
 
     /**
@@ -76,11 +76,11 @@ public class Planeta
      */
     public void clickMoon()
     {
-         if(OgameWeb.webDriver != null)
-             ListaPlanet.kliknijKsiezyc(OgameWeb.webDriver,pozycjaNaLiscie);
-         else
-             Log.printLog(Planeta.class.getName(),"Nie wykonano polecenia clickMoon na planecie "+nazwa+" "
-                     + wspolrzedne + " z powodu WebDriver == null");
+        if(OgameWeb.webDriver != null && moon)
+            ListaPlanet.kliknijKsiezyc(OgameWeb.webDriver,pozycjaNaLiscie);
+        else
+            Log.printLog(Planeta.class.getName(),"Nie wykonano polecenia clickMoon na planecie "+nazwa+" "
+                    + wspolrzedne + (moon ? " z powodu WebDriver == null":" z powodu braku księżyca."));
     }
 
     /*
@@ -207,21 +207,6 @@ public class Planeta
         return moonSelected;
     }
 
-//    public Surowce getSurowce() {
-//        return surowce;
-//    }
-//
-//    public Wydobycie getWydobycie() {
-//        return wydobycie;
-//    }
-//
-//    public Surowce getSurowceMoon() {
-//        return surowceMoon;
-//    }
-//
-//    public Budynki getBudynki() {
-//        return budynki;
-//    }
 
     @Override
     public String toString() {

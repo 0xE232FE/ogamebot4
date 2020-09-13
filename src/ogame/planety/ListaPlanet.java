@@ -63,7 +63,8 @@ public class ListaPlanet
     }
 
     /**
-     * Sprawdza która planeta lub księżyc jest wybrana i zwraca jej pozycję na liscie.
+     * Sprawdza czy wskazana planeta z listy jest wybrana.
+     * @param i Pozycja planety na liście.
      */
     public static boolean wybranaPlaneta(WebDriver w, int i)
     {
@@ -82,7 +83,8 @@ public class ListaPlanet
     }
 
     /**
-     * Sprawdza która planeta lub księżyc jest wybrana i zwraca jej pozycję na liscie.
+     * Sprawdza czy wskazany księżyc z listy jest wybrany.
+     * @param i Pozycja księżyca na liście.
      */
     public static boolean wybranyKsiezyc(WebDriver w, int i)
     {
@@ -196,7 +198,7 @@ public class ListaPlanet
     }
 
     /**
-     * Zwraca informację czy trwa rozbudowa na księżycu.
+     * Zwraca informację czy trwa atak na księżycu.
      * @param i Pozycja na lisćie planet.
      */
     public static boolean atak(WebDriver w, int i)
@@ -212,9 +214,17 @@ public class ListaPlanet
 
             for(WebElement tmp : etmp)
             {
-                boolean b =  tmp.getAttribute("class").contains(ATTACK_ALERT);
-                if(b)
-                    return true;
+                try
+                {
+                    boolean b =  tmp.getAttribute("class").contains(ATTACK_ALERT);
+                    if(b)
+                        return true;
+                }
+                catch (Exception e1)
+                {
+                    Log.printErrorLog(ListaPlanet.class.getName(),"Nie wczytano informacji o ataku na księżyc.");
+                }
+
             }
         }
         return false;

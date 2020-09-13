@@ -39,15 +39,15 @@ public class FlotaI {
      *           9 - Rozpruwacz
      *           10 - Pionier
      */
-    public static void kliknijStatekBojowy(WebDriver w, int nr)
+    public static boolean kliknijStatekBojowy(WebDriver w, int nr)
     {
-        if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę I", FlotaI.class.getName()) && isAnyShips(w))
+        if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę I", FlotaI.class.getName()))
         {
-            WebElement e;
-            boolean bool = true;
-            militaryContainer.setVar(nr);
-            while(bool)
+            if(isAnyShips(w))
             {
+                WebElement e;
+                militaryContainer.setVar(nr);
+
                 try
                 {
                     e = w.findElement(By.xpath(militaryContainer.toString()));
@@ -55,20 +55,25 @@ public class FlotaI {
                     {
                         military.setVar(nr);
                         e = w.findElement(By.xpath(military.toString()));
-                        bool = false;
                         e.click();
+                        return true;
                     }
                     else
                         Log.printLog(FlotaI.class.getName(),"Brak statków na planecie.");
                 }
                 catch(Exception ex)
                 {
-                    Log.printLog(FlotaI.class.getName(),"Nie wczytano statku.");
+                    Log.printErrorLog(FlotaI.class.getName(),"Nie wczytano statku.");
                 }
+
             }
+            else
+                Log.printLog(FlotaI.class.getName(),"Brak statków na planecie.");
         }
         else
             LeftMenu.pressFlota(w, FlotaI.class.getName());
+
+        return false;
     }
 
     /**
@@ -88,28 +93,19 @@ public class FlotaI {
      */
     public static int dostepnaIloscStatekBojowy(WebDriver w, int nr)
     {
-//        int i = -1;
-        if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę I", FlotaI.class.getName()) && isAnyShips(w))
+        if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę I", FlotaI.class.getName()))
         {
-            WebElement e;
-            boolean bool = true;
-            militaryContainer.setVar(nr);
-            while(bool)
+            if(isAnyShips(w))
             {
+                WebElement e;
+                militaryContainer.setVar(nr);
+
                 try
                 {
-//                    Log.printLog1(militaryContainer.toString(),FlotaI.class,101);
                     e = w.findElement(By.xpath(militaryContainer.toString()));
                     if(e.getAttribute("data-status").contains("on"))
                     {
-//                        military.setVar(nr);
-//                        military.append(MAX_ILOSC);
-//                        e = w.findElement(By.xpath(military.toString()));
-//                        Log.printLog1(militaryContainer.append(MAX_ILOSC),FlotaI.class,108);
                         e = w.findElement(By.xpath(militaryContainer.append(MAX_ILOSC)));
-                        bool = false;
-//                        String tmp = e.getAttribute("data-value");
-//                        Log.printLog1(tmp,FlotaI.class,111);
                         return Integer.valueOf(e.getAttribute("data-value"));
                     }
                     else
@@ -117,9 +113,12 @@ public class FlotaI {
                 }
                 catch(Exception ex)
                 {
-                    Log.printLog(FlotaI.class.getName(),"Nie wczytano statku.");
+                    Log.printErrorLog(FlotaI.class.getName(),"Nie wczytano statku.");
                 }
             }
+            else
+                Log.printLog(FlotaI.class.getName(),"Brak statków na planecie.");
+
         }
         else
             LeftMenu.pressFlota(w, FlotaI.class.getName());
@@ -139,35 +138,32 @@ public class FlotaI {
      */
     public static int dostepnaIloscStatekCywilny(WebDriver w, int nr)
     {
-//        int i = -1;
-        if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę I", FlotaI.class.getName()) && isAnyShips(w))
+        if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę I", FlotaI.class.getName()))
         {
-            WebElement e;
-            boolean bool = true;
-            civilContainer.setVar(nr);
-            while(bool)
+            if(isAnyShips(w))
             {
+                WebElement e;
+                civilContainer.setVar(nr);
+
                 try
                 {
-//                    Log.printLog1(civilContainer.toString(),FlotaI.class,149);
                     e = w.findElement(By.xpath(civilContainer.toString()));
                     if(e.getAttribute("data-status").contains("on"))
                     {
-//                        civil.setVar(nr);
-//                        civil.append(MAX_ILOSC);
-//                        e = w.findElement(By.xpath(civil.toString()));
                         e = w.findElement(By.xpath(civilContainer.append(MAX_ILOSC)));
-                        bool = false;
-                       return Integer.valueOf(e.getAttribute("data-value"));
+                        return Integer.valueOf(e.getAttribute("data-value"));
                     }
                     else
                         Log.printLog(FlotaI.class.getName(),"Brak statków na planecie.");
                 }
                 catch(Exception ex)
                 {
-                    Log.printLog(FlotaI.class.getName(),"Nie wczytano statku.");
+                    Log.printErrorLog(FlotaI.class.getName(),"Nie wczytano statku.");
                 }
             }
+            else
+                Log.printLog(FlotaI.class.getName(),"Brak statków na planecie.");
+
         }
         else
             LeftMenu.pressFlota(w, FlotaI.class.getName());
@@ -190,39 +186,40 @@ public class FlotaI {
      *           9 - Rozpruwacz
      *           10 - Pionier
      */
-    public static void wprowadzIloscStatekBojowy(WebDriver w, int nr, int ilosc)
+    public static boolean wprowadzIloscStatekBojowy(WebDriver w, int nr, int ilosc)
     {
         if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę I", FlotaI.class.getName()))
         {
-            WebElement e;
-            boolean bool = true;
-            militaryContainer.setVar(nr);
-            while(bool)
+            if(isAnyShips(w))
             {
+                WebElement e;
+                militaryContainer.setVar(nr);
+
                 try
                 {
-//                    /html/body/div[5]/div[3]/div[2]/div[1]/div/div[7]/div/form/div/div[1]/ul/li[1]/input
-//                    Log.printLog1(militaryContainer.toString(),FlotaI.class,205);
                     e = w.findElement(By.xpath(militaryContainer.toString()));
                     if(e.getAttribute("data-status").contains("on"))
                     {
-//                        military.setVar(nr);
-//                        militaryContainer.append(PODAJ_ILOSC);
                         e = w.findElement(By.xpath(militaryContainer.append(PODAJ_ILOSC)));
-                        bool = false;
                         e.sendKeys(String.valueOf(ilosc));
+                        return true;
                     }
                     else
                         Log.printLog(FlotaI.class.getName(),"Brak statków na planecie.");
                 }
                 catch(Exception ex)
                 {
-                    Log.printLog(FlotaI.class.getName(),"Nie wczytano statku.");
+                    Log.printErrorLog(FlotaI.class.getName(),"Nie wczytano statku.");
                 }
             }
+            else
+                Log.printLog(FlotaI.class.getName(),"Brak statków na planecie.");
+
         }
         else
             LeftMenu.pressFlota(w, FlotaI.class.getName());
+
+        return false;
     }
 
     /**
@@ -235,38 +232,41 @@ public class FlotaI {
      *           4 - Recykler
      *           5 - Sonda szpiegowska
      */
-    public static void wprowadzIloscStatekCywilny(WebDriver w, int nr, int ilosc)
+    public static boolean wprowadzIloscStatekCywilny(WebDriver w, int nr, int ilosc)
     {
         if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę I", FlotaI.class.getName()))
         {
-            WebElement e;
-            boolean bool = true;
-            civilContainer.setVar(nr);
-            while(bool)
+            if(isAnyShips(w))
             {
+                WebElement e;
+                civilContainer.setVar(nr);
+
                 try
                 {
-//                    Log.printLog1(civilContainer.toString());
                     e = w.findElement(By.xpath(civilContainer.toString()));
-//                    Log.printLog1(e.toString());
                     if(e.getAttribute("data-status").contains("on"))
                     {
-//                        Log.printLog1(civilContainer.toString());
                         e = w.findElement(By.xpath(civilContainer.append(PODAJ_ILOSC)));
-                        bool = false;
+
                         e.sendKeys(String.valueOf(ilosc));
+                        return true;
                     }
                     else
                         Log.printLog(FlotaI.class.getName(),"Brak statków na planecie.");
                 }
                 catch(Exception ex)
                 {
-                    Log.printLog(FlotaI.class.getName(),"Nie wczytano statku.");
+                    Log.printErrorLog(FlotaI.class.getName(),"Nie wczytano statku.");
                 }
             }
+            else
+                Log.printLog(FlotaI.class.getName(),"Brak statków na planecie.");
+
         }
         else
             LeftMenu.pressFlota(w, FlotaI.class.getName());
+
+        return false;
     }
 
     /**
@@ -285,54 +285,61 @@ public class FlotaI {
     {
         if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę I", FlotaI.class.getName()))
         {
-            WebElement e;
-            civilContainer.setVar(nr);
-
-            try
+            if(isAnyShips(w))
             {
-                e = w.findElement(By.xpath(civilContainer.toString()));
-                if(e.getAttribute("data-status").contains("on"))
+                WebElement e;
+                civilContainer.setVar(nr);
+
+                try
                 {
-                    civil.setVar(nr);
-                    e = w.findElement(By.xpath(civil.toString()));
-                    e.click();
-                    return true;
+                    e = w.findElement(By.xpath(civilContainer.toString()));
+                    if(e.getAttribute("data-status").contains("on"))
+                    {
+                        civil.setVar(nr);
+                        e = w.findElement(By.xpath(civil.toString()));
+                        e.click();
+                        return true;
+                    }
+                    else
+                        Log.printLog(FlotaI.class.getName(),"Brak statków na planecie.");
+
                 }
-                else
+                catch(Exception ex)
                 {
-                    Log.printLog(FlotaI.class.getName(),"Brak statków na planecie.");
-                    return false;
+                    Log.printErrorLog(FlotaI.class.getName(),"Nie wczytano statku.");
                 }
             }
-            catch(Exception ex)
-            {
-                Log.printLog(FlotaI.class.getName(),"Nie wczytano statku.");
-                return false;
-            }
-
+            else
+                Log.printLog(FlotaI.class.getName(),"Brak statków na planecie.");
         }
         else
-        {
             LeftMenu.pressFlota(w, FlotaI.class.getName());
-            return false;
-        }
+
+        return false;
     }
     /**
      * Wybiera wszystkie statki na planecie.
      * @param w driver
      */
-    public static void chooseAllShips(WebDriver w)
+    public static boolean chooseAllShips(WebDriver w)
     {
-
-        if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę I",FlotaI.class.getName()) && isAnyShips(w))
+        if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę I",FlotaI.class.getName()))
         {
-            WebElement e = w.findElement(By.xpath("//*[@id=\"sendall\"]"));
-            GameClient.scrollToElement(w,e);
-            e.click();
-            Log.printLog(FlotaI.class.getName(),"Klikam w button: Wybieram wszystkie statki.");
-            return;
+            if(isAnyShips(w))
+            {
+                WebElement e = w.findElement(By.xpath("//*[@id=\"sendall\"]"));
+                GameClient.scrollToElement(w,e);
+                e.click();
+                Log.printLog(FlotaI.class.getName(),"Klikam w button: Wybieram wszystkie statki.");
+                return true;
+            }
+            else
+                Log.printLog(FlotaI.class.getName(),"Brak statków na planecie.");
         }
-        Log.printLog(FlotaI.class.getName(),"Nie znaleziono WebElementu - Wszystkie statki.");
+        else
+            LeftMenu.pressFlota(w, FlotaI.class.getName());
+
+        return false;
     }
 
     /**
@@ -346,7 +353,6 @@ public class FlotaI {
                 " /html/body/div[5]/div[3]/div[2]/div[1]/div/div[6]/p"
         };
 
-
         int index = 0;
         boolean bool = true;
 
@@ -354,14 +360,12 @@ public class FlotaI {
         {
             try
             {
-//                WebElement e = w.findElement(By.xpath(paths[index]));
                 w.findElement(By.xpath(paths[index]));
                 bool = false;
                 Log.printLog(FlotaI.class.getName(),"Brak floty na planecie.");
             }
             catch(Exception ex)
             {
-//                Log.printLog(FlotaI.class.getName(),"Nie wczytano informacji o braku floty.");
                 index++;
             }
             finally
@@ -372,10 +376,6 @@ public class FlotaI {
                     Log.printLog(FlotaI.class.getName(),"Na planecie znajduje się flota.");
                     return bool;
                 }
-//                else
-//                {
-//                    Log.printLog(FlotaI.class.getName(),"Nie wczytano informacji o braku floty, zmieniam na scieżkę nr "+ index);
-//                }
             }
         }
         return bool;
@@ -385,51 +385,62 @@ public class FlotaI {
      * Klika przycisk przechodzenia do nastepnej zakładki Flota II.
      * @param w driver
      */
-    public static void clickContinue(WebDriver w)
+    public static boolean clickContinue(WebDriver w)
     {
 
-//        if(isDobryHeaderWyswietlony(w,"Wyślij flotę I", FlotaI.class.getName()) && isAnyShips(w))
-        if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę I", FlotaI.class.getName()) && isAnyShips(w))
+        if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę I", FlotaI.class.getName()))
         {
-            String [] paths = {" /html/body/div[5]/div[3]/div[2]/div[1]/div/div[7]/div/div[2]/div/a/span",
-                    "/html/body/div[5]/div[3]/div[2]/div[1]/div/div[8]/div/div[2]/div/a/span"
-            };
-
-            WebElement e;
-            int index = 0;
-            boolean bool = true;
-
-            while(bool)
+            if(isAnyShips(w))
             {
-                try
-                {
-                    e = w.findElement(By.xpath(paths[index]));
-                    bool = false;
-                    e.click();
-                }
-                catch(Exception ex)
-                {
-                    Log.printLog(FlotaI.class.getName(),"Nie wczytano przycisku Dalej.....");
-                    index++;
-                }
-                finally
-                {
-                    if(index >= paths.length)
-                    {
-                        Log.printLog(FlotaI.class.getName(),"Sprawdzono wszystkie ścieżki, żadna nie pasuje.");
-                    }
+                String [] paths = {" /html/body/div[5]/div[3]/div[2]/div[1]/div/div[7]/div/div[2]/div/a/span",
+                        "/html/body/div[5]/div[3]/div[2]/div[1]/div/div[8]/div/div[2]/div/a/span",
+                        "//*[@id=\"continueToFleet2\"]/span"
+                };
 
-                    else
+                WebElement e;
+                int index = 0;
+                boolean bool = true;
+
+                while(bool)
+                {
+                    try
                     {
-                        Log.printLog(FlotaI.class.getName(),"Zmieniam ścieżkę "+ index);
+                        e = w.findElement(By.xpath(paths[index]));
+                        GameClient.scrollToElement(w,e);
+                        bool = false;
+                        e.click();
+                        return true;
+                    }
+                    catch(Exception ex)
+                    {
+                        Log.printLog(FlotaI.class.getName(),"Nie wczytano przycisku Dalej.....");
+                        index++;
+                    }
+                    finally
+                    {
+                        if(index >= paths.length)
+                        {
+                            Log.printLog(FlotaI.class.getName(),"Sprawdzono wszystkie ścieżki, żadna nie pasuje.");
+                            bool = false;
+                        }
+
+                        else
+                        {
+                            Log.printLog(FlotaI.class.getName(),"Zmieniam ścieżkę "+ index);
+                        }
                     }
                 }
             }
+            else
+                Log.printLog(FlotaI.class.getName(),"Brak statków na planecie.");
+
         }
         else
         {
             LeftMenu.pressFlota(w, FlotaI.class.getName());
         }
+
+        return false;
     }
 
     /**
@@ -486,7 +497,6 @@ public class FlotaI {
             {
                 Log.printErrorLog(FlotaI.class.getName(),"Nie wczytano elementu maksymalna ilość ekskpedcyji.");
             }
-
         }
         else
         {
@@ -555,53 +565,5 @@ public class FlotaI {
             return -1;
         }
         return -1;
-    }
-
-
-
-    @Deprecated
-    private static String getTytulHeader(WebDriver w, String className)
-    {
-        String [] paths = {
-                "/html/body/div[5]/div[3]/div[2]/div[1]/div/div[2]/h2",
-        };
-
-        WebElement e;
-        int index = 0;
-        boolean bool = true;
-
-        while(bool)
-        {
-            try
-            {
-                e = w.findElement(By.xpath(paths[index]));
-                bool = false;
-                return  e.getText();
-            }
-            catch(Exception ex)
-            {
-//                Log.printLog("Nie wczytano Tytuł Header.");
-                index++;
-            }
-            finally
-            {
-                if(index >= paths.length)
-                {
-                    bool = false;
-                    Log.printLog(className,"Sprawdzono wszystkie ścieżki, żadna nie pasuje.");
-                }
-                if(bool)
-                    Log.printLog(className, "Nie wczytano Tytuł Header. Zmieniam ścieżkę "+ index);
-            }
-        }
-        Log.printLog(className, "Nie jest wyświetlony nagłówek Menu.");
-        return null;
-    }
-
-    @Deprecated
-    private static boolean isDobryHeaderWyswietlony(WebDriver w, String czescTresciNaglowka, String className)
-    {
-        String s = getTytulHeader(w,className);
-        return s != null && s.contains(czescTresciNaglowka);
     }
 }

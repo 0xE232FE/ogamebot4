@@ -10,19 +10,11 @@ import org.openqa.selenium.WebElement;
 public class LeftMenu
 {
 
-
-    public static void pressPodglad(WebDriver w, String className)
+    private static boolean press(WebDriver w, String [] paths , String header, String className)
     {
-
-        String [] paths = {
-                "/html/body/div[2]/div[2]/div[2]/div[1]/div[2]/div/ul/li[1]/a",
-                "/html/body/div[5]/div[2]/div[3]/div/ul/li[1]/a"
-        };
-
-
-        if(isDobryHeaderWyswietlony(w,"Podgląd", className))
+        if(Header.dobryHeaderWyswietlony(w,header,className))
         {
-            Log.printLog(className,"Przycisk Podgląd jest już wybrany.");
+            Log.printLog(className,"Przycisk " + header + " jest już wybrany.");
         }
         else
         {
@@ -34,14 +26,16 @@ public class LeftMenu
             {
                 try
                 {
+                    Waiter.sleep(50,50);
                     e = w.findElement(By.xpath(paths[index]));
                     bool = false;
                     e.click();
-                    Log.printLog(className,"Klikam przycisk Podgląd.");
+                    Log.printLog(className,"Klikam przycisk " + header + ".");
+                    return true;
                 }
                 catch(Exception ex)
                 {
-                    Log.printErrorLog(LeftMenu.class.getName(),"Zwrócno błąd przy kliknięciu w Podgląd.");
+                    Log.printErrorLog(LeftMenu.class.getName(),"Zwrócno błąd przy kliknięciu w "+header + ".");
                 }
                 finally
                 {
@@ -54,6 +48,16 @@ public class LeftMenu
                 }
             }
         }
+        return false;
+    }
+
+    public static void pressPodglad(WebDriver w, String className)
+    {
+        press(w,
+                new String[]{"/html/body/div[2]/div[2]/div[2]/div[1]/div[2]/div/ul/li[1]/a",
+               "/html/body/div[5]/div[2]/div[3]/div/ul/li[1]/a"},
+                "Podgląd",
+                className);
     }
 
     public static void pressPodglad(WebDriver w, String className, boolean klikajZawsze)
@@ -65,7 +69,7 @@ public class LeftMenu
         };
 
 
-        if(!klikajZawsze && isDobryHeaderWyswietlony(w,"Podgląd", className))
+        if(!klikajZawsze && Header.dobryHeaderWyswietlony(w,"Podgląd",className))
         {
             Log.printLog(className,"Przycisk Podgląd jest już wybrany.");
         }
@@ -101,173 +105,50 @@ public class LeftMenu
         }
     }
 
-
-
     public static void pressUstawieniaSurowcow(WebDriver w, String className)
     {
-
-        if(isDobryHeaderWyswietlony(w,"Ustawienia surowców", className))
-        {
-            Log.printLog(className,"Przycisk Ustawienia surowców jest już wybrany.");
-        }
-        else
-        {
-            WebElement e;
-            e = w.findElement(By.xpath("/html/body/div[5]/div[2]/div[3]/div/ul/li[2]/span/a/div"));
-            e.click();
-            Log.printLog(className,"Klikam przycisk Ustawienia surowców.");
-        }
+        press(w,
+                new String[]{"/html/body/div[2]/div[2]/div[2]/div[1]/div[2]/div/ul/li[2]/span/a/div",
+                        "/html/body/div[5]/div[2]/div[3]/div/ul/li[2]/span/a/div"},
+                "Ustawienia surowców",
+                className);
     }
 
     public static void pressBadania(WebDriver w, String className)
     {
-
-        if(isDobryHeaderWyswietlony(w,"Badania", className))
-        {
-            Log.printLog(className,"Przycisk Badania jest już wybrany.");
-        }
-        else
-        {
-            WebElement e;
-            e = w.findElement(By.xpath("/html/body/div[5]/div[2]/div[3]/div/ul/li[6]/a"));
-            e.click();
-            Log.printLog(className,"Klikam przycisk Badania.");
-        }
+        press(w,
+                new String[]{"/html/body/div[5]/div[2]/div[3]/div/ul/li[6]/a/span",
+                        "/html/body/div[2]/div[2]/div[2]/div[1]/div[2]/div/ul/li[6]/a"},
+                "Badania",
+                className);
     }
 
     public static void pressSurowce(WebDriver w, String className)
     {
-
-        if(isDobryHeaderWyswietlony(w,"Surowce", className))
-        {
-            Log.printLog(className,"Przycisk Surowce jest już wybrany.");
-        }
-        else
-        {
-            WebElement e;
-            e = w.findElement(By.xpath("/html/body/div[5]/div[2]/div[3]/div/ul/li[2]/a"));
-            e.click();
-            Log.printLog(className,"Klikam przycisk Surowce.");
-        }
+        press(w,
+                new String[]{"/html/body/div[2]/div[2]/div[2]/div[1]/div[2]/div/ul/li[2]/a",
+                        "/html/body/div[5]/div[2]/div[3]/div/ul/li[2]/a/span"},
+                "Surowce",
+                className);
     }
 
-    public static boolean pressFlota(WebDriver w, String className)
+
+    public static void pressFlota(WebDriver w, String className)
     {
-
-//        if(isDobryHeaderWyswietlony(w,"Wyślij flotę I", className))
-//        {
-//            Log.printLog(className,"Przycisk Flota jest już wybrany.");
-//        }
-//        else
-//        {
-//            WebElement e;
-//            e = w.findElement(By.xpath("/html/body/div[5]/div[2]/div[3]/div/ul/li[9]/a"));
-//            e.click();
-//            Log.printLog(className,"Klikam przycisk flota.");
-//        }
-        if(Header.dobryHeaderWyswietlony(w,"Wyslij flotę I",className))
-        {
-            Log.printLog(className,"Ruch flot jest wybrany.");
-            return true;
-        }
-        else
-        {
-            Waiter.sleep(50,50);
-            try
-            {
-                WebElement e = w.findElement(By.xpath("/html/body/div[5]/div[2]/div[3]/div/ul/li[9]/a"));
-                e.click();
-                Log.printLog(className,"Klikam ruch flot.");
-                return true;
-            }
-            catch (Exception e)
-            {
-                Log.printErrorLog(LeftMenu.class.getName(),"Wystąpił nieznany błąd podczas próby kliknięcia.");
-            }
-        }
-        return false;
+        press(w,
+                new String[]{"/html/body/div[2]/div[2]/div[2]/div[1]/div[2]/div/ul/li[9]/a",
+                        "/html/body/div[5]/div[2]/div[3]/div/ul/li[9]/a/span"},
+                "Flota",
+                className);
     }
-
 
     public static boolean pressRuchFlot(WebDriver w, String className)
     {
-        if(isDobryHeaderWyswietlony(w,"Ruch floty", className))
-        {
-            Log.printLog(className,"Ruch flot jest wybrany.");
-            return true;
-        }
-        else
-        {
-            Waiter.sleep(50,50);
-            try
-            {
-                WebElement e = w.findElement(By.xpath("/html/body/div[5]/div[2]/div[3]/div/ul/li[9]/span/a/div"));
-                e.click();
-                Log.printLog(className,"Klikam ruch flot.");
-                return true;
-            }
-            catch (Exception e)
-            {
-                Log.printErrorLog(LeftMenu.class.getName(),"Wystąpił nieznany błąd podczas próby kliknięcia.");
-            }
-        }
-        return false;
-    }
-
-
-
-    private static String getTytulHeader(WebDriver w, String className, String czescTresciNaglowka)
-    {
-        String [] paths = {
-                "/html/body/div[2]/div[2]/div[2]/div[2]/div[2]/div[1]/h2",
-                "/html/body/div[5]/div[3]/div[2]/div[2]/form/div/div[1]/h2",
-                "/html/body/div[5]/div[3]/div[2]/div/div[1]/div[1]/div[2]/h2/a/p",
-                "/html/body/div[5]/div[3]/div[2]/div/header/h2",
-                "/html/body/div[5]/div[3]/div[2]/div[1]/div/div[2]/h2",
-                "/html/body/div[5]/div[3]/div[2]/div/div/header/h2",
-        };
-
-        WebElement e;
-        int index = 0;
-        boolean bool = true;
-
-        while(bool)
-        {
-            try
-            {
-//                Log.printLog1(paths[index],LeftMenu.class,140);
-                e = w.findElement(By.xpath(paths[index]));
-                if(e.getText().contains(czescTresciNaglowka))
-                {
-                    bool = false;
-                    return  e.getText();
-                }
-            }
-            catch(Exception ex)
-            {
-//                Log.printLog("Nie wczytano Tytuł Header.");
-            }
-            finally
-            {
-                index++;
-                if(index >= paths.length)
-                {
-                    bool = false;
-                    Log.printLog(className,"Sprawdzono wszystkie ścieżki, żadna nie pasuje.");
-                }
-//
-//                if(bool)
-//                    Log.printLog(className, "Nie wczytano Tytuł Header. Zmieniam ścieżkę "+ index);
-            }
-        }
-        Log.printLog(className, "Nie jest wyświetlony nagłówek Menu.");
-        return null;
-    }
-
-    private static boolean isDobryHeaderWyswietlony(WebDriver w, String czescTresciNaglowka, String className)
-    {
-        String s = getTytulHeader(w,className,czescTresciNaglowka);
-//        Log.printLog1(s,LeftMenu.class,172);
-        return s != null && s.contains(czescTresciNaglowka);
+        return press(w,
+                new String[]{"/html/body/div[2]/div[2]/div[2]/div[1]/div[2]/div/ul/li[9]/a/div",
+                        "/html/body/div[2]/div[2]/div[2]/div[1]/div[2]/div/ul/li[9]/span/a/div",
+                        "/html/body/div[5]/div[2]/div[3]/div/ul/li[9]/span/a/div"},
+                "Ruch floty",
+                className);
     }
 }

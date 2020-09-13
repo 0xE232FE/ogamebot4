@@ -16,7 +16,6 @@ public class FlotaII
      */
     public static void setGalaxy(WebDriver w, int galaxy)
     {
-//        if(isDobryHeaderWyswietlony(w,"Wyślij flotę II", FlotaII.class.getName()))
         if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę II", FlotaII.class.getName()))
         {
             WebElement e = w.findElement(By.xpath("//*[@id=\"galaxy\"]"));
@@ -36,7 +35,6 @@ public class FlotaII
      */
     public static void setUklad(WebDriver w, int u)
     {
-//        if(isDobryHeaderWyswietlony(w,"Wyślij flotę II", FlotaII.class.getName()))
         if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę II", FlotaII.class.getName()))
         {
             WebElement e = w.findElement(By.xpath("//*[@id=\"system\"]"));
@@ -55,7 +53,6 @@ public class FlotaII
      */
     public static void setPlaneta(WebDriver w, int p)
     {
-//        if(isDobryHeaderWyswietlony(w,"Wyślij flotę II", FlotaII.class.getName()))
         if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę II", FlotaII.class.getName()))
         {
             WebElement e = w.findElement(By.xpath("//*[@id=\"position\"]"));
@@ -73,7 +70,6 @@ public class FlotaII
      */
     public static void clickPlaneta(WebDriver w)
     {
-//        if(isDobryHeaderWyswietlony(w,"Wyślij flotę II", FlotaII.class.getName()))
         if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę II", FlotaII.class.getName()))
         {
             WebElement e = w.findElement(By.xpath("//*[@id=\"pbutton\"]"));
@@ -90,7 +86,6 @@ public class FlotaII
      */
     public static void clickKsiezyc(WebDriver w)
     {
-//        if(isDobryHeaderWyswietlony(w,"Wyślij flotę II", FlotaII.class.getName()))
         if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę II", FlotaII.class.getName()))
         {
             WebElement e = w.findElement(By.xpath("//*[@id=\"mbutton\"]"));
@@ -108,7 +103,6 @@ public class FlotaII
      */
     public static void setSpeed(WebDriver w, int speed)
     {
-//        if(isDobryHeaderWyswietlony(w,"Wyślij flotę II", FlotaII.class.getName()))
         if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę II", FlotaII.class.getName()))
         {
             String path = "/html/body/div[5]/div[3]/div[2]/div[2]/form/div/div[5]/div[2]/div[2]/ul[1]/li[3]/div[1]/div[2]/div["+speed+"]";
@@ -124,8 +118,6 @@ public class FlotaII
      */
     public static String czasLotu(WebDriver w)
     {
-
-//        if(isDobryHeaderWyswietlony(w,"Wyślij flotę II", FlotaII.class.getName()))
         if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę II", FlotaII.class.getName()))
         {
             String path = "//*[@id=\"duration\"]";
@@ -144,7 +136,6 @@ public class FlotaII
      */
     public static void clickContinue(WebDriver w)
     {
-//        if(isDobryHeaderWyswietlony(w,"Wyślij flotę II", FlotaII.class.getName()))
         if(Header.dobryHeaderWyswietlony(w,"Wyślij flotę II", FlotaII.class.getName()))
         {
             w.findElement(By.xpath("/html/body/div[5]/div[3]/div[2]/div[2]/form/div/div[5]/div[2]/div[2]/div/a[1]/span")).click();
@@ -152,52 +143,6 @@ public class FlotaII
         }
         else
             Log.printLog(FlotaII.class.getName(),"Nie znaleziono WebElementu - Dalej.");
-    }
-
-    private static String getTytulHeader(WebDriver w, String className)
-    {
-        String [] paths = {
-                "/html/body/div[5]/div[3]/div[2]/div[2]/form/div/div[1]/h2",
-        };
-
-        WebElement e;
-        int index = 0;
-        boolean bool = true;
-
-        while(bool)
-        {
-            try
-            {
-                e = w.findElement(By.xpath(paths[index]));
-                bool = false;
-                return  e.getText();
-            }
-            catch(Exception ex)
-            {
-//                Log.printLog("Nie wczytano Tytuł Header.");
-                index++;
-            }
-            finally
-            {
-                if(index >= paths.length)
-                {
-                    bool = false;
-                    Log.printLog(className,"Sprawdzono wszystkie ścieżki, żadna nie pasuje.");
-                }
-
-                if(bool)
-                    Log.printLog(className, "Nie wczytano Tytuł Header. Zmieniam ścieżkę "+ index);
-            }
-        }
-        Log.printLog(className, "Nie jest wyświetlony nagłówek Menu.");
-        return null;
-    }
-
-    @Deprecated
-    private static boolean isDobryHeaderWyswietlony(WebDriver w, String czescTresciNaglowka, String className)
-    {
-        String s = getTytulHeader(w,className);
-        return s != null && s.contains(czescTresciNaglowka);
     }
 
 }
