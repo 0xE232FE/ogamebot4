@@ -34,6 +34,16 @@ public class Czas implements Serializable
         }
 
         /**
+         * Tworzy czas o podanych danych.
+         */
+        public Czas(int hour, int minute, int second)
+        {
+            this.hour = hour;
+            this.minute = minute;
+            this.second = second;
+        }
+
+        /**
          * Rozbija czas na godziny, minuty, sekundy.
          * @param czas Czas w formacie [xx:xx:xx] lub [x:xx:xx]
          */

@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="611.0" prefWidth="799.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.test.TestTabController">
+   <content>
+      <VBox prefHeight="610.0" prefWidth="798.0" spacing="2.0">
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+         <children>
+            <Label text="Autotransport">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </Label>
+            <Separator prefWidth="200.0" />
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox prefHeight="25.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label contentDisplay="TOP" prefHeight="23.0" prefWidth="200.0" text="Kliknij wskazaną planetę">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="23.0" prefWidth="75.0" text="Planeta">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldPlanetID" prefWidth="30.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Button mnemonicParsing="false" onAction="#kliknijPlanete" text="Wykonaj">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="25.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label contentDisplay="TOP" prefHeight="23.0" prefWidth="200.0" text="Kliknij wskazany księzyc">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="23.0" prefWidth="75.0" text="Księzyc">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldKsiezycID" prefWidth="30.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Button mnemonicParsing="false" onAction="#kliknijKsiezyc" text="Wykonaj">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="25.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label contentDisplay="TOP" prefHeight="23.0" prefWidth="315.0" text="Pobierz ilość surowców">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#iloscSurowcow" text="Wykonaj">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <Label text="Zakładki">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </Label>
+            <Separator prefWidth="200.0" />
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox prefHeight="25.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label contentDisplay="TOP" prefHeight="23.0" prefWidth="315.0" text="Kliknij Podglad">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#kliknijPodglad" text="Wykonaj">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="25.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label contentDisplay="TOP" prefHeight="23.0" prefWidth="315.0" text="Kliknij Surowce">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#kliknijSurowce" text="Wykonaj">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="25.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label contentDisplay="TOP" prefHeight="23.0" prefWidth="315.0" text="Kliknij Ustawienia surowcow">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#kliknijUstawieniaSurowcow" text="Wykonaj">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="25.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label contentDisplay="TOP" prefHeight="23.0" prefWidth="315.0" text="Kliknij Badania">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#kliknijBadania" text="Wykonaj">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="25.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label contentDisplay="TOP" prefHeight="23.0" prefWidth="315.0" text="Kliknij Flota">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#kliknijFlota" text="Wykonaj">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="25.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label contentDisplay="TOP" prefHeight="23.0" prefWidth="315.0" text="Kliknij Ruch flot">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#kliknijRuchFlot" text="Wykonaj">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="25.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label contentDisplay="TOP" prefHeight="23.0" prefWidth="315.0" text="Wypisz wybraną planetę">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#wypiszWybranaPlanete" text="Wykonaj">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <Label text="Flota I">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </Label>
+            <Separator prefWidth="200.0" />
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox prefHeight="25.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label contentDisplay="TOP" prefHeight="23.0" prefWidth="315.0" text="Sprawdź czy na planecie znajduje się flota">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#czyNaPlanecieJestFlota" text="Wykonaj">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="25.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label contentDisplay="TOP" prefHeight="23.0" prefWidth="180.0" text="Wprowadź ilość statków bojowych">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="23.0" prefWidth="60.0" text="Statek [1-10]">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldStatekBojowy" prefWidth="30.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Label prefHeight="23.0" prefWidth="35.0" text="Ilość">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldIStatekBojowyIlosc" prefWidth="45.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Button mnemonicParsing="false" onAction="#wprowadzIloscStatekBojowy" text="Wykonaj">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="25.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label contentDisplay="TOP" prefHeight="23.0" prefWidth="180.0" text="Wprowadź ilość statków cywilnych">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="23.0" prefWidth="60.0" text="Statek [1-5]">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldStatekCywilny" prefWidth="30.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Label prefHeight="23.0" prefWidth="35.0" text="Ilość">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldIStatekCywilnyIlosc" prefWidth="45.0">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Button mnemonicParsing="false" onAction="#wprowadzIloscStatekCywilny" text="Wykonaj">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="25.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label contentDisplay="TOP" prefHeight="23.0" prefWidth="315.0" text="Wypisz ilości staków">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#iloscStatkow" text="Wykonaj">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <Label text="Flota III">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </Label>
+            <Separator prefWidth="200.0" />
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox prefHeight="25.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label contentDisplay="TOP" prefHeight="23.0" prefWidth="315.0" text="Pobierz wolną przestrzeń ładunkową">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#wolnaPrzestrzenLadunkowa" text="Wykonaj">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="25.0" prefWidth="200.0" spacing="5.0">
+                     <children>
+                        <Label contentDisplay="TOP" prefHeight="23.0" prefWidth="315.0" text="Pobierz maksymalną przestrzeń ładunkową">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#maksymalnaPrzestrzenLadunkowa" text="Wykonaj">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </content>
+   <padding>
+      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+   </padding>
+</ScrollPane>

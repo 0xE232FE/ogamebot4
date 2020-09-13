@@ -159,78 +159,6 @@ public class Ekspedycje
         return false;
     }
 
-//    /**
-//     * Oblicza czas w sekundach jaki pozostał do powrotu najbliższej Ekspedycji.
-//     * @return Ilość sekund do powrotu.
-//     */
-//    public static int iloscSekundDoPowrotuNajblizszejEkspedycji()
-//    {
-//        Data data = CzasGry.getData();
-//        Ekspedycja tmp = null;
-//        List<Ekspedycja> tmpList = new ArrayList<>();
-//
-////        Log.printLog1("Rozpoczynam uzupełnianie tymczasowej listy w Ekspedycje z datą "+id,WrogieMisje.class,"najblizszaMisja(int,List<WrogaMisja>",237);
-////        for(WrogaMisja wrogaMisja : misjeNaWskazaneWspolrzedne)
-////        {
-////            if(wrogaMisja.getId() != id)
-////                tmpList2.add(wrogaMisja);
-////        }
-////
-////        Log.printLog1("Zakończyłem uzupełnianie tymczasowej listy w misje z ID != "+id +
-////                ". Odnaleziona ilość misji to "+tmpList2.size(),WrogieMisje.class,"najblizszaMisja(int,List<WrogaMisja>",244);
-//
-////        if(tmpList2.size() > 0)
-////        {
-//        //Sprawdzanie czy są ekspedycje, których powrót jest dzisiaj
-//        Log.printLog(Ekspedycje.class.getName(),"Rozpoczynam uzupełnianie tymczasowej listy w misje z datą = "+data.toString());
-//        for(Ekspedycja  ekspedycja : listaEkspedycji)
-//        {
-//            if(ekspedycja.getPowrot().getData().equals(data))
-//                tmpList.add(ekspedycja);
-//        }
-//        Log.printLog(Ekspedycje.class.getName(),"Rozpoczynam uzupełnianie tymczasowej listy w misje z datą = "+data.toString()+
-//                ". Odnaleziona ilość misji to " +tmpList.size());
-//
-////        }
-////        else
-////            return null;
-//
-//        //Gdy nie znaleziono ekspedycji, których powrot jest dzisiaj, sprawdzane są ekspedycje których powrót jest jutro.
-//        if(tmpList.size() == 0)
-//        {
-//            data = data.getTommorowDate();
-//            Log.printLog(Ekspedycje.class.getName(),"Rozpoczynam uzupełnianie tymczasowej listy w misje z datą = "+data.toString()+
-//                    ", ponieważ z poprzednią datą nie znaleziono żadnej misji.");
-//
-//            for(Ekspedycja  ekspedycja : listaEkspedycji)
-//            {
-//                if(ekspedycja.getPowrot().getData().equals(data))
-//                    tmpList.add(ekspedycja);
-//            }
-//        }
-//
-//        //Zwracanie najbliższej ekspedycji
-//        if(tmpList.size() > 0)
-//        {
-//            tmp = tmpList.get(0);
-//            for(Ekspedycja e : tmpList)
-//            {
-//                if(e.getPowrot().getCzas().czasWSekundach() < tmp.getPowrot().getCzas().czasWSekundach())
-//                    tmp = e;
-//            }
-//        }
-//        int sekundy;
-//        if(tmp != null)
-//            sekundy = tmp.getPowrot().getCzas().czasWSekundach() - CzasGry.getCzas().czasWSekundach();
-//        else
-//            sekundy = 300;
-//
-//        Log.printLog(Ekspedycje.class.getName(),"Zwracam " + (tmp != null ? tmp.toString():"null") + ".\n Najbliższa ekspedycja wróci za "
-//        + sekundy + " sek.");
-////        Log.printLog1("Zwracam " + tmp.toString(),WrogieMisje.class,"najblizszaMisja(int,List<WrogaMisja>",308);
-//        return sekundy;
-//    }
-
     /**
      * Zwraca tablicę z ekspedycjami, które zostały ukończone. Sprawdza czy te ekspedycje nie zostały opoźnione.
      * @return Zwraca listę ekspedycji, ktorę powróciły - zakończyły się.
@@ -241,7 +169,8 @@ public class Ekspedycje
         //Ekspedycje które zostały ukonczone
         for(Ekspedycja e : listaEkspedycji)
         {
-            if(e.getPowrot().getCzas().czasWSekundach() < CzasGry.getCzas().czasWSekundach())
+            if(e.getPowrot().getData().equals(CzasGry.getData()))
+                if(e.getPowrot().getCzas().czasWSekundach() < CzasGry.getCzas().czasWSekundach())
                 tmp.add(e);
         }
 
@@ -255,8 +184,9 @@ public class Ekspedycje
                 if(e.getId().equals(l.getId()))
                 {
                     e.setOpozniona(true);
+                    e.setPowrot(l.getCzasPowrot());
                     toRemove.add(e);
-                    getEkspedycje(e.getId()).setOpozniona(true);
+//                    getEkspedycje(e.getId()).setOpozniona(true);
                     updateOpoznionaVariable = true;
                 }
             }

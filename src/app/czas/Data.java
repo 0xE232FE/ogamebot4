@@ -1,13 +1,21 @@
 package app.czas;
 
-import com.Log;
 
 import java.io.Serializable;
 
 public class Data implements Serializable {
-    int day = 0, month = 0, year = 0;
-    String data;
+    private int day = 0, month = 0, year = 0;
+    private String data;
 
+    public Data()
+    {
+
+    }
+
+    public Data(String data)
+    {
+        setDataVariable(data);
+    }
     /**
      * Rozbija datę na rok, miesiacm dzien
      * @param data Data w formacie dd.mm.rrrr
@@ -36,7 +44,7 @@ public class Data implements Serializable {
      *
      * @return Dzien miesiaca
      */
-    int getDay() {
+    private int getDay() {
         return day;
     }
 
@@ -44,7 +52,7 @@ public class Data implements Serializable {
      *
      * @return Miesiac
      */
-    int getMonth() {
+    private int getMonth() {
         return month;
     }
 
@@ -52,7 +60,7 @@ public class Data implements Serializable {
      *
      * @return Rok
      */
-    int getYear() {
+    private int getYear() {
         return year;
     }
 

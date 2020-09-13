@@ -27,6 +27,49 @@ public class CzasWykonania
             return (Czas.MAX_SECONDS_DAY - this.czas.czasWSekundach()) + czas.czasWSekundach();
     }
 
+    /**
+     * Określa nową datę po przesunięciu wprowadzonej o określony czas.
+     * @param czasAktualny Aktualny czas.
+     * @param dataAktualna Aktualna data.
+     * @param czasPrzesuniecia Czas o jaki przesunąć.
+     * @return Nowy czas po przesunięciu.
+     */
+    public static CzasWykonania okreslCzasWykonania(Czas czasAktualny, Data dataAktualna, Czas czasPrzesuniecia)
+    {
+        CzasWykonania tmp = new CzasWykonania();
+        int tmp1 = czasAktualny.czasWSekundach();
+        int tmp2 = czasPrzesuniecia.czasWSekundach();
+
+        //Suma czasów większa od maksymalnego czasu 1 doby.
+        if(Czas.MAX_SECONDS_DAY <= tmp1 + tmp2)
+        {
+            tmp.setDataString(dataAktualna.getTommorowDate().toString());
+            int a = Czas.MAX_SECONDS_DAY - tmp1;
+            tmp.setCzasString(new Czas(tmp2 - a).toString());
+        }
+        else
+        {
+            tmp.setDataString(dataAktualna.toString());
+            tmp.setCzasString(new Czas(tmp1+tmp2).toString());
+        }
+
+        return tmp;
+    }
+
+    public Czas pozostaloCzasu(Czas czasAktualny, Data dataAktualna)
+    {
+        int tmp2;
+        //Daty są takie same.
+        if(dataAktualna.equals(data))
+            tmp2 = czas.czasWSekundach() - czasAktualny.czasWSekundach();
+        else
+            tmp2 = czas.czasWSekundach() + (Czas.MAX_SECONDS_DAY - czasAktualny.czasWSekundach());
+
+
+        return new Czas(tmp2);
+    }
+
+
     /*
     SETTERS
      */

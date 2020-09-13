@@ -51,7 +51,7 @@ public class Loty
 
         for (Lot l : RuchFlot.daneLotow(OgameWeb.webDriver))
         {
-            Log.printLog1(l.toString(),Loty.class,47);
+//            Log.printLog1(l.toString(),Loty.class,47);
             boolean check0 = l.getStart().equals(wspolrzedneStartu);
             boolean check1 = l.getCel().equals(wspolrzedneCelu);
             boolean check2 = (l.iszKsiezyca() ? 1:0) == obiektStart;

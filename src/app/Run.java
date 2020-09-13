@@ -2,6 +2,7 @@ package app;
 
 import app.data.accounts.Accounts;
 //import app.data.configuration.Configuration;
+import app.data.configuration.Configuration;
 import app.data.configuration.StartConfiguration;
 //import app.gui.Controller;
 import app.gui.controller.MainController;
@@ -75,6 +76,9 @@ public class Run extends Task
                 LogFleetSaveAttack.addLog(new app.log.Log(Run.class.getName(),"Zalogowałem się do gry na serwerze: "
                         + ogameWeb.getWebDriver().getTitle()));
                 gameClient.setRun(true);
+
+                if(Configuration.testModule)
+                    mainController.setTestModule();
             }
 
             try

@@ -89,7 +89,7 @@ public class FleetSaveAttackRootController
                     hBoxToggleButtonPlaneta2.getChildren().add(toggleButtonPlanetaList.get(i).getToggleButton());
             }
 
-            Log.printLog(FleetSaveAttackRootController.class.getName(),"Zakończyłrm dodawanie ToggleButton.");
+            Log.printLog(FleetSaveAttackRootController.class.getName(),"Zakończyłem dodawanie ToggleButton.");
             initPlanetButtons = false;
         }
     }

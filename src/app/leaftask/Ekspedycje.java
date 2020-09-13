@@ -10,8 +10,8 @@ import app.data.ekspedycje.Ekspedycja;
 import app.planety.Planety;
 import app.ruchflot.Lot;
 import app.ruchflot.Loty;
-import com.DifferentMethods;
 import com.Log;
+import com.Waiter;
 import ogame.LeftMenu;
 import ogame.flota.Flota;
 import ogame.flota.FlotaI;
@@ -22,27 +22,24 @@ import org.openqa.selenium.WebDriver;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class Ekspedycje extends LeafTask {
 
     public Ekspedycje(WebDriver w, int index, long sleep) {
-//        super(w, index, sleep, "Ekspedycje",false);
+
         super(w, index, sleep, "Ekspedycje");
     }
 
-    // Creating date format
-//    DateFormat simple = new SimpleDateFormat("dd MMM yyyy HH:mm:ss:SSS Z");
+
     private DateFormat simple = new SimpleDateFormat("HH:mm:ss");
     private CzasWykonania czasWykonania = new CzasWykonania();
-    private boolean uzupelnijDaneEkspedycji = false;
+//    private boolean uzupelnijDaneEkspedycji = false;
     @Override
     public void execute()
     {
         if (isRun())
         {
-//            printTimeVariable();
             if(isSleepTimeOut(System.currentTimeMillis()))
             {
                 if(app.data.ekspedycje.Ekspedycje.maxIloscEkspedycji == -1 ||
@@ -63,10 +60,10 @@ public class Ekspedycje extends LeafTask {
                     wyslij();
                 }
 
-                if(uzupelnijDaneEkspedycji)
-                {
-                    uzupelnijDaneEkspedycji();
-                }
+//                if(uzupelnijDaneEkspedycji)
+//                {
+//                    uzupelnijDaneEkspedycji();
+//                }
 
                 if(minalCzasPowrotuEkspedycji())
                 {
@@ -110,12 +107,20 @@ public class Ekspedycje extends LeafTask {
         Wspolrzedne wspolrzedne = app.data.ekspedycje.Ekspedycje.getWspolrzedneStartu();
         Planeta planeta = Planety.getPlaneta(wspolrzedne.toString());
         //Wybieranie właściwego miejsca startu.
+//        while(ListaPlanet.wybranaPlaneta(OgameWeb.webDriver) !=
+//                (app.data.ekspedycje.Ekspedycje.configuration.isKsiezyc() ? planeta.getId()*(-1) : planeta.getId()))
+//        {
+//            if(app.data.ekspedycje.Ekspedycje.configuration.isPlanet())
+//                planeta.clickPlanet();
+//            else if(app.data.ekspedycje.Ekspedycje.configuration.isKsiezyc())
+//                planeta.clickMoon();
+//        }
         if(app.data.ekspedycje.Ekspedycje.configuration.isPlanet())
             planeta.clickPlanet();
         else if(app.data.ekspedycje.Ekspedycje.configuration.isKsiezyc())
             planeta.clickMoon();
 
-        //Klikanie w zakładkę
+                //Klikanie w zakładkę
         LeftMenu.pressFlota(OgameWeb.webDriver, Ekspedycje.class.getName());
 
         //Pobieranei danych o ilości misji
@@ -191,25 +196,22 @@ public class Ekspedycje extends LeafTask {
                 FlotaII.setPlaneta(OgameWeb.webDriver,16);
                 FlotaII.clickContinue(OgameWeb.webDriver);
                 //Pobieranie danych o locie
-                CzasLotu przylot = FlotaIII.przylot(OgameWeb.webDriver);
-                CzasLotu powrot = FlotaIII.powrot(OgameWeb.webDriver);
+//                CzasLotu przylot = FlotaIII.przylot(OgameWeb.webDriver);
+//                CzasLotu powrot = FlotaIII.powrot(OgameWeb.webDriver);
                 CzasLotu start = new CzasLotu();
                 start.setDataString(CzasGry.getData().toString());
                 start.setCzasString(CzasGry.getCzas().toString());
                 // Kontynuuj
+                Waiter.sleep(50,50);
                 FlotaIII.wyslijFlote(OgameWeb.webDriver);
-                app.data.ekspedycje.Ekspedycje.dodajEkspedycje(new Ekspedycja(start,przylot,powrot));
+//                app.data.ekspedycje.Ekspedycje.dodajEkspedycje(new Ekspedycja(start,przylot,powrot));
                 Log.printLog(Ekspedycje.class.getName(),"Zakończyłem wysyłanie ekspedycji nr " + (app.data.ekspedycje.Ekspedycje.aktualnaIloscEkspedycji+1)+".");
                 //Flaga - wymagane uzupełnienie danych Ekspedycji
-                uzupelnijDaneEkspedycji = true;
-//                //Ustawienie sleep time
-//                setSleep(30);
+//                uzupelnijDaneEkspedycji = true;
+
             }
             else
             {
-//                int a = app.data.ekspedycje.Ekspedycje.iloscSekundDoPowrotuNajblizszejEkspedycji();
-//                int a = 600;
-//                setSleep(a);
                 Log.printLog(Ekspedycje.class.getName(),"Nie spełniony warunek ilości wolnych ekspedycji. " +
                         "Ustawiono ponowne sprawdzenie za " + getSleep() + " sek");
                 osiagnietoMaxIloscEkspedycji = true;
@@ -226,34 +228,17 @@ public class Ekspedycje extends LeafTask {
 
     private boolean minalCzasPowrotuEkspedycji()
     {
-        if(app.data.ekspedycje.Ekspedycje.najblizszaEkspedycja.getPowrot().getData().toString().equals(CzasGry.getData().toString()))
+        if(app.data.ekspedycje.Ekspedycje.najblizszaEkspedycja != null &&
+                app.data.ekspedycje.Ekspedycje.najblizszaEkspedycja.getPowrot().getData().toString().equals(CzasGry.getData().toString()))
         {
             if(CzasGry.getCzas().czasWSekundach() > app.data.ekspedycje.Ekspedycje.najblizszaEkspedycja.getPowrot().getCzas().czasWSekundach());
                 return true;
         }
 
         return false;
-
-//        if(app.data.ekspedycje.Ekspedycje.sprawdzCzyWrocila())
-//        {
-//            //Klikanie w zakładkę
-//            if(LeftMenu.pressFlota(OgameWeb.webDriver, Ekspedycje.class.getName()))
-//            {
-//                int aktualnaIloscEkspedycji = FlotaI.iloscEkspedycji(OgameWeb.webDriver);
-//                if(aktualnaIloscEkspedycji < app.data.ekspedycje.Ekspedycje.maxIloscEkspedycji)
-//                {
-//                    app.data.ekspedycje.Ekspedycje.usunMisje(app.data.ekspedycje.Ekspedycje.maxIloscEkspedycji - aktualnaIloscEkspedycji);
-//                    osiagnietoMaxIloscEkspedycji = false;
-//                    setSleep(30);
-//                }
-//            }
-//            else
-//                setSleep(30);
-//        }
-//        else
-//            Log.printLog(Ekspedycje.class.getName(),"Flota jeszcze nie wrócila. ");
     }
 
+    @Deprecated
     private void uzupelnijDaneEkspedycji()
     {
         for(Ekspedycja e : app.data.ekspedycje.Ekspedycje.listaEkspedycji)
@@ -267,6 +252,10 @@ public class Ekspedycje extends LeafTask {
                     int a = e.getPrzylot().getCzas().czasWSekundach();
                     int b = l.getCzasUCelu().getCzas().czasWSekundach();
                     //
+                    Log.printLog(Ekspedycje.class.getName(),"Ekspedycja - przylot: " + a +"\n"+
+                            "Lista lotow - u celu: "+b+"\n"+
+                            "Różnica (a-b): "+ (a-b) +"\n"+
+                            "Różnica (b-a): "+ (b-a) );
                     if(a > b && (a - b <= 20))
                     {
                         e.setId(l.getId());
@@ -287,7 +276,6 @@ public class Ekspedycje extends LeafTask {
                 }
             }
         }
-        uzupelnijDaneEkspedycji = false;
     }
 
     private void pobierzDaneOIlosciachEkspedycji()
@@ -320,33 +308,28 @@ public class Ekspedycje extends LeafTask {
     }
 
     private int counterTmp = 0;
-    private void printTimeVariable()
-    {
-        if(counterTmp == 100)
-        {
-            counterTmp = 0;
-            long tmp = System.currentTimeMillis();
-            String currentTime = simple.format(new Date(tmp));
-            String lastTimeExecute = simple.format(new Date(-3600000+getLastTimeExecute()));
-            String sleepTime = simple.format(new Date(-3600000+getSleep()));
-            String czasOdOstatniegoWykonania = simple.format(new Date(-3600000+tmp - getLastTimeExecute()));
-            String pozostalo = simple.format(new Date(-3600000+getSleep() - (tmp - getLastTimeExecute())));
 
-            Log.printLog(Ekspedycje.class.getName(),"\n"+
-                    DifferentMethods.initVariable("Uśpienie wątku:",35) + DifferentMethods.initVariable(sleepTime,10) + DifferentMethods.initVariable(String.valueOf(getSleep()),20)+"\n"
-                            + DifferentMethods.initVariable("Aktualny czas:",35) + DifferentMethods.initVariable(currentTime,10) + DifferentMethods.initVariable(String.valueOf(tmp),20)+"\n"
-                            + DifferentMethods.initVariable("Ostatni czas wykonania wątku:",35) + DifferentMethods.initVariable(lastTimeExecute,10) + DifferentMethods.initVariable(String.valueOf(getLastTimeExecute()),20)+"\n"
-                            + DifferentMethods.initVariable("Czas od ostatniego wykonaia:",35) + DifferentMethods.initVariable(czasOdOstatniegoWykonania,10) + DifferentMethods.initVariable(String.valueOf(tmp - getLastTimeExecute()),20)+"\n"
-                            + DifferentMethods.initVariable("Do wykonania wątku pozsotało:",35) + DifferentMethods.initVariable(pozostalo,10)+DifferentMethods.initVariable(String.valueOf(getSleep() - (tmp - getLastTimeExecute())),20));
-        }
-        else
-            counterTmp++;
-
-    }
-
-    public void czyEkspedycjaZostalaOpozniona()
-    {
-
-    }
-
+//    private void printTimeVariable()
+//    {
+//        if(counterTmp == 100)
+//        {
+//            counterTmp = 0;
+//            long tmp = System.currentTimeMillis();
+//            String currentTime = simple.format(new Date(tmp));
+//            String lastTimeExecute = simple.format(new Date(-3600000+getLastTimeExecute()));
+//            String sleepTime = simple.format(new Date(-3600000+getSleep()));
+//            String czasOdOstatniegoWykonania = simple.format(new Date(-3600000+tmp - getLastTimeExecute()));
+//            String pozostalo = simple.format(new Date(-3600000+getSleep() - (tmp - getLastTimeExecute())));
+//
+//            Log.printLog(Ekspedycje.class.getName(),"\n"+
+//                    DifferentMethods.initVariable("Uśpienie wątku:",35) + DifferentMethods.initVariable(sleepTime,10) + DifferentMethods.initVariable(String.valueOf(getSleep()),20)+"\n"
+//                            + DifferentMethods.initVariable("Aktualny czas:",35) + DifferentMethods.initVariable(currentTime,10) + DifferentMethods.initVariable(String.valueOf(tmp),20)+"\n"
+//                            + DifferentMethods.initVariable("Ostatni czas wykonania wątku:",35) + DifferentMethods.initVariable(lastTimeExecute,10) + DifferentMethods.initVariable(String.valueOf(getLastTimeExecute()),20)+"\n"
+//                            + DifferentMethods.initVariable("Czas od ostatniego wykonaia:",35) + DifferentMethods.initVariable(czasOdOstatniegoWykonania,10) + DifferentMethods.initVariable(String.valueOf(tmp - getLastTimeExecute()),20)+"\n"
+//                            + DifferentMethods.initVariable("Do wykonania wątku pozsotało:",35) + DifferentMethods.initVariable(pozostalo,10)+DifferentMethods.initVariable(String.valueOf(getSleep() - (tmp - getLastTimeExecute())),20));
+//        }
+//        else
+//            counterTmp++;
+//
+//    }
 }

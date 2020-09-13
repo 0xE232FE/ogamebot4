@@ -8,6 +8,7 @@ import java.io.*;
 public class Configuration
 {
     public static boolean firstConfiguration = load();
+    public static boolean testModule = false;
 
     /**
      * Wczytuje z pliku inforamcję czy wykonano konfigurację pierszego uruchomienia.
@@ -84,5 +85,9 @@ public class Configuration
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void setTestModule(boolean testModule) {
+        Configuration.testModule = testModule;
     }
 }

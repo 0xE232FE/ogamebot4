@@ -139,7 +139,7 @@ public class FleetSaveAttack extends LeafTask {
                                 {
                                     WrogaMisja tmpKolejnyAtak = WrogieMisje.najblizszaMisja(wrogaMisja.getId(),dodatkoweAtakiTmp, wrogaMisja.isNaKsiezyc());
                                     // Czy kolejna misja wchodzi tego samego dnia
-                                    if(tmpKolejnyAtak.getData().equals(CzasGry.getData()))
+                                    if(tmpKolejnyAtak != null && tmpKolejnyAtak.getData().equals(CzasGry.getData()))
                                     {
                                         // Czas najbliższego wejscia ataku - aktualny czas
                                         int a = tmpKolejnyAtak.getCzas().czasWSekundach() - CzasGry.getCzas().czasWSekundach();
@@ -200,6 +200,7 @@ public class FleetSaveAttack extends LeafTask {
                                     else
                                     {
                                         // Czas najbliższego wejscia ataku - aktualny czas
+                                        assert tmpKolejnyAtak != null;
                                         int zaIleSekundWejdzieKolejnyAtak = tmpKolejnyAtak.getCzas().czasWSekundach() + Czas.MAX_SECONDS_DAY - CzasGry.getCzas().czasWSekundach();
 
                                         // Czas jaki minął od wysłania FS'a
@@ -440,7 +441,13 @@ public class FleetSaveAttack extends LeafTask {
                         p.getAttackFleetSaveConfiguration().isAutoFleetSaveMoon() )
                     FlotaIII.kliknijMisje(OgameWeb.webDriver,5);
                 else
-                    FlotaIII.kliknijMisje(OgameWeb.webDriver,fleetSave.getMisjaInt());
+                    if(fleetSave != null)
+                        FlotaIII.kliknijMisje(OgameWeb.webDriver,fleetSave.getMisjaInt());
+                    else
+                    {
+                        Log.printLog(FleetSaveAttack.class.getName(),"Nie wybrano misji z powodu: Obiekt FleetSave = null.");
+                        return;
+                    }
 
                 Waiter.sleep(25,25);
                 missionSelected = FlotaIII.isMissionSelected(OgameWeb.webDriver, FleetSaveAttack.class.getName());
@@ -468,7 +475,7 @@ public class FleetSaveAttack extends LeafTask {
         else
         {
             LogFleetSaveAttack.addLog(new app.log.Log(FleetSaveAttack.class.getName(),
-                    "Nie wysłano FS'a z " + (moon ? "księżyc " : "planeta ")
+                    "Nie wysłano FS'a z " + (moon ? "KSIĘŻYC " : "PLANETA ")
                             + p.getWspolrzedne() + " z powodu braku statków na planecie."));
             Log.printLog(FleetSaveAttack.class.getName(),"Brak statków na "+ (moon ? "księżyc " : "planeta ")
                     + p.getWspolrzedne());

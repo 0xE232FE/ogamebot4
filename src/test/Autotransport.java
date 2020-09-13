@@ -55,15 +55,15 @@ public class Autotransport
                 CzasWykonania.okreslCzasWykonania(aktualnyCzas.getCzas(),aktualnyCzas.getData(),new Czas(12,0,0)).getCzas().toString());
         //Obliczanie pozostałego czasu.
         //1
-        Assert.assertEquals("06:00:00",czasNastepnegoWykonania.pozostałoCzasu(new Czas("00:00:00"),new Data("02.01.2020")).toString());
+        Assert.assertEquals("06:00:00",czasNastepnegoWykonania.pozostaloCzasu(new Czas("00:00:00"),new Data("02.01.2020")).toString());
         //2
-        Assert.assertEquals("06:30:00",czasNastepnegoWykonania.pozostałoCzasu(new Czas("23:30:00"),new Data("01.01.2020")).toString());
+        Assert.assertEquals("06:30:00",czasNastepnegoWykonania.pozostaloCzasu(new Czas("23:30:00"),new Data("01.01.2020")).toString());
         //3
-        Assert.assertEquals("00:00:01",czasNastepnegoWykonania.pozostałoCzasu(new Czas("05:59:59"),new Data("02.01.2020")).toString());
+        Assert.assertEquals("00:00:01",czasNastepnegoWykonania.pozostaloCzasu(new Czas("05:59:59"),new Data("02.01.2020")).toString());
         //4
-        Assert.assertEquals(-59,czasNastepnegoWykonania.pozostałoCzasu(new Czas("06:00:59"),new Data("02.01.2020")).czasWSekundach());
+        Assert.assertEquals(-59,czasNastepnegoWykonania.pozostaloCzasu(new Czas("06:00:59"),new Data("02.01.2020")).czasWSekundach());
         //Sprawdzenie czy po minięciu czasu wartość będzie mniejsza od 0.
-        Assert.assertTrue(czasNastepnegoWykonania.pozostałoCzasu(new Czas("06:00:59"),new Data("02.01.2020")).czasWSekundach() < 0);
+        Assert.assertTrue(czasNastepnegoWykonania.pozostaloCzasu(new Czas("06:00:59"),new Data("02.01.2020")).czasWSekundach() < 0);
     }
 
     @Test

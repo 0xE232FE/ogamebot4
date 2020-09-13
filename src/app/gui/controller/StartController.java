@@ -2,6 +2,7 @@ package app.gui.controller;
 
 import app.data.accounts.Account;
 import app.data.accounts.Accounts;
+import app.data.configuration.Configuration;
 import com.URLFactory;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -70,6 +71,43 @@ public class StartController {
             URL url = new URL(urlFactory.path(1,"main.fxml"));
             Stage primaryStage = new Stage();
             Parent root = FXMLLoader.load(url);
+            primaryStage.setTitle("OgameBot");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
+            primaryStage.setOnCloseRequest(e ->
+            {
+                Platform.exit();
+                System.exit(0);
+            });
+
+            stage.close();
+        }
+    }
+
+    @FXML
+    void runTest() throws IOException {
+        Stage stage = (Stage) editTextLogin.getScene().getWindow();
+        if(emptyTextFields())
+        {
+            labelError.setText("Nie wprowadzono danych we wszystkich polach.");
+        }
+        else
+        {
+            //Ustawienie, że uruchamia się test module
+            Configuration.setTestModule(true);
+            Account a = new Account(editTextLogin.getText(),passwordField.getText(), editTextServer.getText(),
+                    editTextOgameWebAdress.getText());
+            Accounts.setSelected(a);
+            Accounts.addAccount(a);
+            Accounts.save();
+            Accounts.saveSelected();
+
+            // Uruchamianie nowego okna
+            URLFactory urlFactory = new URLFactory(getClass().getResource("").toString());
+            URL url = new URL(urlFactory.path(1,"main.fxml"));
+            Stage primaryStage = new Stage();
+            Parent root  = FXMLLoader.load(url);
+
             primaryStage.setTitle("OgameBot");
             primaryStage.setScene(new Scene(root));
             primaryStage.show();

@@ -2,6 +2,7 @@ package app;
 
 
 import app.czas.CzasGry;
+import app.data.configuration.Configuration;
 import app.gui.active_task.ActiveTask;
 import app.gui.controller.MainController;
 import app.log.LogFleetSaveAttack;
@@ -30,6 +31,8 @@ public class GUIUpdater extends Task
                     updateAktywneWatki();
                     updateFleetSaveAttack();
                     updateAktualneEkspedycje();
+                    updateAutoTransport();
+                    updateAlertModuleTest();
                 };
                 Platform.runLater(updater);
             }
@@ -41,6 +44,20 @@ public class GUIUpdater extends Task
     private void updateCzasGry()
     {
        getController().setTime(CzasGry.getData().toString() + " " + CzasGry.getCzas().toString());
+
+       //Ustawienie czasu uruchomienia.
+       if(getController().isInitStartGameTime() && CzasGry.getCzas().czasWSekundach() != 0)
+           getController().setStartGameTime(CzasGry.getData().toString() + " " + CzasGry.getCzas().toString());
+
+    }
+
+    private void updateAlertModuleTest()
+    {
+        if(Configuration.testModule)
+            getController().getLabelAlertModulTest().setVisible(true);
+        else
+            getController().getLabelAlertModulTest().setVisible(false);
+
     }
 
     private boolean initAktywneWatki = true;
@@ -93,10 +110,12 @@ public class GUIUpdater extends Task
     }
 
     private long lastUpdateAutoTransport = 0;
-    public void updateAutoTransport()
+    private void updateAutoTransport()
     {
-
-
+        if(getController() != null)
+        {
+            getController().getAutotransportTabController().update();
+        }
     }
 
     private long lastUpdateAutoFarming = 0;

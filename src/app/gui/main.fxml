@@ -43,16 +43,26 @@
          </children>
       </VBox>
       <Separator orientation="VERTICAL" />
-      <TabPane prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPane" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab text="Fleet Save Attack">
                <content>
                   <fx:include fx:id="fleetSaveAttackRoot" source="fleet_save_attack/fleet_save_attack_root.fxml" />
                </content>
             </Tab>
-            <Tab text="Ekspedycje" >
+            <Tab text="Ekspedycje">
                <content>
                   <fx:include fx:id="ekspedycjeTab" source="ekspedycje/ekspedycje_tab.fxml" />
+               </content>
+            </Tab>
+            <Tab text="Autotransport">
+               <content>
+                  <fx:include fx:id="autotransportTab" source="autotransport/autotransport_tab.fxml" />
+               </content>
+            </Tab>
+            <Tab text="Test">
+               <content>
+                  <fx:include fx:id="testTab" source="test/test_tab.fxml" />
                </content>
             </Tab>
          </tabs></TabPane>
@@ -69,6 +79,18 @@
                   <Separator prefWidth="200.0" />
                </children>
             </VBox>
+            <VBox prefWidth="158.0" spacing="2.0">
+               <children>
+                  <Label text="CZAS URUCHOMIENIA" />
+                  <Label fx:id="labelStartGameTime" />
+                  <Separator prefWidth="200.0" />
+               </children>
+            </VBox>
+            <Label fx:id="labelAlertModulTest" text="MODUŁ  DO TESTÓW" textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
          </children>
       </VBox>
    </children>

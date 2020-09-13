@@ -25,7 +25,8 @@ public class TaskManager
                 new AttackDetector(webDriver,1,5),
                 new FleetSaveAttack(webDriver,2,30*1000),
                 new RuchFlot(webDriver,3,0),
-                new Ekspedycje(webDriver,4,30*1000)
+                new Ekspedycje(webDriver,4,10*1000),
+                new Autotransport(webDriver,5,10*1000)
         };
         Log.printLog(TaskManager.class.getName(), "Utworzono " +tasks.length + " Tasków.");
     }
@@ -43,7 +44,10 @@ public class TaskManager
     public  void stopTask(int taskIndex)
     {
         if(taskIndex <= tasks.length-1)
+        {
             tasks[taskIndex].setRun(false);
+            Log.printLog(TaskManager.class.getName(), "Zatrzymano task "+tasks[taskIndex].getName());
+        }
         else
             Log.printErrorLog(TaskManager.class.getName(),"Podany taskIndex wykracza poza długość tablicy." +
                     " Dlugość tablicy to " + (tasks.length-1));
@@ -51,5 +55,15 @@ public class TaskManager
 
     public static LeafTask[] getTasks() {
         return tasks;
+    }
+
+    public static void stopTasks(int [] taskIndex)
+    {
+            for(int a : taskIndex)
+            {
+                for(LeafTask task : tasks)
+                    if(a == task.getIndex())
+                        task.setRun(false);
+            }
     }
 }

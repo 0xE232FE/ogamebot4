@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import java.io.IOException;
 
 public class EkspedycjaInfo {
+
     private Ekspedycja ekspedycja;
     private EkspedycjaInfoController controller;
     private HBox hBox;
