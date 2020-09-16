@@ -9,9 +9,13 @@ public class GameTime
 
     public static String time (WebDriver w)
     {
+//        String [] paths = {
+//                "/html/body/div[5]/div[1]/div[5]/div/ul/li[9]",
+//                "/html/body/div[2]/div[2]/div[1]/div[2]/div/ul/li[9]"
+//        };
+
         String [] paths = {
-                "/html/body/div[5]/div[1]/div[5]/div/ul/li[9]",
-                "/html/body/div[2]/div[2]/div[1]/div[2]/div/ul/li[9]"
+                "//*[@id=\"bar\"]/ul/li[9]",
         };
 
         int index = 0;
@@ -46,9 +50,13 @@ public class GameTime
 
     public static String date(WebDriver w)
     {
+//        String [] paths = {
+//                "/html/body/div[5]/div[1]/div[5]/div/ul/li[9]",
+//                "/html/body/div[2]/div[2]/div[1]/div[2]/div/ul/li[9]"
+//        };
+
         String [] paths = {
-                "/html/body/div[5]/div[1]/div[5]/div/ul/li[9]",
-                "/html/body/div[2]/div[2]/div[1]/div[2]/div/ul/li[9]"
+                "//*[@id=\"bar\"]/ul/li[9]",
         };
 
         int index = 0;

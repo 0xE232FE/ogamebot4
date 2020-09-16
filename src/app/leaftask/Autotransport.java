@@ -15,6 +15,7 @@ import ogame.LeftMenu;
 import ogame.flota.FlotaI;
 import ogame.flota.FlotaII;
 import ogame.flota.FlotaIII;
+import ogame.planety.ListaPlanet;
 import ogame.planety.Planeta;
 import ogame.surowce.SurowceNaPlanecie;
 import org.openqa.selenium.WebDriver;
@@ -50,7 +51,11 @@ public class Autotransport extends LeafTask
                     if(autotransport.isWyslijUser() &&  autotransport.isWyslijPonownie())
                     {
                         //Kliknięcie w planetę
-                        p.clickPlanet();
+                        while(ListaPlanet.wybranaPlaneta(OgameWeb.webDriver) != p.getPozycjaNaLiscie())
+                        {
+                            p.clickPlanet();
+                            Waiter.sleep(100,100);
+                        }
                         //Kliknięcie w zakladkę flota
                         LeftMenu.pressFlota(OgameWeb.webDriver,Autotransport.class.getName());
                         iloscMisji = FlotaI.iloscMisji(OgameWeb.webDriver);
@@ -71,184 +76,181 @@ public class Autotransport extends LeafTask
                                 int mt = FlotaI.dostepnaIloscStatekCywilny(OgameWeb.webDriver,1);
                                 int dt = FlotaI.dostepnaIloscStatekCywilny(OgameWeb.webDriver,2);
 
-                                //Okreslanie ilości małych transporterów potrzebnych do przewiezienia surowców
-                                int potrzebnaIloscMT = sumaSurowcow/(5000 +(technologiaNadprzestrzenna*250)) + 1;
-                                //Określanie ilości dużych transporterów potrzebnych do przewiezienia surowców
-                                int potrzebnaIloscDT = sumaSurowcow/(25000 +(technologiaNadprzestrzenna*1250)) + 1;
-                                //Sprawdzenie czy wysyłać DT czy MT w pierwszej kolejności
-                                //Wyślij MT
-                                if(iloscMTZadeklarowana >= iloscDTZadeklarowana*5)
-                                {
-                                    //Sprawdzenie czy wystarczy samych MT czy nalezy wysłać DT
-                                    if(potrzebnaIloscMT <= mt )
-                                        potrzebnaIloscDT = 0;
-                                    else
-                                    {
-                                        int tmp = sumaSurowcow;
-                                        //Ile pozostało surowców, gdy załaduje wszytstko na MT.
-                                        tmp = tmp - mt * (5000+(technologiaNadprzestrzenna*250));
-                                        potrzebnaIloscDT = tmp/(25000 +(technologiaNadprzestrzenna*1250)) + 1;
-                                    }
-//                                    if(potrzebnaIloscMT <= mt )
-//                                        potrzebnaIloscDT = 0;
-//                                    else
-//                                    {
-//                                        int tmp = sumaSurowcow;
-//                                        //Ile pozostało surowców, gdy załaduje wszytstko na MT.
-//                                        tmp = tmp - potrzebnaIloscMT * (5000+(technologiaNadprzestrzenna*250));
-//                                        potrzebnaIloscDT = tmp/(25000 +(technologiaNadprzestrzenna*1250)) + 1;
-//                                    }
-                                    //Wpisywanie ilości floty
-                                    FlotaI.wprowadzIloscStatekCywilny(OgameWeb.webDriver,1,potrzebnaIloscMT+1);
-                                    if(potrzebnaIloscDT != 0)
-                                        FlotaI.wprowadzIloscStatekCywilny(OgameWeb.webDriver,2,potrzebnaIloscDT);
+                               if(FlotaI.isAnyShips(OgameWeb.webDriver)&& (mt != 0 || dt != 0))
+                               {
+                                   //Okreslanie ilości małych transporterów potrzebnych do przewiezienia surowców
+                                   int potrzebnaIloscMT = sumaSurowcow/(5000 +(technologiaNadprzestrzenna*250)) + 1;
+                                   //Określanie ilości dużych transporterów potrzebnych do przewiezienia surowców
+                                   int potrzebnaIloscDT = sumaSurowcow/(25000 +(technologiaNadprzestrzenna*1250)) + 1;
+                                   //Sprawdzenie czy wysyłać DT czy MT w pierwszej kolejności
+                                   //Wyślij MT
+                                   if(iloscMTZadeklarowana >= iloscDTZadeklarowana*5)
+                                   {
+                                       //Sprawdzenie czy wystarczy samych MT czy nalezy wysłać DT
+                                       if(potrzebnaIloscMT <= mt )
+                                           potrzebnaIloscDT = 0;
+                                       else
+                                       {
+                                           int tmp = sumaSurowcow;
+                                           //Ile pozostało surowców, gdy załaduje wszytstko na MT.
+                                           tmp = tmp - mt * (5000+(technologiaNadprzestrzenna*250));
+                                           potrzebnaIloscDT = tmp/(25000 +(technologiaNadprzestrzenna*1250)) + 1;
+                                       }
+                                       //Wpisywanie ilości floty
+                                       FlotaI.wprowadzIloscStatekCywilny(OgameWeb.webDriver,1,potrzebnaIloscMT+1);
+                                       if(potrzebnaIloscDT != 0)
+                                           FlotaI.wprowadzIloscStatekCywilny(OgameWeb.webDriver,2,potrzebnaIloscDT);
 
-                                    Waiter.sleep(50,100);
-                                    FlotaI.clickContinue(OgameWeb.webDriver);
-                                    //Wpisywanie współrzednych
-                                    FlotaII.setGalaxy(OgameWeb.webDriver,AutotransportData.configuration.getGalaktyka());
-                                    FlotaII.setUklad(OgameWeb.webDriver,AutotransportData.configuration.getUklad());
-                                    FlotaII.setPlaneta(OgameWeb.webDriver,AutotransportData.configuration.getPlaneta());
-                                    if(AutotransportData.configuration.isPlanet())
-                                        FlotaII.clickPlaneta(OgameWeb.webDriver);
-                                    else if(AutotransportData.configuration.isKsiezyc())
-                                        FlotaII.clickKsiezyc(OgameWeb.webDriver);
+                                       Waiter.sleep(50,100);
+                                       FlotaI.clickContinue(OgameWeb.webDriver);
+                                       //Wpisywanie współrzednych
+                                       FlotaII.setGalaxy(OgameWeb.webDriver,AutotransportData.configuration.getGalaktyka());
+                                       FlotaII.setUklad(OgameWeb.webDriver,AutotransportData.configuration.getUklad());
+                                       FlotaII.setPlaneta(OgameWeb.webDriver,AutotransportData.configuration.getPlaneta());
+                                       if(AutotransportData.configuration.isPlanet())
+                                           FlotaII.clickPlaneta(OgameWeb.webDriver);
+                                       else if(AutotransportData.configuration.isKsiezyc())
+                                           FlotaII.clickKsiezyc(OgameWeb.webDriver);
 
-                                    FlotaII.clickContinue(OgameWeb.webDriver);
+                                       FlotaII.clickContinue(OgameWeb.webDriver);
 
-                                    boolean missionSelected = false;
-                                    //Wybieranie rodzaju misji.
-                                    while(!missionSelected)
-                                    {
-                                        FlotaIII.kliknijMisje(OgameWeb.webDriver,4);
-                                        Waiter.sleep(25,25);
-                                        missionSelected = FlotaIII.isMissionSelected(OgameWeb.webDriver, FleetSaveAttack.class.getName());
-                                    }
-                                    //Załadowanie surowców
-                                    FlotaIII.clickWszystkieSurowce(OgameWeb.webDriver);
-                                    //Pobieranie danych o wysłanych surowcach
-                                    int wolnaPrzestrzen = FlotaIII.wolnaPrzestrzenLadunkowa(OgameWeb.webDriver);
-                                    int maxPrzestrzen = FlotaIII.maksymalnaPrzestrzenLadunkowa(OgameWeb.webDriver);
-                                    if(wolnaPrzestrzen == 0)
-                                    {
-                                        autotransport.setPozostaloSurowcow(sumaSurowcow-maxPrzestrzen);
-                                        autotransport.setZabranoSurowcow(maxPrzestrzen);
-                                    }
-                                    else
-                                    {
-                                        autotransport.setPozostaloSurowcow(0);
-                                        autotransport.setZabranoSurowcow(sumaSurowcow);
-                                    }
-                                    //Pobieranie danych o wysłanej flocie.
-                                    autotransport.setCzasDostarczenia(FlotaIII.przylot(OgameWeb.webDriver));
-                                    autotransport.setCzasPowrotu(FlotaIII.powrot(OgameWeb.webDriver));
-//                                    autotransport.setZabranoSurowcow(sumaSurowcow);
-                                    //Ustawienie czasu następnego wykonania.
-                                    //Ustawienie czasu następnego wykonania.
-                                    if(autotransport.getPozostaloSurowcow() >= MIN_ILOSC_SUROWCOW)
-                                    {
-                                        autotransport.setNastepneWykonanie(CzasWykonania.okreslCzasWykonania(
-                                                CzasGry.getCzas(),CzasGry.getData(),
-                                                new Czas(FlotaIII.czasLotu(OgameWeb.webDriver).getCzas().czasWSekundach()*2+60)
-                                        ));
-                                    }
-                                    else
-                                    {
-                                        autotransport.setNastepneWykonanie(CzasWykonania.okreslCzasWykonania(
-                                                CzasGry.getCzas(),CzasGry.getData(),
-                                                AutotransportData.getInterwalCzasowy()
-                                        ));
-                                    }
-                                    autotransport.setWyslijPonownie(false);
-                                    //Wyślij flotę
-                                    FlotaIII.wyslijFlote(OgameWeb.webDriver);
-                                }
-                                //Wyslij DT
-                                else
-                                {
-                                    //Sprawdzenie czy wystarczy samych DT czy nalezy wysłać MT
-                                    if(potrzebnaIloscDT <= dt )
-                                        potrzebnaIloscMT = 0;
-                                    else
-                                    {
-                                        int tmp = sumaSurowcow;
-                                        //Ile pozostało surowców, gdy załaduje wszytstko na DT.
-                                        tmp = tmp - dt * (25000+(technologiaNadprzestrzenna*1250));
-                                        potrzebnaIloscMT = tmp/(5000 +(technologiaNadprzestrzenna*250)) + 1;
-                                    }
-//                                    if(potrzebnaIloscDT <= dt )
-//                                        potrzebnaIloscMT = 0;
-//                                    else
-//                                    {
-//                                        int tmp = sumaSurowcow;
-//                                        //Ile pozostało surowców, gdy załaduje wszytstko na DT.
-//                                        tmp = tmp - potrzebnaIloscDT * (25000+(technologiaNadprzestrzenna*1250));
-//                                        potrzebnaIloscMT = tmp/(5000 +(technologiaNadprzestrzenna*250)) + 1;
-//                                    }
-                                    //Wpisywanie ilości floty
-                                    FlotaI.wprowadzIloscStatekCywilny(OgameWeb.webDriver,2,potrzebnaIloscDT+1);
-                                    if(potrzebnaIloscMT != 0)
-                                        FlotaI.wprowadzIloscStatekCywilny(OgameWeb.webDriver,1,potrzebnaIloscMT+1);
+                                       boolean missionSelected = false;
+                                       //Wybieranie rodzaju misji.
+                                       while(!missionSelected)
+                                       {
+                                           FlotaIII.kliknijMisje(OgameWeb.webDriver,4);
+                                           Waiter.sleep(25,25);
+                                           missionSelected = FlotaIII.isMissionSelected(OgameWeb.webDriver, FleetSaveAttack.class.getName());
+                                       }
+                                       //Załadowanie surowców
+                                       FlotaIII.clickWszystkieSurowce(OgameWeb.webDriver);
+                                       //Pobieranie danych o wysłanych surowcach
+                                       int wolnaPrzestrzen = FlotaIII.wolnaPrzestrzenLadunkowa(OgameWeb.webDriver);
+                                       int maxPrzestrzen = FlotaIII.maksymalnaPrzestrzenLadunkowa(OgameWeb.webDriver);
+                                       if(wolnaPrzestrzen == 0)
+                                       {
+                                           autotransport.setPozostaloSurowcow(sumaSurowcow-maxPrzestrzen);
+                                           autotransport.setZabranoSurowcow(maxPrzestrzen);
+                                       }
+                                       else
+                                       {
+                                           autotransport.setPozostaloSurowcow(0);
+                                           autotransport.setZabranoSurowcow(sumaSurowcow);
+                                       }
+                                       //Pobieranie danych o wysłanej flocie.
+                                       autotransport.setCzasDostarczenia(FlotaIII.przylot(OgameWeb.webDriver));
+                                       autotransport.setCzasPowrotu(FlotaIII.powrot(OgameWeb.webDriver));
+                                       //Ustawienie czasu następnego wykonania.
+                                       //Ustawienie czasu następnego wykonania.
+                                       if(autotransport.getPozostaloSurowcow() >= MIN_ILOSC_SUROWCOW)
+                                       {
+                                           autotransport.setNastepneWykonanie(CzasWykonania.okreslCzasWykonania(
+                                                   CzasGry.getCzas(),CzasGry.getData(),
+                                                   new Czas(FlotaIII.czasLotu(OgameWeb.webDriver).getCzas().czasWSekundach()*2+60)
+                                           ));
+                                       }
+                                       else
+                                       {
+                                           autotransport.setNastepneWykonanie(CzasWykonania.okreslCzasWykonania(
+                                                   CzasGry.getCzas(),CzasGry.getData(),
+                                                   AutotransportData.getInterwalCzasowy()
+                                           ));
+                                       }
+                                       autotransport.setWyslijPonownie(false);
+                                       //Wyślij flotę
+                                       FlotaIII.wyslijFlote(OgameWeb.webDriver);
+                                   }
+                                   //Wyslij DT
+                                   else
+                                   {
+                                       //Sprawdzenie czy wystarczy samych DT czy nalezy wysłać MT
+                                       if(potrzebnaIloscDT <= dt )
+                                           potrzebnaIloscMT = 0;
+                                       else
+                                       {
+                                           int tmp = sumaSurowcow;
+                                           //Ile pozostało surowców, gdy załaduje wszytstko na DT.
+                                           tmp = tmp - dt * (25000+(technologiaNadprzestrzenna*1250));
+                                           potrzebnaIloscMT = tmp/(5000 +(technologiaNadprzestrzenna*250)) + 1;
+                                       }
 
-                                    Waiter.sleep(50,100);
-                                    FlotaI.clickContinue(OgameWeb.webDriver);
-                                    //Wpisywanie współrzednych
-                                    FlotaII.setGalaxy(OgameWeb.webDriver,AutotransportData.configuration.getGalaktyka());
-                                    FlotaII.setUklad(OgameWeb.webDriver,AutotransportData.configuration.getUklad());
-                                    FlotaII.setPlaneta(OgameWeb.webDriver,AutotransportData.configuration.getPlaneta());
-                                    if(AutotransportData.configuration.isPlanet())
-                                        FlotaII.clickPlaneta(OgameWeb.webDriver);
-                                    else if(AutotransportData.configuration.isKsiezyc())
-                                        FlotaII.clickKsiezyc(OgameWeb.webDriver);
+                                       //Wpisywanie ilości floty
+                                       FlotaI.wprowadzIloscStatekCywilny(OgameWeb.webDriver,2,potrzebnaIloscDT+1);
+                                       if(potrzebnaIloscMT != 0)
+                                           FlotaI.wprowadzIloscStatekCywilny(OgameWeb.webDriver,1,potrzebnaIloscMT+1);
 
-                                    FlotaII.clickContinue(OgameWeb.webDriver);
+                                       Waiter.sleep(50,100);
+                                       FlotaI.clickContinue(OgameWeb.webDriver);
+                                       //Wpisywanie współrzednych
+                                       FlotaII.setGalaxy(OgameWeb.webDriver,AutotransportData.configuration.getGalaktyka());
+                                       FlotaII.setUklad(OgameWeb.webDriver,AutotransportData.configuration.getUklad());
+                                       FlotaII.setPlaneta(OgameWeb.webDriver,AutotransportData.configuration.getPlaneta());
+                                       if(AutotransportData.configuration.isPlanet())
+                                           FlotaII.clickPlaneta(OgameWeb.webDriver);
+                                       else if(AutotransportData.configuration.isKsiezyc())
+                                           FlotaII.clickKsiezyc(OgameWeb.webDriver);
 
-                                    boolean missionSelected = false;
-                                    //Wybieranie rodzaju misji.
-                                    while(!missionSelected)
-                                    {
-                                        FlotaIII.kliknijMisje(OgameWeb.webDriver,4);
-                                        Waiter.sleep(25,25);
-                                        missionSelected = FlotaIII.isMissionSelected(OgameWeb.webDriver, FleetSaveAttack.class.getName());
-                                    }
-                                    //Załadowanie surowców
-                                    FlotaIII.clickWszystkieSurowce(OgameWeb.webDriver);
-                                    //Pobieranie danych o wysłanych surowcach
-                                    int wolnaPrzestrzen = FlotaIII.wolnaPrzestrzenLadunkowa(OgameWeb.webDriver);
-                                    int maxPrzestrzen = FlotaIII.maksymalnaPrzestrzenLadunkowa(OgameWeb.webDriver);
-                                    if(wolnaPrzestrzen == 0)
-                                    {
-                                        autotransport.setPozostaloSurowcow(sumaSurowcow-maxPrzestrzen);
-                                        autotransport.setZabranoSurowcow(maxPrzestrzen);
-                                    }
-                                    else
-                                    {
-                                        autotransport.setPozostaloSurowcow(0);
-                                        autotransport.setZabranoSurowcow(sumaSurowcow);
-                                    }
-                                    //Pobieranie danych o wysłanej flocie.
-                                    autotransport.setCzasDostarczenia(FlotaIII.przylot(OgameWeb.webDriver));
-                                    autotransport.setCzasPowrotu(FlotaIII.powrot(OgameWeb.webDriver));
-//                                    autotransport.setZabranoSurowcow(sumaSurowcow);
-                                    //Ustawienie czasu następnego wykonania.
-                                    if(autotransport.getPozostaloSurowcow() >= MIN_ILOSC_SUROWCOW)
-                                    {
-                                        autotransport.setNastepneWykonanie(CzasWykonania.okreslCzasWykonania(
-                                                CzasGry.getCzas(),CzasGry.getData(),
-                                                new Czas(FlotaIII.czasLotu(OgameWeb.webDriver).getCzas().czasWSekundach()*2+60)
-                                        ));
-                                    }
-                                    else
-                                    {
-                                        autotransport.setNastepneWykonanie(CzasWykonania.okreslCzasWykonania(
-                                                CzasGry.getCzas(),CzasGry.getData(),
-                                                AutotransportData.getInterwalCzasowy()
-                                        ));
-                                    }
-                                    autotransport.setWyslijPonownie(false);
-                                    //Wyślij flotę
-                                    FlotaIII.wyslijFlote(OgameWeb.webDriver);
-                                }
+                                       FlotaII.clickContinue(OgameWeb.webDriver);
+
+                                       boolean missionSelected = false;
+                                       //Wybieranie rodzaju misji.
+                                       while(!missionSelected)
+                                       {
+                                           FlotaIII.kliknijMisje(OgameWeb.webDriver,4);
+                                           Waiter.sleep(25,25);
+                                           missionSelected = FlotaIII.isMissionSelected(OgameWeb.webDriver, FleetSaveAttack.class.getName());
+                                       }
+                                       //Załadowanie surowców
+                                       FlotaIII.clickWszystkieSurowce(OgameWeb.webDriver);
+                                       //Pobieranie danych o wysłanych surowcach
+                                       int wolnaPrzestrzen = FlotaIII.wolnaPrzestrzenLadunkowa(OgameWeb.webDriver);
+                                       int maxPrzestrzen = FlotaIII.maksymalnaPrzestrzenLadunkowa(OgameWeb.webDriver);
+                                       if(wolnaPrzestrzen == 0)
+                                       {
+                                           autotransport.setPozostaloSurowcow(sumaSurowcow-maxPrzestrzen);
+                                           autotransport.setZabranoSurowcow(maxPrzestrzen);
+                                       }
+                                       else
+                                       {
+                                           autotransport.setPozostaloSurowcow(0);
+                                           autotransport.setZabranoSurowcow(sumaSurowcow);
+                                       }
+                                       //Pobieranie danych o wysłanej flocie.
+                                       autotransport.setCzasDostarczenia(FlotaIII.przylot(OgameWeb.webDriver));
+                                       autotransport.setCzasPowrotu(FlotaIII.powrot(OgameWeb.webDriver));
+                                       //Ustawienie czasu następnego wykonania.
+                                       if(autotransport.getPozostaloSurowcow() >= MIN_ILOSC_SUROWCOW)
+                                       {
+                                           autotransport.setNastepneWykonanie(CzasWykonania.okreslCzasWykonania(
+                                                   CzasGry.getCzas(),CzasGry.getData(),
+                                                   new Czas(FlotaIII.czasLotu(OgameWeb.webDriver).getCzas().czasWSekundach()*2+60)
+                                           ));
+                                       }
+                                       else
+                                       {
+                                           autotransport.setNastepneWykonanie(CzasWykonania.okreslCzasWykonania(
+                                                   CzasGry.getCzas(),CzasGry.getData(),
+                                                   AutotransportData.getInterwalCzasowy()
+                                           ));
+                                       }
+                                       autotransport.setWyslijPonownie(false);
+                                       //Wyślij flotę
+                                       FlotaIII.wyslijFlote(OgameWeb.webDriver);
+                                   }
+                               }
+                               else
+                               {
+                                   autotransport.setNastepneWykonanie(CzasWykonania.okreslCzasWykonania(
+                                           CzasGry.getCzas(),CzasGry.getData(),
+                                           new Czas(0,30,0)
+                                   ));
+                                   autotransport.setWyslijPonownie(false);
+
+                                   Log.printLog(Autotransport.class.getName(),"Nie wysłano transportu z planety  "+
+                                           p.getWspolrzedne() +
+                                           " z powodu braku Małych i Dużych Transporterów.");
+                               }
+
                             }
                             else
                             {
