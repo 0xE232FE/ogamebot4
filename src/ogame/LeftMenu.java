@@ -15,6 +15,7 @@ public class LeftMenu
         if(Header.dobryHeaderWyswietlony(w,header,className))
         {
             Log.printLog(className,"Przycisk " + header + " jest już wybrany.");
+            return true;
         }
         else
         {

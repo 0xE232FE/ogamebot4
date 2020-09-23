@@ -51,10 +51,10 @@ public class Autotransport extends LeafTask
                     if(autotransport.isWyslijUser() &&  autotransport.isWyslijPonownie())
                     {
                         //Kliknięcie w planetę
-                        while(ListaPlanet.wybranaPlaneta(OgameWeb.webDriver) != p.getPozycjaNaLiscie())
+                        while(ListaPlanet.wybranaPlaneta(OgameWeb.webDriver) != p.getPozycjaNaLiscie() )
                         {
                             p.clickPlanet();
-                            Waiter.sleep(100,100);
+                            Waiter.sleep(100,150);
                         }
                         //Kliknięcie w zakladkę flota
                         LeftMenu.pressFlota(OgameWeb.webDriver,Autotransport.class.getName());

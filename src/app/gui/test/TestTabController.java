@@ -7,11 +7,13 @@ import com.Log;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import ogame.LeftMenu;
 import ogame.flota.FlotaI;
 import ogame.flota.FlotaIII;
 import ogame.planety.ListaPlanet;
+import ogame.surowce.Surowce;
 import ogame.surowce.SurowceNaPlanecie;
 
 public class TestTabController {
@@ -323,6 +325,156 @@ public class TestTabController {
     }
 
     /*
+    SUROWCE
+     */
+
+    @FXML
+    private TextField textFieldBudynek;
+
+    @FXML
+    private CheckBox checkBoxKsiezyc;
+    @FXML
+    void kliknijWBudynek(ActionEvent event)
+    {
+        if(!activeFlag)
+        {
+            activeFlag = true;
+            Button b = (Button) event.getSource();
+            String text = b.getText();
+            b.setText("...");
+
+            String tmp = textFieldBudynek.getText();
+            boolean moon = checkBoxKsiezyc.isSelected();
+            if(!tmp.equals(""))
+            {
+                boolean a = Surowce.kliknijWBudynek(OgameWeb.webDriver,Integer.valueOf(tmp),moon);
+                if(a)
+                    Log.printLog(TestTabController.class.getName(),"Kliknięto w " + Surowce.getBudynek(Integer.valueOf(tmp),moon).getName() +".");
+            }
+            else
+                Log.printLog(TestTabController.class.getName(),"Nie wprowadzono rodzaju budynku.");
+
+            b.setText(text);
+            activeFlag = false;
+        }
+    }
+
+
+    @FXML
+    private TextField textFieldBudynek1;
+
+    @FXML
+    private CheckBox checkBoxKsiezyc1;
+    @FXML
+    void pobierzStatusBudynku(ActionEvent event)
+    {
+        if(!activeFlag)
+        {
+            activeFlag = true;
+            Button b = (Button) event.getSource();
+            String text = b.getText();
+            b.setText("...");
+
+            String tmp = textFieldBudynek1.getText();
+            boolean moon = checkBoxKsiezyc1.isSelected();
+            if(!tmp.equals(""))
+            {
+                String a = Surowce.statusBudynku(OgameWeb.webDriver,Integer.valueOf(tmp),moon);
+                Log.printLog(TestTabController.class.getName(),"Status " + Surowce.getBudynek(Integer.valueOf(tmp),moon).getName() +": \n" +
+                        DifferentMethods.initVariable(a,12) + "\n");
+            }
+            else
+                Log.printLog(TestTabController.class.getName(),"Nie wprowadzono rodzaju budynku.");
+
+            b.setText(text);
+            activeFlag = false;
+        }
+    }
+
+    @FXML
+    private TextField textFieldBudynek2;
+
+    @FXML
+    private CheckBox checkBoxKsiezyc2;
+    @FXML
+    void pobierzPoziomBudynku(ActionEvent event)
+    {
+        if(!activeFlag)
+        {
+            activeFlag = true;
+            Button b = (Button) event.getSource();
+            String text = b.getText();
+            b.setText("...");
+
+            String tmp = textFieldBudynek2.getText();
+            boolean moon = checkBoxKsiezyc2.isSelected();
+            if(!tmp.equals(""))
+            {
+                int a = Surowce.poziomBudynku(OgameWeb.webDriver,Integer.valueOf(tmp),moon);
+                Log.printLog(TestTabController.class.getName(),"Poziom " + Surowce.getBudynek(Integer.valueOf(tmp),moon).getName() +": \n" +
+                        DifferentMethods.initVariable(String.valueOf(a),12) + "\n");
+            }
+            else
+                Log.printLog(TestTabController.class.getName(),"Nie wprowadzono rodzaju budynku.");
+
+            b.setText(text);
+            activeFlag = false;
+        }
+    }
+
+    @FXML
+    private TextField textFieldBudynek3;
+
+    @FXML
+    private CheckBox checkBoxKsiezyc3;
+    @FXML
+    void rozbudujBudynek(ActionEvent event)
+    {
+        if(!activeFlag)
+        {
+            activeFlag = true;
+            Button b = (Button) event.getSource();
+            String text = b.getText();
+            b.setText("...");
+
+            String tmp = textFieldBudynek3.getText();
+            boolean moon = checkBoxKsiezyc3.isSelected();
+            if(!tmp.equals(""))
+            {
+                boolean a = Surowce.rozbudujBudynek(OgameWeb.webDriver,Integer.valueOf(tmp),moon);
+                if(a)
+                    Log.printLog(TestTabController.class.getName(),"Kliknięto rozbuduj " + Surowce.getBudynek(Integer.valueOf(tmp),moon).getName() +".");
+            }
+            else
+                Log.printLog(TestTabController.class.getName(),"Nie wprowadzono rodzaju budynku.");
+
+            b.setText(text);
+            activeFlag = false;
+        }
+    }
+
+    @FXML
+    private CheckBox checkBoxKsiezyc4;
+    @FXML
+    void budynekWRozbudowie(ActionEvent event)
+    {
+        if(!activeFlag)
+        {
+            activeFlag = true;
+            Button b = (Button) event.getSource();
+            String text = b.getText();
+            b.setText("...");
+
+            boolean moon = checkBoxKsiezyc4.isSelected();
+
+            Log.printLog(TestTabController.class.getName(),"Rozbudowywany budynek: \n" + Surowce.wRozbudowie(OgameWeb.webDriver,moon) +".");
+
+            b.setText(text);
+            activeFlag = false;
+        }
+    }
+
+    /*
     ZAKŁADKI
      */
 
@@ -334,8 +486,17 @@ public class TestTabController {
             Button b = (Button) event.getSource();
             String text = b.getText();
             b.setText("...");
-
-            LeftMenu.pressFlota(OgameWeb.webDriver, TestTabController.class.getName());
+            String tmp1 = textFieldStatekBojowy.getText();
+            String tmp2 = textFieldIStatekBojowyIlosc.getText();
+            if(!tmp1.equals(""))
+            {
+                if(!tmp2.equals(""))
+                    FlotaI.wprowadzIloscStatekBojowy(OgameWeb.webDriver,Integer.valueOf(tmp1),Integer.valueOf(tmp2));
+                else
+                    Log.printLog(TestTabController.class.getName(),"Nie wprowadzono ilości statków.");
+            }
+            else
+                Log.printLog(TestTabController.class.getName(),"Nie wprowadzono rodzaju statku.");
 
             b.setText(text);
             activeFlag = false;
@@ -449,6 +610,7 @@ public class TestTabController {
         textFieldStatekCywilny.textProperty().addListener(new IntegerOnlyInputTextFieldListener(textFieldStatekCywilny,1));
         textFieldIStatekBojowyIlosc.textProperty().addListener(new IntegerOnlyInputTextFieldListener(textFieldIStatekBojowyIlosc,7));
         textFieldIStatekCywilnyIlosc.textProperty().addListener(new IntegerOnlyInputTextFieldListener(textFieldIStatekCywilnyIlosc,7));
+        textFieldBudynek.textProperty().addListener(new IntegerOnlyInputTextFieldListener(textFieldBudynek,7));
     }
 
 }

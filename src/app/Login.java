@@ -13,10 +13,18 @@ class Login
 {
     private WebDriver webDriver;
     Login(Run run) {
-
         webDriver = run.getOgameWeb().getWebDriver();
+
+        closeAd();
+        //Klika zaakceptuj cookies
+        boolean bool = acceptCookies();
+        while(!bool)
+        {
+            bool = acceptCookies();
+        }
         //klika na zakładkę Login.
         WebElement element = webDriver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[2]/div[2]/ul/li[1]"));
+        //Klika zaakceptuj cookies
         element.click();
         //wpisuje login/nazwę gracz.
         setLogin(webDriver, Accounts.getSelected().getLogin());
@@ -27,6 +35,7 @@ class Login
         //klika przycisk login.
         pressLogin(webDriver);
         //po załadowaniu sie nowej strony klika przycisk graj.
+        GameClient.scrollToBottom(webDriver);
         pressPlay(webDriver);
         //po zaladowaniu się strony z kontami gracza na serwerach klika przycisk graj.
         pressSecondPlay(webDriver);
@@ -75,6 +84,29 @@ class Login
         return false;
     }
 
+    private boolean acceptCookies()
+    {
+        try
+        {
+            WebElement x = webDriver.findElement(By.xpath("/html/body/div[3]/div/div/span[2]/button[2]"));
+            if(x.isDisplayed())
+            {
+                Log.printLog(Login.class.getName(),"Zaaakceptuj cookie jest widoczna.");
+                x.click();
+                Log.printLog(Login.class.getName(),"Znaleziono Zaaakceptuj cookie. Kliknięto zamknij.");
+                return true;
+            }
+            else
+                Log.printLog(Login.class.getName(),"Zaaakceptuj cookie nie widoczna.");
+
+        }
+        catch (Exception e)
+        {
+            Log.printErrorLog(Login.class.getName(),"Nie znaleziono Zaaakceptuj cookie.");
+        }
+        return false;
+    }
+
     private void setLogin(WebDriver webDriver, String login)
     {
 
@@ -111,7 +143,6 @@ class Login
                 break;
             }
         }
-
     }
 
     private void pressSecondPlay(WebDriver webDriver)

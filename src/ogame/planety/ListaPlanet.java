@@ -47,15 +47,18 @@ public class ListaPlanet
             for(int i = 1; i <= a; i++)
             {
                 planetContainer.setVar(i);
-                e = w.findElement(By.xpath(planetContainer.toString()));
-                String s = e.getAttribute("class");
-                if(s.contains(HIGHTHLIGHT_PLANET))
+                try
                 {
-                    return i;
+                    e = w.findElement(By.xpath(planetContainer.toString()));
+                    String s = e.getAttribute("class");
+                    if(s.contains(HIGHTHLIGHT_PLANET))
+                        return i;
+                    else if(s.contains(HIGHTHLIGHT_MOON))
+                        return i - (i*2);
                 }
-                else if(s.contains(HIGHTHLIGHT_MOON))
+                catch (Exception ex)
                 {
-                    return i - (i*2);
+                    Log.printErrorLog(ListaPlanet.class.getName(),"Nie wczytano wybranej planety.");
                 }
             }
         }
@@ -209,22 +212,21 @@ public class ListaPlanet
         p.setVar(i);
         if(i <= a)
         {
-            e = w.findElement(By.xpath(p.toString()));
-            List<WebElement> etmp = e.findElements(By.tagName("a"));
-
-            for(WebElement tmp : etmp)
+            try
             {
-                try
-                {
-                    boolean b =  tmp.getAttribute("class").contains(ATTACK_ALERT);
-                    if(b)
-                        return true;
-                }
-                catch (Exception e1)
-                {
-                    Log.printErrorLog(ListaPlanet.class.getName(),"Nie wczytano informacji o ataku na księżyc.");
-                }
+                e = w.findElement(By.xpath(p.toString()));
+                List<WebElement> etmp = e.findElements(By.tagName("a"));
 
+                for(WebElement tmp : etmp)
+                {
+                        boolean b =  tmp.getAttribute("class").contains(ATTACK_ALERT);
+                        if(b)
+                            return true;
+                }
+            }
+            catch (Exception e1)
+            {
+                Log.printErrorLog(ListaPlanet.class.getName(),"Nie wczytano informacji o ataku na księżyc.");
             }
         }
         return false;
