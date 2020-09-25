@@ -1,7 +1,6 @@
-package ogame.surowce;
+package ogame.budynki;
 
 import app.GameClient;
-import app.OgameWeb;
 import com.Log;
 import ogame.Header;
 import ogame.LeftMenu;
@@ -10,17 +9,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class Surowce
+public class BudynkiProdukcyjne
 {
-    private final String [] STATUSY =
-            {
-                    "disabled",
-                    "off",
-                    "on",
-                    "active"
-            };
+    private static SciezkaWebElementu BUDYNEK = new SciezkaWebElementu("//*[@id=\"producers\"]/li[","]");
+    private static SciezkaWebElementu POZIOM_BUDYNKU = new SciezkaWebElementu("//*[@id=\"producers\"]/li[","]/span/span/span[1]");
+    private static SciezkaWebElementu ROZBUDUJ_BUDYNEK = new SciezkaWebElementu("//*[@id=\"producers\"]/li[","]/span/button");
 
-    private static final Budynek [] BUDYNKI_MOON =
+    private static final Budynek[] BUDYNKI_MOON =
             {
                     new Budynek(1,"Kopalnia metalu", 1),
                     new Budynek(2,"Kopalnia kryształu", 2),
@@ -46,12 +41,6 @@ public class Surowce
                     new Budynek(9,"Magazyn kryształu", 23),
                     new Budynek(10,"Zbiornik deuteru", 24),
             };
-
-    private static SciezkaWebElementu BUDYNEK = new SciezkaWebElementu("//*[@id=\"producers\"]/li[","]");
-    private static SciezkaWebElementu POZIOM_BUDYNKU = new SciezkaWebElementu("//*[@id=\"producers\"]/li[","]/span/span/span[1]");
-    private static SciezkaWebElementu ROZBUDUJ_BUDYNEK = new SciezkaWebElementu("//*[@id=\"producers\"]/li[","]/span/button");
-
-
     /**
      * Wybiera wskazany budynek.
      * @param w driver
@@ -80,7 +69,7 @@ public class Surowce
      */
     public static boolean kliknijWBudynek(WebDriver w, int nr, boolean onMoon)
     {
-        if(Header.dobryHeaderWyswietlony(w,"Surowce", Surowce.class.getName()))
+        if(Header.dobryHeaderWyswietlony(w,"Surowce", BudynkiProdukcyjne.class.getName()))
         {
             BUDYNEK.setVar(nr);
 
@@ -94,12 +83,12 @@ public class Surowce
             }
             catch(Exception ex)
             {
-                Log.printErrorLog(Surowce.class.getName(),"Nie wczytano budynku "+ getBudynek(nr,onMoon).getName()+".");
+                Log.printErrorLog(BudynkiProdukcyjne.class.getName(),"Nie wczytano budynku "+ getBudynek(nr,onMoon).getName()+".");
             }
 
         }
         else
-            LeftMenu.pressSurowce(w, Surowce.class.getName());
+            LeftMenu.pressSurowce(w, BudynkiProdukcyjne.class.getName());
 
         return false;
     }
@@ -132,7 +121,7 @@ public class Surowce
      */
     public static String statusBudynku(WebDriver w, int nr, boolean onMoon)
     {
-        if(Header.dobryHeaderWyswietlony(w,"Surowce", Surowce.class.getName()))
+        if(Header.dobryHeaderWyswietlony(w,"Surowce", BudynkiProdukcyjne.class.getName()))
         {
             BUDYNEK.setVar(nr);
 
@@ -144,20 +133,27 @@ public class Surowce
             }
             catch(Exception ex)
             {
-                Log.printErrorLog(Surowce.class.getName(),"Nie wczytano budynku "+ getBudynek(nr,onMoon).getName()+".");
+                Log.printErrorLog(BudynkiProdukcyjne.class.getName(),"Nie wczytano budynku "+ getBudynek(nr,onMoon).getName()+".");
             }
 
         }
         else
-            LeftMenu.pressSurowce(w, Surowce.class.getName());
+            LeftMenu.pressSurowce(w, BudynkiProdukcyjne.class.getName());
 
         return "null";
     }
 
 
+    /**
+     * Zwraca niepowtarzalny numer dla każdegu rodzaju budynku.
+     * @param w ***
+     * @param nr ***
+     * @param onMoon ***
+     * @return Niepowtarzalny numer lub -1 gdy brak możliwości pobrania.
+     */
     public static int dataTechnology(WebDriver w, int nr, boolean onMoon)
     {
-        if(Header.dobryHeaderWyswietlony(w,"Surowce", Surowce.class.getName()))
+        if(Header.dobryHeaderWyswietlony(w,"Surowce", BudynkiProdukcyjne.class.getName()))
         {
             BUDYNEK.setVar(nr);
 
@@ -169,12 +165,12 @@ public class Surowce
             }
             catch(Exception ex)
             {
-                Log.printErrorLog(Surowce.class.getName(),"Nie wczytano budynku "+ getBudynek(nr,onMoon).getName()+".");
+                Log.printErrorLog(BudynkiProdukcyjne.class.getName(),"Nie wczytano budynku "+ getBudynek(nr,onMoon).getName()+".");
             }
 
         }
         else
-            LeftMenu.pressSurowce(w, Surowce.class.getName());
+            LeftMenu.pressSurowce(w, BudynkiProdukcyjne.class.getName());
 
         return -1;
     }
@@ -207,7 +203,7 @@ public class Surowce
      */
     public static int poziomBudynku(WebDriver w, int nr, boolean onMoon)
     {
-        if(Header.dobryHeaderWyswietlony(w,"Surowce", Surowce.class.getName()))
+        if(Header.dobryHeaderWyswietlony(w,"Surowce", BudynkiProdukcyjne.class.getName()))
         {
             POZIOM_BUDYNKU.setVar(nr);
 
@@ -220,19 +216,26 @@ public class Surowce
             }
             catch(Exception ex)
             {
-                Log.printErrorLog(Surowce.class.getName(),"Nie wczytano budynku "+ getBudynek(nr,onMoon).getName()+".");
+                Log.printErrorLog(BudynkiProdukcyjne.class.getName(),"Nie wczytano budynku "+ getBudynek(nr,onMoon).getName()+".");
             }
 
         }
         else
-            LeftMenu.pressSurowce(w, Surowce.class.getName());
+            LeftMenu.pressSurowce(w, BudynkiProdukcyjne.class.getName());
 
         return -1;
     }
 
+    /**
+     * Klika w rozbuduj w wskazanym budynku.
+     * @param w ***
+     * @param nr ***
+     * @param onMoon Czy jest to na księżycu.
+     * @return true jeżeli kliknął w innym wypadku false.
+     */
     public static boolean rozbudujBudynek(WebDriver w, int nr, boolean onMoon)
     {
-        if(Header.dobryHeaderWyswietlony(w,"Surowce", Surowce.class.getName()))
+        if(Header.dobryHeaderWyswietlony(w,"Surowce", BudynkiProdukcyjne.class.getName()))
         {
             ROZBUDUJ_BUDYNEK.setVar(nr);
 
@@ -248,43 +251,29 @@ public class Surowce
                 }
                 catch(Exception ex)
                 {
-                    Log.printErrorLog(Surowce.class.getName(),"Nie wczytano budynku "+ getBudynek(nr,onMoon).getName()+".");
+                    Log.printErrorLog(BudynkiProdukcyjne.class.getName(),"Nie wczytano budynku "+ getBudynek(nr,onMoon).getName()+".");
                 }
             }
             else
-                Log.printErrorLog(Surowce.class.getName(),"Budynek "+ getBudynek(nr,onMoon).getName()+" nie może " +
+                Log.printErrorLog(BudynkiProdukcyjne.class.getName(),"Budynek "+ getBudynek(nr,onMoon).getName()+" nie może " +
                         "zostać rozbudowany.");
 
         }
         else
-            LeftMenu.pressSurowce(w, Surowce.class.getName());
+            LeftMenu.pressSurowce(w, BudynkiProdukcyjne.class.getName());
 
         return false;
     }
 
 
 
-    public static Budynek getBudynek(int nr, boolean onMoon)
-    {
-        if(onMoon)
-        {
-            for(Budynek b : BUDYNKI_MOON)
-            {
-                if(b.getIndex() == nr)
-                    return b;
-            }
-        }
-        else
-        {
-            for(Budynek b : BUDYNKI)
-            {
-                if(b.getIndex() == nr)
-                    return b;
-            }
-        }
-        return new Budynek(-1,"null", -1);
-    }
 
+    /**
+     * Zwraca budynek który jest w rozbudowie. Jeżeli żaden się nie rozbudowuje, to zwróci pusty obiekt.
+     * @param webDriver ***
+     * @param onMoon Czy jest to na księżycu.
+     * @return Budynek lub pusty konstruktor, gdy nic się nie buduje.
+     */
     public static Budynek wRozbudowie(WebDriver webDriver, boolean onMoon)
     {
         if(onMoon)
@@ -301,6 +290,33 @@ public class Surowce
             {
                 if(statusBudynku(webDriver,i,onMoon).equals("active"))
                     return getBudynek(i,onMoon);
+            }
+        }
+        return new Budynek(-1,"null", -1);
+    }
+
+    /**
+     * Zwraca budynek o określonym indexie.
+     * @param nr ***
+     * @param onMoon Czy jest to na księżycu.
+     * @return Budynek lub pusty konstruktor, gdy nr jest spoza zakresu.
+     */
+    public static Budynek getBudynek(int nr, boolean onMoon)
+    {
+        if(onMoon)
+        {
+            for(Budynek b : BUDYNKI_MOON)
+            {
+                if(b.getIndex() == nr)
+                    return b;
+            }
+        }
+        else
+        {
+            for(Budynek b : BUDYNKI)
+            {
+                if(b.getIndex() == nr)
+                    return b;
             }
         }
         return new Budynek(-1,"null", -1);

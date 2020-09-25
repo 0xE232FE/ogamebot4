@@ -13,7 +13,7 @@ import ogame.LeftMenu;
 import ogame.flota.FlotaI;
 import ogame.flota.FlotaIII;
 import ogame.planety.ListaPlanet;
-import ogame.surowce.Surowce;
+import ogame.budynki.BudynkiProdukcyjne;
 import ogame.surowce.SurowceNaPlanecie;
 
 public class TestTabController {
@@ -347,9 +347,9 @@ public class TestTabController {
             boolean moon = checkBoxKsiezyc.isSelected();
             if(!tmp.equals(""))
             {
-                boolean a = Surowce.kliknijWBudynek(OgameWeb.webDriver,Integer.valueOf(tmp),moon);
+                boolean a = BudynkiProdukcyjne.kliknijWBudynek(OgameWeb.webDriver,Integer.valueOf(tmp),moon);
                 if(a)
-                    Log.printLog(TestTabController.class.getName(),"Kliknięto w " + Surowce.getBudynek(Integer.valueOf(tmp),moon).getName() +".");
+                    Log.printLog(TestTabController.class.getName(),"Kliknięto w " + BudynkiProdukcyjne.getBudynek(Integer.valueOf(tmp),moon).getName() +".");
             }
             else
                 Log.printLog(TestTabController.class.getName(),"Nie wprowadzono rodzaju budynku.");
@@ -379,8 +379,8 @@ public class TestTabController {
             boolean moon = checkBoxKsiezyc1.isSelected();
             if(!tmp.equals(""))
             {
-                String a = Surowce.statusBudynku(OgameWeb.webDriver,Integer.valueOf(tmp),moon);
-                Log.printLog(TestTabController.class.getName(),"Status " + Surowce.getBudynek(Integer.valueOf(tmp),moon).getName() +": \n" +
+                String a = BudynkiProdukcyjne.statusBudynku(OgameWeb.webDriver,Integer.valueOf(tmp),moon);
+                Log.printLog(TestTabController.class.getName(),"Status " + BudynkiProdukcyjne.getBudynek(Integer.valueOf(tmp),moon).getName() +": \n" +
                         DifferentMethods.initVariable(a,12) + "\n");
             }
             else
@@ -410,8 +410,8 @@ public class TestTabController {
             boolean moon = checkBoxKsiezyc2.isSelected();
             if(!tmp.equals(""))
             {
-                int a = Surowce.poziomBudynku(OgameWeb.webDriver,Integer.valueOf(tmp),moon);
-                Log.printLog(TestTabController.class.getName(),"Poziom " + Surowce.getBudynek(Integer.valueOf(tmp),moon).getName() +": \n" +
+                int a = BudynkiProdukcyjne.poziomBudynku(OgameWeb.webDriver,Integer.valueOf(tmp),moon);
+                Log.printLog(TestTabController.class.getName(),"Poziom " + BudynkiProdukcyjne.getBudynek(Integer.valueOf(tmp),moon).getName() +": \n" +
                         DifferentMethods.initVariable(String.valueOf(a),12) + "\n");
             }
             else
@@ -441,9 +441,9 @@ public class TestTabController {
             boolean moon = checkBoxKsiezyc3.isSelected();
             if(!tmp.equals(""))
             {
-                boolean a = Surowce.rozbudujBudynek(OgameWeb.webDriver,Integer.valueOf(tmp),moon);
+                boolean a = BudynkiProdukcyjne.rozbudujBudynek(OgameWeb.webDriver,Integer.valueOf(tmp),moon);
                 if(a)
-                    Log.printLog(TestTabController.class.getName(),"Kliknięto rozbuduj " + Surowce.getBudynek(Integer.valueOf(tmp),moon).getName() +".");
+                    Log.printLog(TestTabController.class.getName(),"Kliknięto rozbuduj " + BudynkiProdukcyjne.getBudynek(Integer.valueOf(tmp),moon).getName() +".");
             }
             else
                 Log.printLog(TestTabController.class.getName(),"Nie wprowadzono rodzaju budynku.");
@@ -467,7 +467,7 @@ public class TestTabController {
 
             boolean moon = checkBoxKsiezyc4.isSelected();
 
-            Log.printLog(TestTabController.class.getName(),"Rozbudowywany budynek: \n" + Surowce.wRozbudowie(OgameWeb.webDriver,moon) +".");
+            Log.printLog(TestTabController.class.getName(),"Rozbudowywany budynek: \n" + BudynkiProdukcyjne.wRozbudowie(OgameWeb.webDriver,moon) +".");
 
             b.setText(text);
             activeFlag = false;

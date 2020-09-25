@@ -201,7 +201,7 @@ public class EkspedycjeTabController {
                 {
                     aktualneEkspedycje.remove(e);
                 }
-                //update vBoxAktywneEkspedycje
+                //updateGUI vBoxAktywneEkspedycje
                 vBoxAktywneEkspedycje.getChildren().clear();
                 for(EkspedycjaInfo e : aktualneEkspedycje)
                 {
@@ -232,7 +232,7 @@ public class EkspedycjeTabController {
                         }
                     }
             }
-            //update vBoxAktywneEkspedycje
+            //updateGUI vBoxAktywneEkspedycje
             vBoxAktywneEkspedycje.getChildren().clear();
             for(EkspedycjaInfo e : aktualneEkspedycje)
             {

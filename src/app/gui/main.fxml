@@ -45,6 +45,11 @@
       <Separator orientation="VERTICAL" />
       <TabPane fx:id="tabPane" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
+            <Tab text="Imperium" >
+               <content>
+                  <fx:include fx:id="imperium" source="imperium/imperium.fxml" />
+               </content>
+            </Tab>
             <Tab text="Fleet Save Attack">
                <content>
                   <fx:include fx:id="fleetSaveAttackRoot" source="fleet_save_attack/fleet_save_attack_root.fxml" />

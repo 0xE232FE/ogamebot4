@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="611.0" prefWidth="799.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.imperium.ImperiumController">
+   <content>
+      <VBox prefHeight="611.0" prefWidth="799.0" spacing="2.0">
+         <children>
+            <HBox prefHeight="540.0" prefWidth="795.0">
+               <children>
+                  <VBox prefHeight="540.0" prefWidth="110.0" spacing="1.0">
+                     <children>
+                        <Label text="Planety">
+                           <font>
+                              <Font name="System Bold" size="10.0" />
+                           </font>
+                        </Label>
+                        <Separator prefWidth="200.0" />
+                        <Label text="Wspólrzędne">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Nazwa">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="17.0" text="Księżyc">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="17.0" text="Planeta w budowie">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="17.0" text="Księzyc w budowie">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label>
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Wydobycie">
+                           <font>
+                              <Font name="System Bold" size="10.0" />
+                           </font>
+                        </Label>
+                        <Separator prefWidth="200.0" />
+                        <Label text="Metal">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Kryształ">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Deuter">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Wolna energia">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label>
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Budynki">
+                           <font>
+                              <Font name="System Bold" size="10.0" />
+                           </font>
+                        </Label>
+                        <Separator prefWidth="200.0" />
+                        <Label text="Kopalnia metalu">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Kopalnia kryształu">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Ekstraktor deuteru">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Elektrownia słoneczna">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Elektrownia fuzyjna">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Satelita słoneczny">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Magazyn metalu">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Magazyn kryształu">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Zbiornik deuteru">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Pełzacz">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label>
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Stacja">
+                           <font>
+                              <Font name="System Bold" size="10.0" />
+                           </font>
+                        </Label>
+                        <Separator prefWidth="200.0" />
+                        <Label text="Fabryka robotów">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Stocznia">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Laboratorium badawcze">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Depozyt sojuszniczy">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Silos rakietowy">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Fabryka nanitów">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Terraformer">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label text="Dok kosmiczny">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Separator prefWidth="200.0" />
+                     </children>
+                  </VBox>
+                  <Separator orientation="VERTICAL" prefHeight="540.0" />
+                  <HBox fx:id="hBoxImperium" prefHeight="540.0" prefWidth="676.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="20.0" prefWidth="795.0">
+               <children>
+                  <Label prefWidth="125.0" text="Ostatnia aktualizacja">
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelOstatniaAktualizacja" prefWidth="100.0">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label prefWidth="125.0" text="Pozostało">
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelPozostalo" prefWidth="100.0">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </VBox>
+   </content>
+</ScrollPane>

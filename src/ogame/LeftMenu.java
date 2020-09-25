@@ -149,13 +149,14 @@ public class LeftMenu
                 new String[]{"//*[@id=\"menuTable\"]/li[9]/span/a/div"},
                 "Ruch floty",
                 className);
-//        return press(w,
-//                new String[]{"/html/body/div[2]/div[2]/div[2]/div[1]/div[2]/div/ul/li[9]/a/div",
-//                        "/html/body/div[2]/div[2]/div[2]/div[1]/div[2]/div/ul/li[9]/span/a/div",
-//                        "/html/body/div[5]/div[2]/div[3]/div/ul/li[9]/span/a/div",
-//                         "//*[@id=\"menuTable\"]/li[9]/span/a/div"},
-//
-//                "Ruch floty",
-//                className);
+    }
+
+    public static boolean pressStacja(WebDriver w, String className)
+    {
+
+       return press(w,
+                new String[]{"//*[@id=\"menuTable\"]/li[3]/a"},
+                "Stacja",
+                className);
     }
 }

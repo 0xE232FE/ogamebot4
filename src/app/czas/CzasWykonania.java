@@ -56,6 +56,12 @@ public class CzasWykonania
         return tmp;
     }
 
+    /**
+     * Oblicza czas pozsotały do wykonania zadania.
+     * @param czasAktualny ***
+     * @param dataAktualna ***
+     * @return Zwraca czas pozostały do wykonania zadania kolejny raz.
+     */
     public Czas pozostaloCzasu(Czas czasAktualny, Data dataAktualna)
     {
         int tmp2;

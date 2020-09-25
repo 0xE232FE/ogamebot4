@@ -5,7 +5,6 @@ import app.czas.CzasGry;
 import app.data.configuration.Configuration;
 import app.gui.active_task.ActiveTask;
 import app.gui.controller.MainController;
-import app.log.LogFleetSaveAttack;
 import com.Waiter;
 import javafx.application.Platform;
 import org.openqa.selenium.WebDriver;
@@ -33,6 +32,7 @@ public class GUIUpdater extends Task
                     updateAktualneEkspedycje();
                     updateAutoTransport();
                     updateAlertModuleTest();
+                    updateImperium();
                 };
                 Platform.runLater(updater);
             }
@@ -92,24 +92,21 @@ public class GUIUpdater extends Task
         }
     }
 
+    private void updateImperium()
+    {
+        if(getController() != null)
+        {
+            getController().getImperiumController().update();
+            getController().getImperiumController().updateTime();
+        }
+    }
+
     private void updateBadania()
     {
 
     }
 
-    private long lastUpdateMojePlanety = 0;
-    private void updateMojePlanety()
-    {
 
-    }
-
-    private long lastUpdateAktywnosc = 0;
-    private void updateAktywnosc()
-    {
-
-    }
-
-    private long lastUpdateAutoTransport = 0;
     private void updateAutoTransport()
     {
         if(getController() != null)
@@ -118,10 +115,4 @@ public class GUIUpdater extends Task
         }
     }
 
-    private long lastUpdateAutoFarming = 0;
-
-    public void updateAutoFarming()
-    {
-
-    }
 }

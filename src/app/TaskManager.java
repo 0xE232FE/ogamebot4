@@ -26,7 +26,8 @@ public class TaskManager
                 new FleetSaveAttack(webDriver,2,30*1000),
                 new RuchFlot(webDriver,3,0),
                 new Ekspedycje(webDriver,4,10*1000),
-                new Autotransport(webDriver,5,10*1000)
+                new Autotransport(webDriver,5,10*1000),
+                new Imperium(webDriver,6,10*1000)
         };
         Log.printLog(TaskManager.class.getName(), "Utworzono " +tasks.length + " Tasków.");
     }

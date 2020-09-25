@@ -5,6 +5,7 @@ import app.TaskManager;
 import app.gui.autotransport.AutotransportTabController;
 import app.gui.ekspedycje.EkspedycjeTabController;
 import app.gui.fleet_save_attack.FleetSaveAttackRootController;
+import app.gui.imperium.ImperiumController;
 import app.tasks.BotLogic;
 import com.Log;
 import javafx.fxml.FXML;
@@ -75,6 +76,15 @@ public class MainController
     /*
         Autotransport
      */
+    @FXML private ImperiumController imperiumController;
+
+    public ImperiumController getImperiumController() {
+        return imperiumController;
+    }
+
+    /*
+       Autotransport
+    */
     @FXML private AutotransportTabController autotransportTabController;
 
     public AutotransportTabController getAutotransportTabController() {

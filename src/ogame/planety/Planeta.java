@@ -5,7 +5,7 @@ import app.Wspolrzedne;
 import app.data.fleet_save_attack.FleetSaveAttackMissionConfiguration;
 import com.DifferentMethods;
 import com.Log;
-//import ogame.budynki.Budynki;
+import ogame.budynki.Budynki;
 import ogame.ruchflot.ObiektLotu;
 
 
@@ -30,10 +30,8 @@ public class Planeta
     private ObiektLotu obiektFSZKsiezyca;
     private FleetSaveAttackMissionConfiguration attackFleetSaveConfiguration;
 
-//        private Surowce surowce = new Surowce();
-//        private Surowce surowceMoon = null;
 //        private Wydobycie wydobycie = new Wydobycie();
-//        private Budynki budynki = new Budynki();
+    private Budynki budynki = new Budynki();
 
     public Planeta(int pozycjaNaLiscie, String wspolrzedne, String nazwa, boolean moon, int id) {
         this.pozycjaNaLiscie = pozycjaNaLiscie;
@@ -47,8 +45,6 @@ public class Planeta
         moonFileName = planetFileName +"_M";
 
         attackFleetSaveConfiguration = FleetSaveAttackMissionConfiguration.load(planetFileName);
-//        if(moon)
-//            surowceMoon = new Surowce();
     }
 
     @Override
@@ -129,6 +125,10 @@ public class Planeta
     /*
     GETTERS
      */
+
+    public Budynki getBudynki() {
+        return budynki;
+    }
 
     public int getPozycjaNaLiscie() {
         return pozycjaNaLiscie;

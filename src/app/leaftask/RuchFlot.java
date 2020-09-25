@@ -35,10 +35,10 @@ public class RuchFlot extends LeafTask {
                     setSleep(nextTimeExecute(tmp));
                     Log.printLog(RuchFlot.class.getName(),"Ustawiono sleep time na "+getSleep() + " msek.");
 
-                    for(Lot l : Loty.listaLotow)
-                    {
-                        Log.printLog(RuchFlot.class.getName(),l.toString());
-                    }
+//                    for(Lot l : Loty.listaLotow)
+//                    {
+//                        Log.printLog(RuchFlot.class.getName(),l.toString());
+//                    }
                 }
             }
 
