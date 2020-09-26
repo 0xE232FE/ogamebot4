@@ -7,6 +7,7 @@ import com.DifferentMethods;
 import com.Log;
 import ogame.budynki.Budynki;
 import ogame.ruchflot.ObiektLotu;
+import ogame.surowce.Wydobycie;
 
 
 public class Planeta
@@ -30,7 +31,7 @@ public class Planeta
     private ObiektLotu obiektFSZKsiezyca;
     private FleetSaveAttackMissionConfiguration attackFleetSaveConfiguration;
 
-//        private Wydobycie wydobycie = new Wydobycie();
+    private Wydobycie wydobycie;
     private Budynki budynki = new Budynki();
 
     public Planeta(int pozycjaNaLiscie, String wspolrzedne, String nazwa, boolean moon, int id) {
@@ -122,6 +123,10 @@ public class Planeta
         this.obiektFSZKsiezyca = obiektFSZKsiezyca;
     }
 
+    public void setWydobycie(Wydobycie wydobycie) {
+        this.wydobycie = wydobycie;
+    }
+
     /*
     GETTERS
      */
@@ -207,6 +212,9 @@ public class Planeta
         return moonSelected;
     }
 
+    public Wydobycie getWydobycie() {
+        return wydobycie;
+    }
 
     @Override
     public String toString() {

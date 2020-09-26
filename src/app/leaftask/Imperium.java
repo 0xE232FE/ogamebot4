@@ -16,6 +16,8 @@ import ogame.budynki.BudynkiProdukcyjne;
 import ogame.budynki.BudynkiTechnologiczne;
 import ogame.planety.ListaPlanet;
 import ogame.planety.Planeta;
+import ogame.surowce.UstawieniaSurowcow;
+import ogame.surowce.Wydobycie;
 import org.openqa.selenium.WebDriver;
 
 public class Imperium extends LeafTask {
@@ -45,6 +47,9 @@ public class Imperium extends LeafTask {
                     Log.printLog(Imperium.class.getName(),"Rozpoczynam pobieranie danych o budynkach technologicznych.");
                     pobierzDaneOBudynkachTechnologicznych();
                     Log.printLog(Imperium.class.getName(),"Zakończyłem pobieranie danych o budynkach technologicznychh.");
+                    Log.printLog(Imperium.class.getName(),"Rozpoczynam pobieranie danych o wydobyciu.");
+                    pobierzDaneOWydobyciu();
+                    Log.printLog(Imperium.class.getName(),"Zakończyłem pobieranie danych o wydobyciu.");
                 }
                 setLastTimeExecute(System.currentTimeMillis());
             }
@@ -129,6 +134,43 @@ public class Imperium extends LeafTask {
                 b.setStatus(Statusy.getIndex(BudynkiTechnologiczne.statusBudynku(OgameWeb.webDriver,i,false)));
             }
         }
+        //Ustawienie czasów wykonania.
+        czasPobraniaDanych.setCzasString(CzasGry.getCzas().toString());
+        czasPobraniaDanych.setDataString(CzasGry.getData().toString());
+        czasKolejnegoWykonania = CzasWykonania.okreslCzasWykonania(
+                czasPobraniaDanych.getCzas(),
+                czasPobraniaDanych.getData(),
+                WYKONAJ_PONOWNIE_ZA
+        );
+        //Zaznaczenie flagi o updateGUI.
+        updateGUI = true;
+        //Określenie czasu uśpienia
+        setSleep(WYKONAJ_PONOWNIE_ZA.czasWSekundach());
+        czasPobraniaDanych.setActive(true);
+        czasKolejnegoWykonania.setActive(true);
+    }
+
+    private void pobierzDaneOWydobyciu()
+    {
+        for(Planeta p : Planety.planety)
+        {
+            //Klikam w zkładkę Ustawienie surowców.
+            LeftMenu.pressUstawieniaSurowcow(OgameWeb.webDriver,Imperium.class.toString());
+            //Kliknięcie w planetę.
+            while(ListaPlanet.wybranaPlaneta(OgameWeb.webDriver) != p.getPozycjaNaLiscie() )
+            {
+                p.clickPlanet();
+                Waiter.sleep(100,150);
+            }
+            //Pobieranie danych o budynkach technologicznych na planecie.
+            String s1 = UstawieniaSurowcow.metalGodzinneWydobycie(OgameWeb.webDriver);
+            String s2 = UstawieniaSurowcow.krysztalGodzinneWydobycie(OgameWeb.webDriver);
+            String s3 = UstawieniaSurowcow.deuterGodzinneWydobycie(OgameWeb.webDriver);
+            String s4 = UstawieniaSurowcow.wolnaEnergia(OgameWeb.webDriver);
+
+            p.setWydobycie(new Wydobycie(s1,s2,s3,s4));
+        }
+
         //Ustawienie czasów wykonania.
         czasPobraniaDanych.setCzasString(CzasGry.getCzas().toString());
         czasPobraniaDanych.setDataString(CzasGry.getData().toString());

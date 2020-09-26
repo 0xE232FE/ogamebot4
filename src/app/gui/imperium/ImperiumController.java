@@ -9,6 +9,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import ogame.budynki.Budynek;
 import ogame.planety.Planeta;
+import ogame.surowce.Wydobycie;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,14 +47,16 @@ public class ImperiumController
             }
         }
 
-        //Update danych o budynkach produkcyjnych.
+
         if(app.leaftask.Imperium.updateGUI)
         {
+
             for(Imperium imperium : imperiumList)
             {
                 Budynek[] budynki = imperium.getPlaneta().getBudynki().getBudynki();
                 ImperiumPlanetaController controller = imperium.getController();
 
+                //Update danych o budynkach produkcyjnych.
                 for(Budynek b : budynki)
                 {
                     int a = b.getDataTechnology();
@@ -133,6 +136,18 @@ public class ImperiumController
                             break;
                     }
                 }
+
+                //Update danych o wydobyciu.
+                Wydobycie wydobycie = imperium.getPlaneta().getWydobycie();
+                if(wydobycie != null)
+                {
+                    controller.getLabelMetal().setText(wydobycie.getMetal());
+                    controller.getLabelKrysztal().setText(wydobycie.getKrysztal());
+                    controller.getLabelDeuter().setText(wydobycie.getDeuter());
+                    controller.getLabelWolnaEnergia().setText(wydobycie.getWolnaEnergia());
+                    if(wydobycie.getWolanEnergiaINT() < 0)
+                        controller.getLabelWolnaEnergia().setStyle("-fx-background-color: tomato");
+                }
             }
             app.leaftask.Imperium.updateGUI = false;
         }
@@ -153,7 +168,7 @@ public class ImperiumController
         switch (status)
         {
             case 1:
-                label.setStyle("-fx-background-color: lime");
+                label.setStyle("-fx-background-color: springgreen");
                 break;
             case 2:
                 label.setStyle("-fx-background-color: lightgray");
@@ -162,7 +177,7 @@ public class ImperiumController
                 label.setStyle("-fx-background-color: tomato");
                 break;
             case 4:
-                label.setStyle("-fx-background-color: springgreen");
+                label.setStyle("-fx-background-color: orange");
                 break;
         }
     }
